@@ -11,7 +11,7 @@ load_dotenv()
 
 
 url = os.getenv("SUPABASE_URL")
-key = os.getenv("SUPABASE_PUBLISHABLE_KEY") #aici luam url-ul si cheia din variabilele de mediu, astfel incat sa nu fie hardcodate in codul sursa
+key = os.getenv("SUPABASE_SECRET_KEY") #aici luam url-ul si cheia din variabilele de mediu, astfel incat sa nu fie hardcodate in codul sursa
 
 
 options = ClientOptions(
