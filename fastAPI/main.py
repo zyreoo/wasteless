@@ -16,6 +16,7 @@ from routes.order_items import router as order_items_router
 from routes.order_status import router as order_status_router
 from routes.order_type import router as order_type_router
 from routes.product import router as product_router
+from routes.users import router as users_router
 
 app = FastAPI()
 app.include_router(cart_router)
@@ -23,6 +24,7 @@ app.include_router(favorite_router)
 app.include_router(settings_router)
 app.include_router(offers_router)
 app.include_router(order_router)
+app.include_router(users_router)
 
 #!!!folosite doar in schema public:
 app.include_router(cart_items_router)

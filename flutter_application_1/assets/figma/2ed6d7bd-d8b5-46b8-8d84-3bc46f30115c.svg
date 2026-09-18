@@ -1,0 +1,8 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Container+BackgroundColor">
+<path d="M0 50C0 22.3858 22.3858 0 50 0H190C217.614 0 240 22.3858 240 50V190C240 217.614 217.614 240 190 240H50C22.3858 240 0 217.614 0 190V50Z" fill="#40916C" fill-opacity="0.12"/>
+<path id="Vector" d="M120 147.81C135.464 147.81 148 135.274 148 119.81C148 104.346 135.464 91.8101 120 91.8101C104.536 91.8101 92 104.346 92 119.81C92 135.274 104.536 147.81 120 147.81Z" fill="#40916C"/>
+<path id="Vector_2" d="M120 141.81C132.15 141.81 142 131.96 142 119.81C142 107.66 132.15 97.8101 120 97.8101C107.85 97.8101 98 107.66 98 119.81C98 131.96 107.85 141.81 120 141.81Z" fill="#31572C"/>
+<path id="Vector_3" d="M109 119.81L116 126.81L131 111.81" stroke="#ECF39E" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

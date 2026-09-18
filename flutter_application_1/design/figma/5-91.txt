@@ -1,0 +1,123 @@
+const imgFrame = "https://www.figma.com/api/mcp/asset/a1e71d8f-b826-4537-8a8e-0c71e6113a3a.svg";
+const imgFrame1 = "https://www.figma.com/api/mcp/asset/0aad52d0-1feb-4099-a4fe-ccb000056ef5.svg";
+const imgFrame2 = "https://www.figma.com/api/mcp/asset/3c3de4ec-e8c5-4877-b6ba-8b35639573d7.svg";
+const imgFrame3 = "https://www.figma.com/api/mcp/asset/eb6184c1-ce04-499f-8b6b-2a0706980c0b.svg";
+const imgFrame4 = "https://www.figma.com/api/mcp/asset/d0d7d852-4dbb-468a-91a6-1b70ce2b1dea.svg";
+const imgFrame5 = "https://www.figma.com/api/mcp/asset/2a5a5e68-1a4e-4eca-99d0-217fb3debbc9.svg";
+
+export default function BodyBackgroundColor() {
+  return (
+    <div className="relative size-full" data-node-id="5:91" style={{ backgroundImage: "linear-gradient(90deg, rgb(250, 249, 246) 0%, rgb(250, 249, 246) 100%), linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 100%)" }} data-name="Body+BackgroundColor">
+      <div className="absolute bg-[#faf9f6] h-[844px] left-0 overflow-clip top-0 w-[390px]" data-node-id="5:92" data-name="Container+BackgroundColor">
+        <div className="absolute bg-[#31572c] h-[220px] left-0 overflow-clip rounded-bl-[40px] rounded-br-[40px] top-0 w-[390px]" data-node-id="5:94" data-name="Container+BackgroundColor">
+          <div className="absolute bg-[rgba(64,145,108,0.3)] left-[230px] rounded-[50px] size-[220px] top-[-60px]" data-node-id="5:100" data-name="Container+BackgroundColor" />
+        </div>
+        <div className="absolute bg-[rgba(0,0,0,0)] h-[624px] left-0 overflow-clip top-[220px] w-[390px]" data-node-id="5:95" data-name="Container">
+          <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[28px] leading-[28px] left-[28px] text-[#31572c] text-[22px] top-[36px] tracking-[-0.4px] w-[334px]" data-node-id="5:104">
+            Autentificare
+          </p>
+          <div className="absolute bg-[rgba(0,0,0,0)] h-[78px] left-[28px] top-[92px] w-[334px]" data-node-id="5:105" data-name="Container">
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[16px] leading-[16px] left-0 text-[#4a4a44] text-[13px] top-0 w-[334px]" data-node-id="5:127">
+              Adresă de email
+            </p>
+            <div className="absolute bg-white border border-[#e0dfd9] border-solid h-[54px] left-0 rounded-[14px] top-[24px] w-[334px]" data-node-id="5:128" data-name="Container+BackgroundColor">
+              <div className="absolute bg-[rgba(0,0,0,0)] left-[16px] overflow-clip size-[18px] top-[17px]" data-node-id="5:143" data-name="SVG">
+                <div className="absolute left-0 size-[18px] top-0" data-node-id="5:144" data-name="Frame">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame} />
+                </div>
+              </div>
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[19px] leading-[19px] left-[46px] text-[#b8b7b1] text-[14.95px] top-[16.5px] w-[132px]" data-node-id="5:148">
+                email@exemplu.ro
+              </p>
+            </div>
+          </div>
+          <div className="absolute bg-[rgba(0,0,0,0)] h-[78px] left-[28px] top-[186px] w-[334px]" data-node-id="5:106" data-name="Container">
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[16px] leading-[16px] left-0 text-[#4a4a44] text-[13px] top-0 w-[334px]" data-node-id="5:131">
+              Parolă
+            </p>
+            <div className="absolute bg-white border border-[#e0dfd9] border-solid h-[54px] left-0 rounded-[14px] top-[24px] w-[334px]" data-node-id="5:132" data-name="Container+BackgroundColor">
+              <div className="absolute bg-[rgba(0,0,0,0)] left-[16px] overflow-clip size-[18px] top-[17px]" data-node-id="5:149" data-name="SVG">
+                <div className="absolute left-0 size-[18px] top-0" data-node-id="5:150" data-name="Frame">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame1} />
+                </div>
+              </div>
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[19px] leading-[19px] left-[46px] text-[#b8b7b1] text-[15px] top-[16.5px] tracking-[4px] w-[96px]" data-node-id="5:156">
+                ••••••••
+              </p>
+              <div className="absolute bg-[rgba(0,0,0,0)] left-[298px] overflow-clip size-[18px] top-[15px]" data-node-id="5:157" data-name="Container / SVG">
+                <div className="absolute left-0 size-[18px] top-0" data-node-id="5:158" data-name="Frame">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame2} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <p className="-translate-x-full [word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[21px] leading-[16px] left-[362px] text-[#40916c] text-[13px] text-right top-[272px] w-[334px]" data-node-id="5:109">
+            Ai uitat parola?
+          </p>
+          <div className="absolute bg-[#40916c] h-[58px] left-[28px] rounded-[18px] top-[325px] w-[334px]" data-node-id="5:110" data-name="Container+BackgroundColor">
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[21px] leading-[21px] left-[110.5px] text-[#faf9f6] text-[15.843px] top-[18.5px] w-[113px]" data-node-id="5:135">
+              Autentifică-te
+            </p>
+          </div>
+          <div className="absolute bg-[rgba(0,0,0,0)] h-[16px] left-[28px] top-[407px] w-[334px]" data-node-id="5:111" data-name="Container">
+            <div className="absolute bg-[#e0dfd9] h-px left-0 top-[7.5px] w-[106px]" data-node-id="5:136" data-name="Container+BackgroundColor" />
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Medium'] font-medium h-[16px] leading-[16px] left-[118px] text-[#9b9a94] text-[13px] top-0 w-[98px]" data-node-id="5:139">
+              sau continuă cu
+            </p>
+            <div className="absolute bg-[#e0dfd9] h-px left-[228px] top-[7.5px] w-[106px]" data-node-id="5:140" data-name="Container+BackgroundColor" />
+          </div>
+          <div className="absolute bg-[rgba(0,0,0,0)] h-[52px] left-[28px] top-[447px] w-[334px]" data-node-id="5:112" data-name="Container">
+            <div className="absolute bg-white border border-[#e0dfd9] border-solid h-[52px] left-0 rounded-[14px] top-0 w-[161px]" data-node-id="5:141" data-name="Container+BackgroundColor">
+              <div className="absolute bg-[rgba(0,0,0,0)] left-[40.5px] overflow-clip size-[20px] top-[15px]" data-node-id="5:161" data-name="SVG">
+                <div className="absolute left-0 size-[20px] top-0" data-node-id="5:162" data-name="Frame">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame3} />
+                </div>
+              </div>
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[18px] leading-[18px] left-[68.5px] text-[#31572c] text-[13.778px] top-[16px] w-[50px]" data-node-id="5:169">
+                Google
+              </p>
+            </div>
+            <div className="absolute bg-white border border-[#e0dfd9] border-solid h-[52px] left-[173px] rounded-[14px] top-0 w-[161px]" data-node-id="5:142" data-name="Container+BackgroundColor">
+              <div className="absolute bg-[rgba(0,0,0,0)] h-[20px] left-[46.5px] overflow-clip top-[15px] w-[18px]" data-node-id="5:170" data-name="SVG">
+                <div className="absolute h-[20px] left-0 top-0 w-[18px]" data-node-id="5:171" data-name="Frame">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame4} />
+                </div>
+              </div>
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[18px] leading-[18px] left-[72.5px] text-[#31572c] text-[13.693px] top-[16px] w-[40px]" data-node-id="5:176">
+                Apple
+              </p>
+            </div>
+          </div>
+          <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[18px] leading-[0] left-[195px] text-[0px] text-black text-center top-[574px] w-[334px]" data-node-id="5:115">
+            <span className="leading-[18px] text-[#6b6a63] text-[14px]">Nu ai cont?</span>
+            <span className="leading-[18px] text-[#40916c] text-[14px]">{` Înregistrează-te`}</span>
+          </p>
+        </div>
+      </div>
+      <div className="absolute bg-[rgba(0,0,0,0)] h-[64px] left-[32px] top-[128px] w-[291px]" data-node-id="5:93" data-name="Container">
+        <div className="absolute bg-[rgba(0,0,0,0)] h-[36px] left-0 top-0 w-[291px]" data-node-id="5:96" data-name="Container">
+          <div className="absolute bg-[rgba(0,0,0,0)] left-0 overflow-clip size-[36px] top-0" data-node-id="5:116" data-name="SVG">
+            <div className="absolute left-0 size-[36px] top-0" data-node-id="5:117" data-name="Frame">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame5} />
+            </div>
+          </div>
+          <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[28px] leading-[28px] left-[46px] text-[#faf9f6] text-[21.702px] top-[4px] w-[109px]" data-node-id="5:124">
+            Wasteless
+          </p>
+        </div>
+        <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[18px] leading-[18px] left-0 text-[13.843px] text-[rgba(250,249,246,0.65)] top-[46px] w-[291px]" data-node-id="5:99">
+          Bun revenit! Autentifică-te pentru a continua.
+        </p>
+      </div>
+    </div>
+  );
+}
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+Images and SVGs will be stored as constants, e.g. const image = 'https://www.figma.com/api/mcp/asset/550e8400-e29b-41d4-a716-446655440000.png'. These constants will be used in the code as the source for the image, ex: <img src={image} />. Image assets are stored on a remote server for 7 days and can be fetched using the provided URLs until they expire.

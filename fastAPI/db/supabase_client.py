@@ -21,7 +21,7 @@ options = ClientOptions(
 
 
 supabase: Client = create_client(
-    url, key, options=options
+    url, key, options=options 
     ) #aici cream conexiunea cu supabase, folosind url-ul si cheia din variabilele de mediu
 
 

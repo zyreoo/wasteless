@@ -1,0 +1,1 @@
+You've reached the Figma MCP tool call limit on the Starter plan. Upgrade your plan for more tool calls: https://www.figma.com/files/team/1564806922813679087/all-projects?upgrade=mcp_rate_limit_paywall

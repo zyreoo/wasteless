@@ -1,0 +1,167 @@
+const imgVector = "https://www.figma.com/api/mcp/asset/9c085e9a-9348-4548-b765-20ee51ef94eb.svg";
+const imgVector1 = "https://www.figma.com/api/mcp/asset/2021fe87-594e-48e7-8d0e-0f0a53a7853d.svg";
+const imgVector2 = "https://www.figma.com/api/mcp/asset/33bc2a1f-8be4-4f59-aeed-51a74f4fa3b8.svg";
+const imgVector3 = "https://www.figma.com/api/mcp/asset/1f3fe689-2ddb-4818-8477-7002769d37bb.svg";
+const imgVector4 = "https://www.figma.com/api/mcp/asset/5c96e3f4-76f4-4147-86f2-8f89795bc3d9.svg";
+const imgVector5 = "https://www.figma.com/api/mcp/asset/2c25ea40-3d62-477d-93b3-d2bd8ee2f14f.svg";
+const imgVector6 = "https://www.figma.com/api/mcp/asset/90ff83c2-198d-420b-ad07-164e47766fbb.svg";
+const imgVector7 = "https://www.figma.com/api/mcp/asset/6db42844-5e09-4bc3-a109-5301f0c1e85a.svg";
+const imgVector8 = "https://www.figma.com/api/mcp/asset/a243bd89-5223-4c81-9135-a917229b4f56.svg";
+const imgVector9 = "https://www.figma.com/api/mcp/asset/ccef09ff-885e-4cc3-aee4-62c8d76bf952.svg";
+const imgVector10 = "https://www.figma.com/api/mcp/asset/9549b981-51a2-4f7d-a558-7740b93b2302.svg";
+const imgVector11 = "https://www.figma.com/api/mcp/asset/a35f94d6-4622-4e97-b0b0-e70e3ad98b3b.svg";
+const imgVector12 = "https://www.figma.com/api/mcp/asset/b64fd64b-c1f4-4a2d-9d71-06b8c57beb90.svg";
+const imgVector13 = "https://www.figma.com/api/mcp/asset/583ef175-5d8a-4b1c-b360-50de5e61cde2.svg";
+const imgVector14 = "https://www.figma.com/api/mcp/asset/cd6bf1b0-6bdd-453f-ab3e-85baea23e0b6.svg";
+const imgVector15 = "https://www.figma.com/api/mcp/asset/c2241dcb-3377-4686-8eea-2d0c8735c0fd.svg";
+const imgVector16 = "https://www.figma.com/api/mcp/asset/9cdf1154-dd69-4547-bbfc-742a9b4389da.svg";
+const imgSvg = "https://www.figma.com/api/mcp/asset/805f72fb-6ed7-4b8f-a4fd-0918119a0b45.svg";
+
+export default function BodyBackgroundColor() {
+  return (
+    <div className="bg-[#faf9f6] relative size-full" data-node-id="10:4166" data-name="Body+BackgroundColor">
+      <div className="absolute bg-[#faf9f6] h-[844px] left-0 overflow-clip top-0 w-[390px]" data-node-id="10:4167" data-name="div">
+        <div className="absolute h-[56px] left-0 top-0 w-[390px]" data-node-id="10:4168" data-name="div">
+          <div className="absolute bg-[rgba(49,87,44,0.08)] h-[36px] left-[271.63px] rounded-[20px] top-[20px] w-[94.375px]" data-node-id="10:4169" data-name="div">
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.27] left-[16px] text-[#40916c] text-[13px] top-[11px] w-[70.375px]" data-node-id="10:4170">
+              Sari peste
+            </p>
+          </div>
+        </div>
+        <div className="absolute h-[459.359px] left-0 top-[56px] w-[390px]" data-node-id="10:4171" data-name="div">
+          <div className="absolute left-[65px] overflow-clip size-[260px] top-[99.68px]" data-node-id="10:4172" data-name="svg">
+            <div className="absolute inset-[19.23%_11.54%]" data-node-id="10:4173" data-name="Vector">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector} />
+            </div>
+            <div className="absolute inset-[38.46%_11.54%_61.54%_11.54%]" data-node-id="10:4174" data-name="Vector">
+              <div className="absolute inset-[-0.5px_0]">
+                <img alt="" className="block max-w-none size-full" src={imgVector1} />
+              </div>
+            </div>
+            <div className="absolute inset-[57.69%_11.54%_42.31%_11.54%]" data-node-id="10:4175" data-name="Vector">
+              <div className="absolute inset-[-0.5px_0]">
+                <img alt="" className="block max-w-none size-full" src={imgVector1} />
+              </div>
+            </div>
+            <div className="absolute inset-[19.23%_69.23%_19.23%_30.77%]" data-node-id="10:4176" data-name="Vector">
+              <div className="absolute inset-[0_-0.5px]">
+                <img alt="" className="block max-w-none size-full" src={imgVector2} />
+              </div>
+            </div>
+            <div className="absolute bottom-[19.23%] left-1/2 right-1/2 top-[19.23%]" data-node-id="10:4177" data-name="Vector">
+              <div className="absolute inset-[0_-0.5px]">
+                <img alt="" className="block max-w-none size-full" src={imgVector2} />
+              </div>
+            </div>
+            <div className="absolute inset-[19.23%_30.77%_19.23%_69.23%]" data-node-id="10:4178" data-name="Vector">
+              <div className="absolute inset-[0_-0.5px]">
+                <img alt="" className="block max-w-none size-full" src={imgVector2} />
+              </div>
+            </div>
+            <div className="absolute inset-[48.08%_11.54%_51.92%_11.54%]" data-node-id="10:4179" data-name="Vector">
+              <div className="absolute inset-[-4px_-2%]">
+                <img alt="" className="block max-w-none size-full" src={imgVector3} />
+              </div>
+            </div>
+            <div className="absolute inset-[19.23%_59.62%_19.23%_40.38%]" data-node-id="10:4180" data-name="Vector">
+              <div className="absolute inset-[-2.5%_-4px]">
+                <img alt="" className="block max-w-none size-full" src={imgVector4} />
+              </div>
+            </div>
+            <div className="absolute inset-[27.69%_62.31%_58.46%_23.85%]" data-node-id="10:4181" data-name="Vector">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector5} />
+            </div>
+            <div className="absolute inset-[29.62%_64.23%_60.38%_25.77%]" data-node-id="10:4182" data-name="Vector">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector6} />
+            </div>
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal inset-[31.92%_66.92%_63.46%_28.46%] leading-[normal] text-[#ecf39e] text-[12px] text-center whitespace-nowrap" data-node-id="10:4183">
+              🥐
+            </p>
+            <div className="absolute inset-[54.62%_31.54%_31.54%_54.62%]" data-node-id="10:4184" data-name="Vector">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector7} />
+            </div>
+            <div className="absolute inset-[56.54%_33.46%_33.46%_56.54%]" data-node-id="10:4185" data-name="Vector">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector8} />
+            </div>
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal inset-[58.85%_36.15%_36.54%_59.23%] leading-[normal] text-[#ecf39e] text-[12px] text-center whitespace-nowrap" data-node-id="10:4186">
+              🥬
+            </p>
+            <div className="absolute inset-[25.38%_35%_63.85%_54.23%]" data-node-id="10:4187" data-name="Vector">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector9} />
+            </div>
+            <div className="absolute inset-[26.92%_36.54%_65.38%_55.77%]" data-node-id="10:4188" data-name="Vector">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector10} />
+            </div>
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal inset-[28.46%_38.46%_67.69%_57.69%] leading-[normal] text-[#faf9f6] text-[10px] text-center whitespace-nowrap" data-node-id="10:4189">
+              🍱
+            </p>
+            <div className="absolute inset-[39.62%_51.15%_43.46%_31.92%]" data-node-id="10:4190" data-name="Vector">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector11} />
+            </div>
+            <div className="absolute inset-[41.92%_53.46%_45.77%_34.23%]" data-node-id="10:4191" data-name="Vector">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector12} />
+            </div>
+            <div className="absolute inset-[45.77%_57.31%_49.62%_38.08%]" data-node-id="10:4192" data-name="Vector">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector13} />
+            </div>
+            <div className="absolute inset-[36.54%_48.08%_40.38%_28.85%]" data-node-id="10:4193" data-name="Vector">
+              <div className="absolute inset-[-1.67%]">
+                <img alt="" className="block max-w-none size-full" src={imgVector14} />
+              </div>
+            </div>
+            <div className="absolute bottom-[36.54%] left-1/4 right-[44.23%] top-[32.69%]" data-node-id="10:4194" data-name="Vector">
+              <div className="absolute inset-[-0.63%]">
+                <img alt="" className="block max-w-none size-full" src={imgVector15} />
+              </div>
+            </div>
+            <div className="absolute inset-[23.08%_64.62%_69.23%_15.38%]" data-node-id="10:4195" data-name="Vector">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector16} />
+            </div>
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold inset-[24.62%_68.08%_70.38%_18.85%] leading-[normal] text-[#31572c] text-[10px] text-center whitespace-nowrap" data-node-id="10:4196">
+              0,3 km
+            </p>
+            <div className="absolute inset-[64.62%_16.54%_27.69%_63.46%]" data-node-id="10:4197" data-name="Vector">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector16} />
+            </div>
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold inset-[66.15%_20%_28.85%_66.92%] leading-[normal] text-[#31572c] text-[10px] text-center whitespace-nowrap" data-node-id="10:4198">
+              0,8 km
+            </p>
+          </div>
+          <div className="absolute bg-[rgba(144,169,85,0.1)] left-[45px] rounded-[50px] size-[300px] top-[79.68px]" data-node-id="10:4199" data-name="div" />
+          <div className="absolute bg-[rgba(64,145,108,0.1)] left-[85px] rounded-[50px] size-[220px] top-[119.68px]" data-node-id="10:4200" data-name="div" />
+        </div>
+        <div className="absolute h-[8px] left-[167px] top-[515.36px] w-[56px]" data-node-id="10:4201" data-name="div">
+          <div className="absolute bg-[#d1d0c9] left-0 rounded-[4px] size-[8px] top-0" data-node-id="10:4202" data-name="div" />
+          <div className="absolute bg-[#40916c] h-[8px] left-[16px] rounded-[4px] top-0 w-[24px]" data-node-id="10:4203" data-name="div" />
+          <div className="absolute bg-[#d1d0c9] left-[48px] rounded-[4px] size-[8px] top-0" data-node-id="10:4204" data-name="div" />
+        </div>
+        <div className="absolute h-[284.641px] left-0 top-[559.36px] w-[390px]" data-node-id="10:4205" data-name="div">
+          <div className="-translate-x-1/2 [word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[0] left-[199.55px] text-[#31572c] text-[26px] text-center top-0 tracking-[-0.6px] w-[335.1px]" data-node-id="10:4206">
+            <p className="leading-[31.2px] mb-0">Găsește oferte</p>
+            <p className="leading-[31.2px]">lângă tine</p>
+          </div>
+          <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[24.75px] left-[199px] text-[#6b6a63] text-[15px] text-center top-[76.39px] w-[334px]" data-node-id="10:4207">
+            Răsfoiește surplusul alimentar de la brutării, cafenele și magazine din apropiere — oferte noi apărute în fiecare oră.
+          </p>
+          <div className="absolute bg-[#40916c] h-[58px] left-[32px] rounded-[18px] top-[186.64px] w-[326px]" data-node-id="10:4208" data-name="div">
+            <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[1.25] left-[152px] text-[#faf9f6] text-[16px] text-center top-[19px] w-[61.07px]" data-node-id="10:4209">
+              Înainte
+            </p>
+            <div className="absolute left-[184.53px] size-[20px] top-[19px]" data-node-id="10:4210" data-name="svg">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSvg} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+Images and SVGs will be stored as constants, e.g. const image = 'https://www.figma.com/api/mcp/asset/550e8400-e29b-41d4-a716-446655440000.png'. These constants will be used in the code as the source for the image, ex: <img src={image} />. Image assets are stored on a remote server for 7 days and can be fetched using the provided URLs until they expire.
