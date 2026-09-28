@@ -7,8 +7,9 @@ from pydantic import BaseModel, ConfigDict, Field
 from auth import Identity, current_user
 from repositories.commerce_repository import CommerceRepository
 from services.commerce_service import cart_summary
+from rate_limit import user_rate_limit
 
-router = APIRouter(prefix='/api')
+router = APIRouter(prefix='/api', dependencies=[Depends(user_rate_limit)])
 
 
 def repository(user: Annotated[Identity, Depends(current_user)]):

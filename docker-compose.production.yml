@@ -1,0 +1,30 @@
+services:
+  api:
+    build: ./fastAPI
+    restart: unless-stopped
+    environment:
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_PUBLISHABLE_KEY: ${SUPABASE_PUBLISHABLE_KEY}
+      CORS_ORIGINS: ${FRONTEND_ORIGIN}
+      RATE_LIMIT_ENABLED: "true"
+      RATE_LIMIT_READS_PER_MINUTE: "120"
+      RATE_LIMIT_WRITES_PER_MINUTE: "30"
+      RATE_LIMIT_CHECKOUT_PER_MINUTE: "6"
+      TRUSTED_PROXY_IPS: ${TRUSTED_PROXY_IPS:-127.0.0.1}
+    ports:
+      - "8000:8000"
+
+  web:
+    build:
+      context: ./flutter_application_1
+      args:
+        SUPABASE_URL: ${SUPABASE_URL}
+        SUPABASE_PUBLISHABLE_KEY: ${SUPABASE_PUBLISHABLE_KEY}
+        API_BASE_URL: ${API_ORIGIN}
+        AUTH_REDIRECT_URL: ${FRONTEND_ORIGIN}/#/reset-password
+    restart: unless-stopped
+    environment:
+      API_ORIGIN: ${API_ORIGIN}
+      SUPABASE_ORIGIN: ${SUPABASE_URL}
+    ports:
+      - "8080:80"

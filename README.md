@@ -18,6 +18,10 @@ Flutter, FastAPI and Supabase. Development branch: `codex/wasteless-mvp`.
   decimals. There is no payment gateway: payment is at pickup, not online.
 - Romanian errors, loading/empty states, accessibility text scaling and the existing
   colors/fonts/design assets. Old artboards remain available for design review only.
+- Real Supabase password recovery with a configurable web redirect and neutral
+  account-enumeration-safe messaging.
+- Single-instance MVP API rate limiting, request timing logs and production Docker
+  paths for the API and Flutter/nginx frontend.
 
 ## Deployment status — important
 
@@ -76,6 +80,9 @@ web/desktop development. Android release has Internet permission but does not
 permit arbitrary cleartext HTTP. Choose a HTTPS development endpoint for mobile.
 Supabase email-confirmation settings are respected: registration may require
 confirming the email and then logging in. No success is faked.
+
+Production deployment, HTTPS proxy, Auth redirect, rate limits, caching and security
+headers are documented in [production deployment](docs/production-deployment.md).
 
 The design-only prototype (seeded preview data, never the production entry point):
 

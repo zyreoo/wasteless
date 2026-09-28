@@ -357,6 +357,7 @@ class _DesignPageState extends State<DesignPage> {
     if (widget.auth != null) {
       a['5:110'] = () => authenticate(false);
       a['5:199'] = () => authenticate(true);
+      a['5:109'] = () => go('/forgot-password');
     }
     return a;
   }
@@ -364,7 +365,7 @@ class _DesignPageState extends State<DesignPage> {
   void prepare(DesignNode root) {
     hidden.clear();
     if (widget.auth != null) {
-      hidden.addAll(['5:141', '5:142', '5:245', '5:246', '5:109', '5:139']);
+      hidden.addAll(['5:141', '5:142', '5:245', '5:246', '5:139']);
     }
     patches.clear();
     values.clear();
@@ -593,6 +594,11 @@ class _DesignPageState extends State<DesignPage> {
                     : 'Autentifică-te',
               ),
             ),
+            if (!register)
+              TextButton(
+                onPressed: submitting ? null : () => go('/forgot-password'),
+                child: const Text('Ai uitat parola?'),
+              ),
             TextButton(
               onPressed: submitting
                   ? null

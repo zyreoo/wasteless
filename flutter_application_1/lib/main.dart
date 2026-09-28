@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'auth/auth_controller.dart';
@@ -13,6 +14,7 @@ import 'pages/live_product_page.dart';
 import 'pages/live_cart_page.dart';
 import 'pages/live_checkout_page.dart';
 import 'pages/live_orders_page.dart';
+import 'pages/password_recovery_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +43,11 @@ Future<void> main() async {
     publishableKey: config.publishableKey,
   );
   await FigmaDesign.load();
-  final auth = AuthController(Supabase.instance.client);
+  final auth = AuthController(
+    Supabase.instance.client,
+    recoveryRedirectUrl: config.authRedirectUrl,
+    startInRecovery: kIsWeb && Uri.base.toString().contains('reset-password'),
+  );
   final api = ApiService(baseUrl: config.apiUrl, accessToken: auth.accessToken);
   runApp(WastelessApp(auth: auth, api: api));
 }
@@ -83,15 +89,24 @@ class WastelessApp extends StatelessWidget {
       title: 'Wasteless',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme,
-      home: auth.signedIn
+      home: auth.recovering
+          ? ResetPasswordPage(auth: auth)
+          : auth.signedIn
           ? CatalogPage(service: CommerceService(api))
           : DesignPage(nodeId: designRoutes['/login']!, auth: auth),
       onGenerateRoute: (settings) {
         final route = settings.name;
-        final public = route == '/register' || route == '/login';
+        final public =
+            route == '/register' ||
+            route == '/login' ||
+            route == '/forgot-password';
         return MaterialPageRoute<void>(
           settings: settings,
-          builder: (_) => public && !auth.signedIn
+          builder: (_) => route == '/forgot-password' && !auth.signedIn
+              ? ForgotPasswordPage(auth: auth)
+              : auth.recovering
+              ? ResetPasswordPage(auth: auth)
+              : public && !auth.signedIn
               ? DesignPage(nodeId: designRoutes[route]!, auth: auth)
               : auth.signedIn
               ? authenticatedRoute(settings)

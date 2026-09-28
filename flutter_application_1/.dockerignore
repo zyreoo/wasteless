@@ -1,0 +1,6 @@
+.dart_tool
+.flutter-plugins*
+build
+config.local.json
+test
+tool

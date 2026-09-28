@@ -20,7 +20,10 @@ void main() {
     'https://example.supabase.co',
     'sb_publishable_test',
     httpClient: http,
-    authOptions: AuthClientOptions(autoRefreshToken: false, pkceAsyncStorage: MemoryStorage()),
+    authOptions: AuthClientOptions(
+      autoRefreshToken: false,
+      pkceAsyncStorage: MemoryStorage(),
+    ),
   );
 
   test('Login establishes real SDK session, logout clears it', () async {
@@ -84,6 +87,30 @@ void main() {
     auth.dispose();
     await c.dispose();
   });
+
+  test('Password recovery sends a real neutral reset request', () async {
+    late http.Request request;
+    final c = client(
+      MockClient((value) async {
+        request = value;
+        return http.Response('{}', 200);
+      }),
+    );
+    final auth = AuthController(
+      c,
+      recoveryRedirectUrl: 'https://app.example/reset-password',
+    );
+    await auth.requestPasswordReset(' user@example.invalid ');
+    expect(request.url.path, endsWith('/recover'));
+    final body = jsonDecode(request.body) as Map<String, dynamic>;
+    expect(body['email'], 'user@example.invalid');
+    expect(
+      request.url.queryParameters['redirect_to'],
+      'https://app.example/reset-password',
+    );
+    auth.dispose();
+    await c.dispose();
+  });
 }
 
 class MemoryStorage extends GotrueAsyncStorage {
@@ -91,7 +118,12 @@ class MemoryStorage extends GotrueAsyncStorage {
   @override
   Future<String?> getItem({required String key}) async => values[key];
   @override
-  Future<void> setItem({required String key, required String value}) async { values[key] = value; }
+  Future<void> setItem({required String key, required String value}) async {
+    values[key] = value;
+  }
+
   @override
-  Future<void> removeItem({required String key}) async { values.remove(key); }
+  Future<void> removeItem({required String key}) async {
+    values.remove(key);
+  }
 }

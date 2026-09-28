@@ -6,18 +6,30 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../services/api_service.dart';
 
 class AuthController extends ChangeNotifier {
-  AuthController(this.client) {
+  AuthController(
+    this.client, {
+    this.recoveryRedirectUrl = '',
+    bool startInRecovery = false,
+  }) : _recovering = startInRecovery {
     _subscription = client.auth.onAuthStateChange.listen(
-      (_) => notifyListeners(),
+      (state) {
+        if (state.event == AuthChangeEvent.passwordRecovery) {
+          _recovering = true;
+        }
+        notifyListeners();
+      },
       onError: (Object error) {
         notifyListeners();
       },
     );
   }
   final SupabaseClient client;
+  final String recoveryRedirectUrl;
+  bool _recovering;
   late final StreamSubscription<AuthState> _subscription;
   User? get user => client.auth.currentUser;
   bool get signedIn => client.auth.currentSession != null;
+  bool get recovering => _recovering;
 
   Future<String?> accessToken() async {
     var session = client.auth.currentSession;
@@ -52,6 +64,28 @@ class AuthController extends ChangeNotifier {
       data: {'display_name': name.trim()},
     );
     return result.session != null;
+  }
+
+  Future<void> requestPasswordReset(String email) async {
+    await client.auth.resetPasswordForEmail(
+      email.trim(),
+      redirectTo: recoveryRedirectUrl.isEmpty ? null : recoveryRedirectUrl,
+    );
+  }
+
+  Future<void> updatePassword(String password) async {
+    if (client.auth.currentSession == null || !_recovering) {
+      throw const AuthException('Sesiunea de recuperare nu este validă.');
+    }
+    await client.auth.updateUser(UserAttributes(password: password));
+    _recovering = false;
+    notifyListeners();
+  }
+
+  Future<void> cancelRecovery() async {
+    _recovering = false;
+    await client.auth.signOut(scope: SignOutScope.local);
+    notifyListeners();
   }
 
   Future<void> logout() => client.auth.signOut(scope: SignOutScope.local);
