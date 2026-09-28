@@ -12,9 +12,9 @@ comparison against a fresh export. Do not treat it as pixel-verified.
 
 ```sh
 flutter pub get
-flutter run -d chrome
+flutter run -t lib/preview_main.dart -d chrome
 # Open a catalogue with direct links to every screen:
-flutter run -d chrome --dart-define=INITIAL_ROUTE=/screens
+flutter run -t lib/preview_main.dart -d chrome --dart-define=INITIAL_ROUTE=/screens
 flutter test
 # Produce 390 × 844 Flutter renders in design/previews:
 DESIGN_PREVIEWS=1 flutter test

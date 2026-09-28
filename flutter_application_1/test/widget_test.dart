@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_application_1/main.dart';
+import 'package:flutter_application_1/preview_main.dart';
 import 'package:flutter_application_1/pages/design_page.dart';
 import 'package:flutter_application_1/widgets/figma_layout.dart';
 

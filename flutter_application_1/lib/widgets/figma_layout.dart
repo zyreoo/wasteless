@@ -202,7 +202,7 @@ class FigmaLayout extends StatelessWidget {
                     .toList(),
         ),
         textAlign: align,
-        textScaler: TextScaler.noScaling,
+        textScaler: MediaQuery.textScalerOf(context),
         overflow: TextOverflow.visible,
         textHeightBehavior: const TextHeightBehavior(
           leadingDistribution: TextLeadingDistribution.even,

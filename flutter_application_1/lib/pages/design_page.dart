@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../widgets/figma_layout.dart';
+import '../auth/auth_controller.dart';
 
 /// Screen catalogue mirrors the 18 artboards in the supplied Figma file.
 const designRoutes = <String, String>{
@@ -61,7 +62,13 @@ class PreviewState extends ChangeNotifier {
 }
 
 class DesignPage extends StatefulWidget {
-  const DesignPage({super.key, required this.nodeId, this.savedOnly = false});
+  const DesignPage({
+    super.key,
+    required this.nodeId,
+    this.savedOnly = false,
+    this.auth,
+  });
+  final AuthController? auth;
   final String nodeId;
   final bool savedOnly;
   @override
@@ -77,6 +84,38 @@ class _DesignPageState extends State<DesignPage> {
   int quantity = 1, category = 0, historyFilter = 0, payment = 0;
   bool obscure = true, accepted = true, read = false, sorted = false;
   String query = '';
+  bool submitting = false;
+
+  Future<void> authenticate(bool register) async {
+    if (submitting) return;
+    final email = controllers[register ? '5:259' : '5:148']?.text.trim() ?? '';
+    final password = controllers[register ? '5:270' : '5:156']?.text ?? '';
+    if (!email.contains('@') || password.isEmpty || (register && !accepted)) {
+      notice('Completează emailul, parola și acordul necesar.');
+      return;
+    }
+    setState(() => submitting = true);
+    try {
+      if (register) {
+        final active = await widget.auth!.register(
+          email,
+          password,
+          controllers['5:253']?.text ?? '',
+        );
+        if (mounted && !active) {
+          notice(
+            'Verifică emailul pentru confirmarea contului, apoi autentifică-te.',
+          );
+        }
+      } else {
+        await widget.auth!.login(email, password);
+      }
+    } catch (error) {
+      if (mounted) notice(AuthController.message(error));
+    } finally {
+      if (mounted) setState(() => submitting = false);
+    }
+  }
 
   @override
   void initState() {
@@ -314,11 +353,18 @@ class _DesignPageState extends State<DesignPage> {
       'Cod promoțional',
       'Codurile promoționale vor fi validate după conectarea serviciului de comenzi.',
     );
+    if (widget.auth != null) {
+      a['5:110'] = () => authenticate(false);
+      a['5:199'] = () => authenticate(true);
+    }
     return a;
   }
 
   void prepare(DesignNode root) {
     hidden.clear();
+    if (widget.auth != null) {
+      hidden.addAll(['5:141', '5:142', '5:245', '5:246', '5:109']);
+    }
     patches.clear();
     values.clear();
     // Source navigation is pinned at y=764; only the content above it scrolls.
@@ -505,38 +551,52 @@ class _DesignPageState extends State<DesignPage> {
     prepare(root);
     return Scaffold(
       backgroundColor: const Color(0xfffaf9f6),
-      body: DesignViewport(
-        child: FigmaLayout(
-          node: root,
-          actions: actions,
-          nodeBuilder: field,
-          hidden: hidden,
-          patches: patches,
-          textValues: values,
-          verticalScroll: const {
-            '5:185',
-            '5:95',
-            '5:308',
-            '5:568',
-            '5:832',
-            '5:965',
-            '5:1184',
-            '5:1358',
-            '10:3531',
-            '10:3646',
-            '10:3747',
-            '10:3835',
-            '10:3935',
-          },
-          horizontalScroll: const {
-            '5:316',
-            '5:567',
-            '5:1357',
-            '5:1014',
-            '10:3522',
-            '10:3650',
-            '10:3787',
-          },
+      body: AbsorbPointer(
+        absorbing: submitting,
+        child: Stack(
+          children: [
+            DesignViewport(
+              child: FigmaLayout(
+                node: root,
+                actions: actions,
+                nodeBuilder: field,
+                hidden: hidden,
+                patches: patches,
+                textValues: values,
+                verticalScroll: const {
+                  '5:185',
+                  '5:95',
+                  '5:308',
+                  '5:568',
+                  '5:832',
+                  '5:965',
+                  '5:1184',
+                  '5:1358',
+                  '10:3531',
+                  '10:3646',
+                  '10:3747',
+                  '10:3835',
+                  '10:3935',
+                },
+                horizontalScroll: const {
+                  '5:316',
+                  '5:567',
+                  '5:1357',
+                  '5:1014',
+                  '10:3522',
+                  '10:3650',
+                  '10:3787',
+                },
+              ),
+            ),
+            if (submitting)
+              const Positioned.fill(
+                child: ColoredBox(
+                  color: Color(0x66ffffff),
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+              ),
+          ],
         ),
       ),
     );

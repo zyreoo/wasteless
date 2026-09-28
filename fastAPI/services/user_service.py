@@ -12,7 +12,7 @@ class UserService:
 
     def get_all(self):
         try:
-            users = self.repository.find_all().users
+            users = self.repository.find_all()
         except Exception:
             raise HTTPException(status_code=500, detail="Could not fetch users")
 
