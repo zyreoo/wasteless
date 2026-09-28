@@ -7,6 +7,12 @@ import 'pages/design_page.dart';
 import 'services/api_service.dart';
 import 'theme/app_theme.dart';
 import 'widgets/figma_layout.dart';
+import 'services/commerce_service.dart';
+import 'pages/catalog_page.dart';
+import 'pages/live_product_page.dart';
+import 'pages/live_cart_page.dart';
+import 'pages/live_checkout_page.dart';
+import 'pages/live_orders_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,6 +51,30 @@ class WastelessApp extends StatelessWidget {
   final AuthController auth;
   final ApiService api;
 
+  Widget authenticatedRoute(RouteSettings settings) {
+    final service = CommerceService(api);
+    final id = settings.arguments;
+    return switch (settings.name) {
+      '/search' => CatalogPage(service: service, search: true),
+      '/saved' => CatalogPage(service: service, savedOnly: true),
+      '/cart' => LiveCartPage(service: service),
+      '/checkout' => LiveCheckoutPage(service: service),
+      '/history' => LiveOrdersPage(service: service),
+      '/profile' => AccountPage(auth: auth, api: api),
+      '/product' when id is int => LiveProductPage(service: service, id: id),
+      '/order-detail' when id is int => LiveOrderDetailPage(
+        service: service,
+        id: id,
+      ),
+      '/order-confirm' when id is int => LiveOrderDetailPage(
+        service: service,
+        id: id,
+        confirmation: true,
+      ),
+      _ => CatalogPage(service: service),
+    };
+  }
+
   @override
   Widget build(BuildContext context) => ListenableBuilder(
     listenable: auth,
@@ -54,7 +84,7 @@ class WastelessApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme,
       home: auth.signedIn
-          ? AccountPage(auth: auth, api: api)
+          ? CatalogPage(service: CommerceService(api))
           : DesignPage(nodeId: designRoutes['/login']!, auth: auth),
       onGenerateRoute: (settings) {
         final route = settings.name;
@@ -64,7 +94,7 @@ class WastelessApp extends StatelessWidget {
           builder: (_) => public && !auth.signedIn
               ? DesignPage(nodeId: designRoutes[route]!, auth: auth)
               : auth.signedIn
-              ? AccountPage(auth: auth, api: api)
+              ? authenticatedRoute(settings)
               : DesignPage(nodeId: designRoutes['/login']!, auth: auth),
         );
       },
@@ -72,8 +102,6 @@ class WastelessApp extends StatelessWidget {
   );
 }
 
-/// Temporary authenticated landing while the existing commerce schema is unavailable.
-/// Never substitute the seeded design preview for real account data.
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key, required this.auth, required this.api});
   final AuthController auth;
@@ -133,7 +161,10 @@ class _AccountPageState extends State<AccountPage> {
             },
           ),
           const SizedBox(height: 24),
-          const Text('Catalogul și comenzile nu sunt disponibile momentan.'),
+          TextButton(
+            onPressed: () => Navigator.pushNamed(context, '/history'),
+            child: const Text('Comenzile mele'),
+          ),
           const SizedBox(height: 24),
           OutlinedButton(
             onPressed: signingOut ? null : logout,

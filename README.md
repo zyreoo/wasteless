@@ -1,27 +1,49 @@
 # Wasteless
 
-Flutter + FastAPI + Supabase. Work continues on `codex/wasteless-mvp`.
+Flutter, FastAPI and Supabase. Development branch: `codex/wasteless-mvp`.
 
-## Status
+## Implemented
 
-**This branch is an incomplete MVP foundation, not a deployable commerce app.**
-Email/password registration, login and local logout use Supabase Auth. The Flutter
-SDK manages persisted sessions and token refresh. FastAPI validates bearer tokens
-with Supabase and exposes only the authenticated identity at `GET /api/me`.
-The API client centralizes credentials, timeouts, decoding and Romanian errors.
+- Supabase email/password authentication, confirmation-required signup, SDK session
+  persistence/refresh, logout and auth-aware routing. Backend validates each token
+  with Supabase Auth and derives identity from the verified response.
+- Real product list/detail, persistent cart CRUD, favorites by product ID,
+  transactional order creation and owner-scoped order history/detail.
+- User-token PostgREST requests, server owner filters and database RLS. Admin user
+  listing is removed. Direct commerce writes are revoked in favor of authenticated
+  RPCs with ownership checks. No service-role credential is used by these routes.
+- Checkout locks the cart and products, checks stock, snapshots prices/names,
+  decrements stock and clears the cart in one transaction. A per-user idempotency
+  key prevents duplicate orders; retries reuse the key. Prices are RON with two
+  decimals. There is no payment gateway: payment is at pickup, not online.
+- Romanian errors, loading/empty states, accessibility text scaling and the existing
+  colors/fonts/design assets. Old artboards remain available for design review only.
 
-The former unrestricted database reads fail closed: anonymous requests receive
-401; authenticated legacy data requests receive 503. The users admin listing is
-not exposed. This is a temporary security boundary, **not completed cart/order
-functionality**. Do not remove it until real ownership constraints and RLS are
-implemented and verified.
+## Deployment status — important
 
-The configured Supabase project could not be resolved and is not accessible
-through the connected account. No schema was present in Git. Consequently no
-migration or guessed replacement tables were created, and no production data
-was changed. Real catalogue/cart/favorites/orders and their integration tests
-remain blocked on access to the existing schema. Auth has only been exercised
-against mocked Supabase responses, not live accounts or device restarts.
+The remote project is reachable, and its existing schema has been inspected.
+**The migrations are not applied:** automatic approval review blocked live schema
+and permission changes pending explicit approval. Until they are applied, the new
+commerce endpoints cannot run against that project. No production rows were
+changed during implementation.
+
+Existing products 1 and 2 have unknown (`NULL`) stock. They remain unchanged and
+are hidden from the orderable catalogue until real stock is entered. The existing
+favorite has no product or owner; it is preserved but not assigned to an account.
+No fake products or guessed stock are inserted.
+
+Tests cover local PostgreSQL semantics, API contracts and Flutter interactions.
+Live registration, real-device restart/session restoration and a complete live
+purchase have **not** been verified. The database tests use isolated test users and
+products, never production rows.
+
+## Database
+
+See [migration notes](docs/database-handoff.md). The migrations adapt the existing
+schema captured in `docs/schema-before-mvp.json`; they do not create duplicate
+commerce tables. Apply in filename order through the Supabase migration workflow
+only after review/approval. Take a schema backup first; do not blindly rerun applied
+migrations or use these against an unrelated schema.
 
 ## Backend
 
@@ -31,52 +53,50 @@ Python 3.11:
 python3 -m venv .venv
 . .venv/bin/activate
 pip install -r fastAPI/requirements.txt
-cp fastAPI/.env.example fastAPI/.env # only on a fresh checkout
+cp fastAPI/.env.example fastAPI/.env # fresh checkout only
 cd fastAPI
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-Use the project's publishable key for authentication validation. Never put a
-secret/service-role key in Flutter. Configure explicit `CORS_ORIGINS` for web.
-The backend does not need privileged database credentials for the exposed routes.
+Set `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY` and explicit `CORS_ORIGINS`.
+Never put secret/service-role credentials in Flutter. `/health` is public;
+`/api/me` and every commerce route require a bearer session token.
 
 ## Flutter
 
 ```sh
 cd flutter_application_1
 cp config.example.json config.local.json
-# Fill in SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY and API_BASE_URL.
+# Fill SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY and API_BASE_URL.
 flutter pub get
 flutter run --dart-define-from-file=config.local.json
 ```
 
-Choose an API address reachable from the target: desktop loopback, Android emulator
-host alias or your development machine's LAN address. Use HTTPS outside local
-development. Release Android builds have Internet permission; HTTP exceptions
-are not enabled globally.
+Use an API address reachable from the target device and HTTPS outside local
+web/desktop development. Android release has Internet permission but does not
+permit arbitrary cleartext HTTP. Choose a HTTPS development endpoint for mobile.
+Supabase email-confirmation settings are respected: registration may require
+confirming the email and then logging in. No success is faked.
 
-When email confirmation is enabled in Supabase, registration asks the user to
-confirm their email, then sign in. It never fakes an authenticated session.
-
-The existing full design prototype is preserved separately for visual review:
+The design-only prototype (seeded preview data, never the production entry point):
 
 ```sh
 flutter run -t lib/preview_main.dart
 ```
 
-It contains seeded preview data and must not be shipped as the real application.
-Production entry point `lib/main.dart` cannot navigate into its fake checkout.
-
 ## Checks
 
 ```sh
 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=fastAPI python3 -m unittest discover -s fastAPI/tests -v
+npm ci --prefix tests/database
+node tests/database/test.mjs
 cd flutter_application_1
 flutter analyze
 flutter test
+flutter build web --dart-define-from-file=config.local.json
 ```
 
-Existing design tests are retained; additional tests cover SDK authentication,
-logout, signup requiring confirmation, protected requests, invalid tokens,
-identity spoofing, upstream failures and API error handling. They are not a
-substitute for RLS tests or end-to-end commerce tests.
+PostgreSQL tests use PGlite and reconstruct the inspected legacy schema before
+applying the migration. They cover cross-user reads/mutations, anonymous access,
+price snapshots, stock failure rollback, idempotency and preservation of incomplete
+legacy rows. They do not simulate concurrent PostgreSQL connections.

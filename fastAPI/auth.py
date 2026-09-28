@@ -1,7 +1,7 @@
 """Validate user sessions against Supabase Auth, never client-supplied IDs."""
 import logging
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Annotated
 from uuid import UUID
 
@@ -17,6 +17,7 @@ bearer = HTTPBearer(auto_error=False)
 class Identity:
     id: str
     email: str | None
+    token: str = field(default="", repr=False)
 
 
 def current_user(
@@ -51,13 +52,4 @@ def current_user(
             raise ValueError('Invalid email shape')
     except (ValueError, TypeError, KeyError):
         raise HTTPException(503, 'Răspuns invalid de la serviciul de autentificare.') from None
-    return Identity(id=user_id, email=email)
-
-
-def require_verified_schema(user: Annotated[Identity, Depends(current_user)]) -> None:
-    """Fail closed until ownership columns and database policies can be verified.
-
-    Do not replace this guard with a configuration bypass. Replace legacy
-    endpoints with owner-scoped operations once the real schema is available.
-    """
-    raise HTTPException(503, 'Datele aplicației nu sunt disponibile momentan.')
+    return Identity(id=user_id, email=email, token=credentials.credentials)

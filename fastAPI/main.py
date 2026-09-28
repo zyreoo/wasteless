@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
-from auth import Identity, current_user, require_verified_schema
+from auth import Identity, current_user
 
 app = FastAPI(title='Wasteless API')
 origins = [value.strip() for value in os.getenv('CORS_ORIGINS', '').split(',') if value.strip()]
@@ -29,14 +29,5 @@ def me(user: Annotated[Identity, Depends(current_user)]):
     return {'id': user.id, 'email': user.email}
 
 
-# Preserve old URLs without exposing unscoped admin-backed reads. The real
-# commerce routes replace these once the existing schema has been inspected.
-for resource in (
-    'cart', 'cart_items', 'favorite', 'favorites', 'order', 'orders', 'order_items',
-    'settings', 'loyalty_points', 'users', 'product', 'products', 'offers',
-    'offer_items', 'merchants', 'locations', 'location_type', 'order_status', 'order_type',
-):
-    app.add_api_route(
-        f'/api/{resource}/', require_verified_schema, methods=['GET'],
-        include_in_schema=False,
-    )
+from routes.commerce import router as commerce_router
+app.include_router(commerce_router)

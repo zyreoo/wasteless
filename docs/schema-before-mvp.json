@@ -1,0 +1,1310 @@
+{
+  "tables": [
+    {
+      "name": "public.locations",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "identity",
+            "updatable"
+          ],
+          "identity_generation": "BY DEFAULT"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "description",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "rating",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ],
+          "default_value": "'0'::bigint"
+        },
+        {
+          "name": "coordonates",
+          "data_type": "double precision",
+          "format": "float8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "latlon",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "adres",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "city",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "created_by",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "updated_by",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "merchant_id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "type_id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "locations_type_id_fkey",
+          "source_table": "public.locations",
+          "source_columns": [
+            "type_id"
+          ],
+          "target_table": "public.location_type",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "Produs_location_id_fkey",
+          "source_table": "public.product",
+          "source_columns": [
+            "location_id"
+          ],
+          "target_table": "public.locations",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "favorite_id_restaurants_fkey",
+          "source_table": "public.favorite",
+          "source_columns": [
+            "restaurants_id"
+          ],
+          "target_table": "public.locations",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "Restaurants_merchant_id_fkey",
+          "source_table": "public.locations",
+          "source_columns": [
+            "merchant_id"
+          ],
+          "target_table": "public.merchants",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.merchants",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "identity",
+            "updatable"
+          ],
+          "identity_generation": "BY DEFAULT"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "created_by",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "updated_by",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "location",
+          "data_type": "double precision",
+          "format": "float8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "Restaurants_merchant_id_fkey",
+          "source_table": "public.locations",
+          "source_columns": [
+            "merchant_id"
+          ],
+          "target_table": "public.merchants",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.product",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "identity",
+            "updatable"
+          ],
+          "identity_generation": "BY DEFAULT"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "nullable",
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "price",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "name",
+          "data_type": "character varying",
+          "format": "varchar",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "description",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "image_path",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "stock",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "location_id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "offer_items_item_id_fkey",
+          "source_table": "public.offer_items",
+          "source_columns": [
+            "item_id"
+          ],
+          "target_table": "public.product",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "Produs_location_id_fkey",
+          "source_table": "public.product",
+          "source_columns": [
+            "location_id"
+          ],
+          "target_table": "public.locations",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "cart_items_cart_id_fkey",
+          "source_table": "public.cart_items",
+          "source_columns": [
+            "cart_id"
+          ],
+          "target_table": "public.product",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "favorite_id_items_fkey",
+          "source_table": "public.favorite",
+          "source_columns": [
+            "items_id"
+          ],
+          "target_table": "public.product",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "order_items_product_id_fkey",
+          "source_table": "public.order_items",
+          "source_columns": [
+            "product_id"
+          ],
+          "target_table": "public.product",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.loyalty_points",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "identity",
+            "updatable"
+          ],
+          "identity_generation": "BY DEFAULT"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "points",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "user_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "loyalty_points_user_id_fkey",
+          "source_table": "public.loyalty_points",
+          "source_columns": [
+            "user_id"
+          ],
+          "target_table": "auth.users",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.favorite",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "identity",
+            "updatable"
+          ],
+          "identity_generation": "BY DEFAULT"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "restaurants_id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "items_id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "favorite_id_items_fkey",
+          "source_table": "public.favorite",
+          "source_columns": [
+            "items_id"
+          ],
+          "target_table": "public.product",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "favorite_id_restaurants_fkey",
+          "source_table": "public.favorite",
+          "source_columns": [
+            "restaurants_id"
+          ],
+          "target_table": "public.locations",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.offers",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "identity",
+            "updatable"
+          ],
+          "identity_generation": "BY DEFAULT"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "name",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "items_included_id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "price",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "description",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "inadge_path",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "stock",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "offer_items_offer_id_fkey",
+          "source_table": "public.offer_items",
+          "source_columns": [
+            "offer_id"
+          ],
+          "target_table": "public.offers",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.settings",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "identity",
+            "updatable"
+          ],
+          "identity_generation": "BY DEFAULT"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "dark_mode",
+          "data_type": "boolean",
+          "format": "bool",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "personalized_offers",
+          "data_type": "boolean",
+          "format": "bool",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "payment_option",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    {
+      "name": "public.cart",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "identity",
+            "updatable"
+          ],
+          "identity_generation": "BY DEFAULT"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "updated_at",
+          "data_type": "timestamp without time zone",
+          "format": "timestamp",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "amount",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "user_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "cart_items_cart_id_fkey1",
+          "source_table": "public.cart_items",
+          "source_columns": [
+            "cart_id"
+          ],
+          "target_table": "public.cart",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "cart_user_id_fkey",
+          "source_table": "public.cart",
+          "source_columns": [
+            "user_id"
+          ],
+          "target_table": "auth.users",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.order",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "identity",
+            "updatable"
+          ],
+          "identity_generation": "BY DEFAULT"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "created_by",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "updated_by",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "total_price",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "status_id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "type_id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "user_id",
+          "data_type": "uuid",
+          "format": "uuid",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "location_id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "order_items_order_id_fkey",
+          "source_table": "public.order_items",
+          "source_columns": [
+            "order_id"
+          ],
+          "target_table": "public.order",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "order_type_id_fkey",
+          "source_table": "public.order",
+          "source_columns": [
+            "type_id"
+          ],
+          "target_table": "public.order_type",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "order_user_id_fkey",
+          "source_table": "public.order",
+          "source_columns": [
+            "user_id"
+          ],
+          "target_table": "auth.users",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "order_status_id_fkey",
+          "source_table": "public.order",
+          "source_columns": [
+            "status_id"
+          ],
+          "target_table": "public.order_status",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.cart_items",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "identity",
+            "updatable"
+          ],
+          "identity_generation": "BY DEFAULT"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "product_id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "cart_id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "quantity",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "'1'::bigint"
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "cart_items_cart_id_fkey",
+          "source_table": "public.cart_items",
+          "source_columns": [
+            "cart_id"
+          ],
+          "target_table": "public.product",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "cart_items_cart_id_fkey1",
+          "source_table": "public.cart_items",
+          "source_columns": [
+            "cart_id"
+          ],
+          "target_table": "public.cart",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.offer_items",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "identity",
+            "updatable"
+          ],
+          "identity_generation": "BY DEFAULT"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "item_id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "item_amount",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "offer_id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "offer_items_item_id_fkey",
+          "source_table": "public.offer_items",
+          "source_columns": [
+            "item_id"
+          ],
+          "target_table": "public.product",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "offer_items_offer_id_fkey",
+          "source_table": "public.offer_items",
+          "source_columns": [
+            "offer_id"
+          ],
+          "target_table": "public.offers",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.location_type",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "identity",
+            "updatable"
+          ],
+          "identity_generation": "BY DEFAULT"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "type",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "locations_type_id_fkey",
+          "source_table": "public.locations",
+          "source_columns": [
+            "type_id"
+          ],
+          "target_table": "public.location_type",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.order_items",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "identity",
+            "updatable"
+          ],
+          "identity_generation": "BY DEFAULT"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "order_id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "product_id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        },
+        {
+          "name": "quantity",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "order_items_product_id_fkey",
+          "source_table": "public.order_items",
+          "source_columns": [
+            "product_id"
+          ],
+          "target_table": "public.product",
+          "target_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "order_items_order_id_fkey",
+          "source_table": "public.order_items",
+          "source_columns": [
+            "order_id"
+          ],
+          "target_table": "public.order",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.order_type",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "identity",
+            "updatable"
+          ],
+          "identity_generation": "BY DEFAULT"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "type",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "order_type_id_fkey",
+          "source_table": "public.order",
+          "source_columns": [
+            "type_id"
+          ],
+          "target_table": "public.order_type",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.order_status",
+      "rls_enabled": true,
+      "rows": 0,
+      "columns": [
+        {
+          "name": "id",
+          "data_type": "bigint",
+          "format": "int8",
+          "options": [
+            "identity",
+            "updatable"
+          ],
+          "identity_generation": "BY DEFAULT"
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "format": "timestamptz",
+          "options": [
+            "updatable"
+          ],
+          "default_value": "now()"
+        },
+        {
+          "name": "status",
+          "data_type": "text",
+          "format": "text",
+          "options": [
+            "nullable",
+            "updatable"
+          ]
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_key_constraints": [
+        {
+          "name": "order_status_id_fkey",
+          "source_table": "public.order",
+          "source_columns": [
+            "status_id"
+          ],
+          "target_table": "public.order_status",
+          "target_columns": [
+            "id"
+          ]
+        }
+      ]
+    }
+  ]
+}

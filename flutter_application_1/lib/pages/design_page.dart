@@ -121,6 +121,7 @@ class _DesignPageState extends State<DesignPage> {
   void initState() {
     super.initState();
     state.addListener(refresh);
+    if (widget.auth != null) accepted = false;
   }
 
   void refresh() {
@@ -363,7 +364,7 @@ class _DesignPageState extends State<DesignPage> {
   void prepare(DesignNode root) {
     hidden.clear();
     if (widget.auth != null) {
-      hidden.addAll(['5:141', '5:142', '5:245', '5:246', '5:109']);
+      hidden.addAll(['5:141', '5:142', '5:245', '5:246', '5:109', '5:139']);
     }
     patches.clear();
     values.clear();
@@ -545,8 +546,71 @@ class _DesignPageState extends State<DesignPage> {
     );
   }
 
+  Widget accessibleAuth() {
+    final register = widget.nodeId == '5:181';
+    Widget input(String id, String label, {bool password = false}) => Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: TextField(
+        controller: controllers.putIfAbsent(id, () => TextEditingController()),
+        obscureText: password,
+        decoration: InputDecoration(labelText: label),
+        keyboardType: password
+            ? TextInputType.visiblePassword
+            : label == 'Email'
+            ? TextInputType.emailAddress
+            : TextInputType.name,
+      ),
+    );
+    return Scaffold(
+      appBar: AppBar(title: const Text('Wasteless')),
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.all(24),
+          children: [
+            Text(
+              register ? 'Creează un cont' : 'Autentificare',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            const SizedBox(height: 24),
+            if (register) input('5:253', 'Nume'),
+            input(register ? '5:259' : '5:148', 'Email'),
+            input(register ? '5:270' : '5:156', 'Parolă', password: true),
+            if (register)
+              CheckboxListTile(
+                value: accepted,
+                onChanged: submitting
+                    ? null
+                    : (v) => setState(() => accepted = v ?? false),
+                title: const Text('Sunt de acord cu termenii de utilizare.'),
+              ),
+            FilledButton(
+              onPressed: submitting ? null : () => authenticate(register),
+              child: Text(
+                submitting
+                    ? 'Se conectează…'
+                    : register
+                    ? 'Creează contul'
+                    : 'Autentifică-te',
+              ),
+            ),
+            TextButton(
+              onPressed: submitting
+                  ? null
+                  : () => go(register ? '/login' : '/register'),
+              child: Text(register ? 'Am deja cont' : 'Creează un cont'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (widget.auth != null &&
+        MediaQuery.textScalerOf(context).scale(16) > 21) {
+      return accessibleAuth();
+    }
     final root = FigmaDesign.screen(widget.nodeId);
     prepare(root);
     return Scaffold(

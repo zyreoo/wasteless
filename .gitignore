@@ -4,3 +4,7 @@ __pycache__/
 .env
 .venv/
 flutter_application_1/config.local.json
+node_modules/
+.supabase/
+
+supabase/.temp/

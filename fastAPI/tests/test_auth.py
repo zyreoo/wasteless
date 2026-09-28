@@ -27,7 +27,7 @@ class AuthTests(unittest.TestCase):
         self.mock.get.return_value = httpx.Response(status, json=data or {'id': A, 'email': 'a@example.invalid'})
 
     def test_anonymous_is_rejected_without_external_request(self):
-        for path in ['/api/me', '/api/cart/', '/api/favorite/', '/api/order/', '/api/users/']:
+        for path in ['/api/me', '/api/cart', '/api/favorites', '/api/orders']:
             with self.subTest(path=path):
                 self.assertEqual(self.client.get(path).status_code, 401)
         self.mock.get.assert_not_called()
@@ -64,12 +64,8 @@ class AuthTests(unittest.TestCase):
             self.assertEqual(self.client.get('/api/me', headers={'Authorization': 'Bearer token'}).status_code, 503)
         self.mock.get.assert_not_called()
 
-    def test_legacy_reads_cannot_expose_other_users(self):
-        self.respond()
-        for resource in ['cart', 'order', 'favorite', 'users', 'cart_items', 'order_items']:
-            r = self.client.get(f'/api/{resource}/?user_id={B}', headers={'Authorization': 'Bearer token'})
-            self.assertEqual(r.status_code, 503)
-            self.assertNotIn(B, r.text)
+    def test_admin_user_listing_is_not_exposed(self):
+        self.assertEqual(self.client.get('/api/users/').status_code, 404)
 
     def test_health_does_not_require_secrets(self):
         self.assertEqual(self.client.get('/health').json(), {'status': 'ok'})
