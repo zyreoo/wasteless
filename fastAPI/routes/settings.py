@@ -1,16 +1,15 @@
 from fastapi import APIRouter
-from db.supabase_client import supabase
+from services.settings_service import SettingsService
 
 
 router = APIRouter(
-    prefix="/api/settings", 
+    prefix="/api/settings",
     tags=["settings"],
 )
+
+settings_service = SettingsService()
+
+
 @router.get("/")
 async def get_settings():
-    try:
-        response = supabase.table("settings").select("*").execute()
-        return {"settings": response.data} 
-    except Exception as e:
-        return {"error": str(e)}
-    
+    return {"settings": settings_service.get_all()}

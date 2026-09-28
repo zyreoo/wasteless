@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from db.supabase_client import supabase
+from services.cart_service import CartService
 
 
 router = APIRouter(
@@ -7,11 +7,9 @@ router = APIRouter(
     tags=["cart"],
 )
 
+cart_service = CartService()
+
+
 @router.get("/")
 async def get_cart():
-    try:
-        response = supabase.table("cart").select("*").execute()
-        return {"cart": response.data}
-    except Exception as e:
-        return {"error": str(e)}
-    
+    return {"cart": cart_service.get_all()}

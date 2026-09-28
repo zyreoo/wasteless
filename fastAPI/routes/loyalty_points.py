@@ -1,15 +1,15 @@
 from fastapi import APIRouter
-from db.supabase_client import supabase
+from services.loyalty_points_service import LoyaltyPointsService
 
 
 router = APIRouter(
     prefix="/api/loyalty_points",
     tags=["loyalty_points"],
 )
+
+loyalty_points_service = LoyaltyPointsService()
+
+
 @router.get("/")
 async def get_loyalty_points():
-    try:
-        response = supabase.table("loyalty_points").select("*").execute()
-        return {"loyalty_points": response.data}
-    except Exception as e:
-        return {"error": str(e)}
+    return {"loyalty_points": loyalty_points_service.get_all()}

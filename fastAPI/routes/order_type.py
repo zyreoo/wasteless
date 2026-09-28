@@ -1,15 +1,15 @@
 from fastapi import APIRouter
-from db.supabase_client import supabase
+from services.order_type_service import OrderTypeService
 
 
 router = APIRouter(
     prefix="/api/order_type",
     tags=["order_type"],
 )
+
+order_type_service = OrderTypeService()
+
+
 @router.get("/")
 async def get_order_type():
-    try:
-        response = supabase.table("order_type").select("*").execute()
-        return {"order_type": response.data}
-    except Exception as e:
-        return {"error": str(e)}
+    return {"order_type": order_type_service.get_all()}

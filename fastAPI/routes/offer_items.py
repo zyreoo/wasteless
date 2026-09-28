@@ -1,15 +1,15 @@
 from fastapi import APIRouter
-from db.supabase_client import supabase
+from services.offer_items_service import OfferItemsService
 
 
 router = APIRouter(
     prefix="/api/offer_items",
     tags=["offer_items"],
 )
+
+offer_items_service = OfferItemsService()
+
+
 @router.get("/")
 async def get_offer_items():
-    try:
-        response = supabase.table("offer_items").select("*").execute()
-        return {"offer_items": response.data}
-    except Exception as e:
-        return {"error": str(e)}
+    return {"offer_items": offer_items_service.get_all()}

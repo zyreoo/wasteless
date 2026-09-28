@@ -1,15 +1,15 @@
 from fastapi import APIRouter
-from db.supabase_client import supabase
+from services.locations_service import LocationsService
 
 
 router = APIRouter(
     prefix="/api/locations",
     tags=["locations"],
 )
+
+locations_service = LocationsService()
+
+
 @router.get("/")
 async def get_locations():
-    try:
-        response = supabase.table("locations").select("*").execute()
-        return {"locations": response.data}
-    except Exception as e:
-        return {"error": str(e)}
+    return {"locations": locations_service.get_all()}

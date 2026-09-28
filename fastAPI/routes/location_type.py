@@ -1,15 +1,15 @@
 from fastapi import APIRouter
-from db.supabase_client import supabase
+from services.location_type_service import LocationTypeService
 
 
 router = APIRouter(
     prefix="/api/location_type",
     tags=["location_type"],
 )
+
+location_type_service = LocationTypeService()
+
+
 @router.get("/")
 async def get_location_type():
-    try:
-        response = supabase.table("location_type").select("*").execute()
-        return {"location_type": response.data}
-    except Exception as e:
-        return {"error": str(e)}
+    return {"location_type": location_type_service.get_all()}

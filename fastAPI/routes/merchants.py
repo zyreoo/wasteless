@@ -1,15 +1,15 @@
 from fastapi import APIRouter
-from db.supabase_client import supabase
+from services.merchants_service import MerchantsService
 
 
 router = APIRouter(
     prefix="/api/merchants",
     tags=["merchants"],
 )
+
+merchants_service = MerchantsService()
+
+
 @router.get("/")
 async def get_merchants():
-    try:
-        response = supabase.table("merchants").select("*").execute()
-        return {"merchants": response.data}
-    except Exception as e:
-        return {"error": str(e)}
+    return {"merchants": merchants_service.get_all()}
