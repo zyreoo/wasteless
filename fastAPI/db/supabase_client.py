@@ -24,5 +24,5 @@ if not key:
 options = ClientOptions(schema=SUPABASE_SCHEMA) #schema specificata explicit prin constanta, nu ca string hardcodat
 
 supabase: Client = create_client(
-    url, key, options=options
+    url, key, options=options 
     ) #aici cream conexiunea cu supabase, folosind url-ul si cheia din variabilele de mediu

@@ -1,0 +1,232 @@
+const imgDiv = "https://www.figma.com/api/mcp/asset/ffe84f22-2176-406d-a189-5c3d8bfffdb7.png";
+const imgDiv1 = "https://www.figma.com/api/mcp/asset/1166c6de-82a7-41f1-a2ec-45460235a5cb.png";
+const imgDiv2 = "https://www.figma.com/api/mcp/asset/3fd58732-5e1e-4e46-9f4c-d05a3f8137ea.png";
+const imgDiv3 = "https://www.figma.com/api/mcp/asset/e91c7833-fabb-4123-8c21-64da109733fc.png";
+const imgSvg = "https://www.figma.com/api/mcp/asset/a004bc97-c647-445a-8b59-ff1f3f70c903.svg";
+const imgSvg1 = "https://www.figma.com/api/mcp/asset/c6cc8da0-f658-49ed-b9f5-7e8178d9ef18.svg";
+const imgSvg2 = "https://www.figma.com/api/mcp/asset/b853062a-7850-447a-b8f1-d0cecd82ddea.svg";
+const imgSvg3 = "https://www.figma.com/api/mcp/asset/0283bc04-2efd-4eb7-9968-f3ee052089ff.svg";
+const imgSvg4 = "https://www.figma.com/api/mcp/asset/b6a36cc3-d399-44d9-ac86-47c9498e713a.svg";
+const imgSvg5 = "https://www.figma.com/api/mcp/asset/de979dde-1176-4f11-b28c-d60a49e0139f.svg";
+const imgSvg6 = "https://www.figma.com/api/mcp/asset/54e8f84d-2dbb-469c-990c-7e54e92e3bf6.svg";
+const imgSvg7 = "https://www.figma.com/api/mcp/asset/c4be62ba-3fff-4dcb-9302-a44e30275513.svg";
+const imgSvg8 = "https://www.figma.com/api/mcp/asset/5c6cef72-d254-4a4f-93cf-3ba0c5c8bf17.svg";
+const imgSvg9 = "https://www.figma.com/api/mcp/asset/461ab102-c49b-4126-ac1b-de4f8ddff59f.svg";
+
+export default function BodyBackgroundColor() {
+  return (
+    <div className="bg-[#faf9f6] relative size-full" data-node-id="10:3721" data-name="Body+BackgroundColor">
+      <div className="absolute bg-[#faf9f6] h-[844px] left-0 overflow-clip top-0 w-[390px]" data-node-id="10:3722" data-name="div">
+        <div className="absolute bg-[#e8ede5] h-[260px] left-0 overflow-clip top-0 w-[390px]" data-node-id="10:3723" data-name="div">
+          <div className="absolute bg-size-[390px_260px] bg-top-left h-[260px] left-0 top-0 w-[390px]" data-node-id="10:3724" style={{ backgroundImage: `url("${imgDiv}")` }} data-name="div" />
+          <div className="absolute h-[260px] left-0 top-0 w-[390px]" data-node-id="10:3725" data-name="svg">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSvg} />
+          </div>
+          <div className="absolute backdrop-blur-[4px] bg-[rgba(250,249,246,0.85)] left-[20px] rounded-[12px] size-[40px] top-[20px]" data-node-id="10:3736" data-name="div">
+            <div className="absolute left-[10px] size-[20px] top-[10px]" data-node-id="10:3737" data-name="svg">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSvg1} />
+            </div>
+          </div>
+          <div className="absolute backdrop-blur-[4px] bg-[rgba(250,249,246,0.85)] left-[330px] rounded-[12px] size-[40px] top-[20px]" data-node-id="10:3739" data-name="div">
+            <div className="absolute h-[20px] left-[11px] top-[10px] w-[18px]" data-node-id="10:3740" data-name="svg">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSvg2} />
+            </div>
+          </div>
+          <div className="absolute bg-[#31572c] h-[27px] left-[271.73px] rounded-[12px] top-[217px] w-[102.273px]" data-node-id="10:3742" data-name="div">
+            <div className="absolute left-[14px] size-[14px] top-[6.5px]" data-node-id="10:3743" data-name="svg">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSvg3} />
+            </div>
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[1.25] left-[34px] text-[#ecf39e] text-[12px] top-[6px] w-[62.273px]" data-node-id="10:3746">
+              Expiră azi
+            </p>
+          </div>
+        </div>
+        <div className="absolute h-[421px] left-0 overflow-clip top-[260px] w-[390px]" data-node-id="10:3747" data-name="div">
+          <div className="absolute h-[28px] left-[24px] top-[20px] w-[342px]" data-node-id="10:3748" data-name="div">
+            <div className="absolute bg-[#40916c] left-0 rounded-[8px] size-[28px] top-0" data-node-id="10:3749" data-name="div">
+              <div className="absolute left-[7px] size-[14px] top-[7px]" data-node-id="10:3750" data-name="svg">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSvg4} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.27] left-[36px] text-[#40916c] text-[13px] top-[5.75px] w-[132.313px]" data-node-id="10:3754">
+              Piața Verde · 0,4 km
+            </p>
+            <div className="absolute h-[16.5px] left-[305.89px] top-[5.75px] w-[36.109px]" data-node-id="10:3755" data-name="div">
+              <div className="absolute left-0 size-[12px] top-[2.25px]" data-node-id="10:3756" data-name="svg">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSvg5} />
+              </div>
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.27] left-[15px] text-[#31572c] text-[13px] top-0 w-[29.109px]" data-node-id="10:3758">
+                4.8
+              </p>
+            </div>
+          </div>
+          <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[26.4px] left-[24px] text-[#31572c] text-[22px] top-[60px] tracking-[-0.5px] w-[350px]" data-node-id="10:3759">
+            Bol de salată proaspătă
+          </p>
+          <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[23.1px] left-[24px] text-[#6b6a63] text-[14px] top-[94.4px] w-[350px]" data-node-id="10:3760">
+            Verdeturi de sezon, roșii cherry, castraveți și vinaigretă de casă. Preparat dimineața — salvat înainte de seară.
+          </p>
+          <div className="absolute h-[32px] left-[24px] top-[177.68px] w-[342px]" data-node-id="10:3761" data-name="div">
+            <div className="absolute bg-[rgba(64,145,108,0.12)] h-[32px] left-0 rounded-[20px] top-0 w-[64.766px]" data-node-id="10:3762" data-name="div">
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.25] left-[14px] text-[#40916c] text-[12px] top-[10px] w-[44.766px]" data-node-id="10:3763">
+                Vegan
+              </p>
+            </div>
+            <div className="absolute bg-[rgba(64,145,108,0.12)] h-[32px] left-[72.77px] rounded-[20px] top-0 w-[92.266px]" data-node-id="10:3764" data-name="div">
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.25] left-[14px] text-[#40916c] text-[12px] top-[10px] w-[72.266px]" data-node-id="10:3765">
+                Fără gluten
+              </p>
+            </div>
+            <div className="absolute bg-[rgba(49,87,44,0.08)] h-[32px] left-[173.03px] rounded-[20px] top-0 w-[78.797px]" data-node-id="10:3766" data-name="div">
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.25] left-[14px] text-[#31572c] text-[12px] top-[10px] w-[58.797px]" data-node-id="10:3767">
+                400 kcal
+              </p>
+            </div>
+          </div>
+          <div className="absolute bg-[rgba(144,169,85,0.12)] h-[73.5px] left-[24px] rounded-[16px] top-[223.68px] w-[342px]" data-node-id="10:3768" data-name="div">
+            <div className="absolute bg-[#90a955] left-[16px] rounded-[12px] size-[38px] top-[17.75px]" data-node-id="10:3769" data-name="div">
+              <div className="absolute left-[9px] size-[20px] top-[9px]" data-node-id="10:3770" data-name="svg">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSvg6} />
+              </div>
+            </div>
+            <div className="[word-break:break-word] absolute h-[49.5px] leading-[1.27] left-[66px] text-[13px] top-[12px] w-[260px]" data-node-id="10:3773" data-name="div">
+              <p className="absolute font-['Plus_Jakarta_Sans:Bold'] font-bold left-0 text-[#31572c] top-0 w-[268px]" data-node-id="10:3774">
+                Prin salvarea acestui produs economisești
+              </p>
+              <p className="absolute font-['Plus_Jakarta_Sans:Regular'] font-normal left-0 text-[#6b6a63] top-[33px] w-[268px]" data-node-id="10:3775">
+                0,6 kg CO₂ · 1,2 L apă · valoare de 8,50 lei
+              </p>
+            </div>
+          </div>
+          <div className="absolute h-[38px] left-[24px] top-[311.18px] w-[342px]" data-node-id="10:3776" data-name="div">
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:SemiBold'] font-semibold leading-[1.27] left-0 text-[#31572c] text-[15px] top-[9.5px] w-[76.305px]" data-node-id="10:3777">
+              Cantitate
+            </p>
+            <div className="absolute h-[38px] left-[214px] top-0 w-[128px]" data-node-id="10:3778" data-name="div">
+              <div className="absolute bg-[#e8ede5] left-0 rounded-[12px] size-[38px] top-0" data-node-id="10:3779" data-name="div">
+                <div className="absolute left-[11px] size-[16px] top-[11px]" data-node-id="10:3780" data-name="svg">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSvg7} />
+                </div>
+              </div>
+              <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[1.25] left-[68px] text-[#31572c] text-[18px] text-center top-[7.75px] w-[28px]" data-node-id="10:3782">
+                1
+              </p>
+              <div className="absolute bg-[#40916c] left-[90px] rounded-[12px] size-[38px] top-0" data-node-id="10:3783" data-name="div">
+                <div className="absolute left-[11px] size-[16px] top-[11px]" data-node-id="10:3784" data-name="svg">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSvg8} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[1.27] left-[24px] text-[#31572c] text-[15px] top-[365.18px] w-[350px]" data-node-id="10:3786">
+            Alte oferte din același magazin
+          </p>
+          <div className="absolute h-[172px] left-[24px] overflow-clip top-[396.18px] w-[342px]" data-node-id="10:3787" data-name="div">
+            <div className="absolute bg-white drop-shadow-[0px_1px_3px_rgba(0,0,0,0.06)] h-[168px] left-0 rounded-[16px] top-0 w-[140px]" data-node-id="10:3788" data-name="div">
+              <div className="absolute bg-size-[116px_80px] bg-top-left h-[80px] left-[12px] rounded-[10px] top-[12px] w-[116px]" data-node-id="10:3789" style={{ backgroundImage: `url("${imgDiv1}")` }} data-name="div">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.25] left-[42px] text-[32px] text-black top-[18.5px] w-[70.4px]" data-node-id="10:3790">
+                  🥐
+                </p>
+              </div>
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[1.27] left-[12px] text-[#31572c] text-[13px] top-[100px] w-[126px]" data-node-id="10:3791">
+                Croissant cu unt
+              </p>
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.27] left-[12px] text-[#9b9a94] text-[11px] top-[118.5px] w-[124px]" data-node-id="10:3792">
+                Expiră azi
+              </p>
+              <div className="absolute h-[17.5px] left-[12px] top-[138.5px] w-[116px]" data-node-id="10:3793" data-name="div">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[1.25] left-0 text-[#31572c] text-[14px] top-0 w-[55.938px]" data-node-id="10:3794">
+                  1,50 lei
+                </p>
+                <div className="absolute bg-[rgba(64,145,108,0.12)] h-[16.5px] left-[71.71px] rounded-[8px] top-[0.5px] w-[44.289px]" data-node-id="10:3795" data-name="span">
+                  <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[1.25] left-[7px] text-[#40916c] text-[10px] top-[2px] whitespace-nowrap" data-node-id="10:3796">
+                    −50%
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="absolute bg-white drop-shadow-[0px_1px_3px_rgba(0,0,0,0.06)] h-[168px] left-[152px] rounded-[16px] top-0 w-[140px]" data-node-id="10:3797" data-name="div">
+              <div className="absolute bg-size-[116px_80px] bg-top-left h-[80px] left-[12px] rounded-[10px] top-[12px] w-[116px]" data-node-id="10:3798" style={{ backgroundImage: `url("${imgDiv2}")` }} data-name="div">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.25] left-[42px] text-[32px] text-black top-[18.5px] w-[70.4px]" data-node-id="10:3799">
+                  🥛
+                </p>
+              </div>
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[1.27] left-[12px] text-[#31572c] text-[13px] top-[100px] w-[126px]" data-node-id="10:3800">
+                Lapte proaspăt 1L
+              </p>
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.27] left-[12px] text-[#9b9a94] text-[11px] top-[118.5px] w-[124px]" data-node-id="10:3801">
+                Expiră mâine
+              </p>
+              <div className="absolute h-[17.5px] left-[12px] top-[138.5px] w-[116px]" data-node-id="10:3802" data-name="div">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[1.25] left-0 text-[#31572c] text-[14px] top-0 w-[55.125px]" data-node-id="10:3803">
+                  2,10 lei
+                </p>
+                <div className="absolute bg-[rgba(64,145,108,0.12)] h-[16.5px] left-[71.31px] rounded-[8px] top-[0.5px] w-[44.688px]" data-node-id="10:3804" data-name="span">
+                  <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[1.25] left-[7px] text-[#40916c] text-[10px] top-[2px] whitespace-nowrap" data-node-id="10:3805">
+                    −40%
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="absolute bg-white drop-shadow-[0px_1px_3px_rgba(0,0,0,0.06)] h-[168px] left-[304px] rounded-[16px] top-0 w-[140px]" data-node-id="10:3806" data-name="div">
+              <div className="absolute bg-size-[116px_80px] bg-top-left h-[80px] left-[12px] rounded-[10px] top-[12px] w-[116px]" data-node-id="10:3807" style={{ backgroundImage: `url("${imgDiv3}")` }} data-name="div">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.25] left-[42px] text-[32px] text-black top-[18.5px] w-[70.4px]" data-node-id="10:3808">
+                  🥗
+                </p>
+              </div>
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[1.27] left-[12px] text-[#31572c] text-[13px] top-[100px] w-[126px]" data-node-id="10:3809">
+                Wrap cu legume
+              </p>
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.27] left-[12px] text-[#9b9a94] text-[11px] top-[118.5px] w-[124px]" data-node-id="10:3810">
+                Expiră azi · 15:00
+              </p>
+              <div className="absolute h-[17.5px] left-[12px] top-[138.5px] w-[116px]" data-node-id="10:3811" data-name="div">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[1.25] left-0 text-[#31572c] text-[14px] top-0 w-[58.766px]" data-node-id="10:3812">
+                  2,80 lei
+                </p>
+                <div className="absolute bg-[rgba(64,145,108,0.12)] h-[16.5px] left-[72.65px] rounded-[8px] top-[0.5px] w-[43.352px]" data-node-id="10:3813" data-name="span">
+                  <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[1.25] left-[7px] text-[#40916c] text-[10px] top-[2px] whitespace-nowrap" data-node-id="10:3814">
+                    −55%
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="absolute bg-[#faf9f6] border-[#eeeee9] border-solid border-t h-[163px] left-0 top-[681px] w-[390px]" data-node-id="10:3815" data-name="div">
+          <div className="[word-break:break-word] absolute h-[48px] left-[24px] top-[14px] w-[342px]" data-node-id="10:3816" data-name="div">
+            <div className="absolute h-[48px] left-0 top-0 w-[152.852px]" data-node-id="10:3817" data-name="div">
+              <p className="[text-decoration-skip-ink:none] [text-underline-position:from-font] absolute decoration-from-font decoration-solid font-['Plus_Jakarta_Sans:Medium'] font-medium leading-[1.25] left-0 line-through text-[#9b9a94] text-[12px] top-0 w-[160.852px]" data-node-id="10:3818">
+                8,50 lei
+              </p>
+              <p className="absolute font-['Inter:Regular'] font-normal leading-[0] left-0 not-italic text-[0px] text-black top-[15px] tracking-[-0.5px] w-[161.952px]" data-node-id="10:3819">
+                <span className="font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[1.27] text-[#31572c] text-[26px]">{`3,40 lei `}</span>
+                <span className="font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[1.27] text-[#40916c] text-[13px]">−60%</span>
+              </p>
+            </div>
+            <p className="absolute font-['Plus_Jakarta_Sans:Regular'] font-normal leading-[1.27] left-[286.19px] text-[#9b9a94] text-[13px] top-[15.75px] w-[63.813px]" data-node-id="10:3820">
+              3 rămase
+            </p>
+          </div>
+          <div className="absolute bg-[#40916c] h-[56px] left-[24px] rounded-[18px] top-[74px] w-[342px]" data-node-id="10:3821" data-name="div">
+            <div className="absolute left-[102.26px] size-[20px] top-[18px]" data-node-id="10:3822" data-name="svg">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSvg9} />
+            </div>
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold leading-[1.25] left-[132.26px] text-[#faf9f6] text-[16px] top-[18px] w-[115.484px]" data-node-id="10:3826">
+              Adaugă în coș
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+Images and SVGs will be stored as constants, e.g. const image = 'https://www.figma.com/api/mcp/asset/550e8400-e29b-41d4-a716-446655440000.png'. These constants will be used in the code as the source for the image, ex: <img src={image} />. Image assets are stored on a remote server for 7 days and can be fetched using the provided URLs until they expire.

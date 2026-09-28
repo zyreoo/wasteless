@@ -1,0 +1,254 @@
+const imgFrame = "https://www.figma.com/api/mcp/asset/d794c20a-2d61-466f-983e-6ceb177aed72.svg";
+const imgFrame1 = "https://www.figma.com/api/mcp/asset/2979475d-5747-4890-9ced-40742e494a6d.svg";
+const imgFrame2 = "https://www.figma.com/api/mcp/asset/12b1c4b7-6dde-414c-bbb4-726edd0cda27.svg";
+const imgFrame3 = "https://www.figma.com/api/mcp/asset/94722230-2415-48ec-acff-f4b75ca61715.svg";
+const imgFrame4 = "https://www.figma.com/api/mcp/asset/a626e118-e70f-434a-ac8d-2a49a6d45c7f.svg";
+const imgFrame5 = "https://www.figma.com/api/mcp/asset/b70164ae-e7a0-41f3-af6c-55bc50ae0ace.svg";
+const imgFrame6 = "https://www.figma.com/api/mcp/asset/f10321cd-6ba1-4bb0-b221-b5ae2781545f.svg";
+
+export default function BodyBackgroundColor() {
+  return (
+    <div className="relative size-full" data-node-id="5:1181" style={{ backgroundImage: "linear-gradient(90deg, rgb(250, 249, 246) 0%, rgb(250, 249, 246) 100%), linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 100%)" }} data-name="Body+BackgroundColor">
+      <div className="absolute bg-[#faf9f6] h-[844px] left-0 overflow-clip top-0 w-[390px]" data-node-id="5:1182" data-name="Container+BackgroundColor">
+        <div className="absolute bg-[rgba(0,0,0,0)] h-[112px] left-0 top-0 w-[390px]" data-node-id="5:1183" data-name="Container">
+          <div className="absolute bg-[#e8ede5] left-[24px] rounded-[12px] size-[40px] top-[52px]" data-node-id="5:1185" data-name="Container+BackgroundColor">
+            <div className="absolute bg-[rgba(0,0,0,0)] left-[10px] overflow-clip size-[20px] top-[10px]" data-node-id="5:1208" data-name="SVG">
+              <div className="absolute left-0 size-[20px] top-0" data-node-id="5:1209" data-name="Frame">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame} />
+              </div>
+            </div>
+          </div>
+          <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[28px] leading-[28px] left-[76px] text-[#31572c] text-[21.661px] top-[58px] w-[63px]" data-node-id="5:1188">
+            Setări
+          </p>
+        </div>
+        <div className="absolute bg-[rgba(0,0,0,0)] h-[732px] left-0 overflow-clip top-[112px] w-[390px]" data-node-id="5:1184" data-name="Container">
+          <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[15px] leading-[15px] left-[24px] text-[#9b9a94] text-[12px] top-0 tracking-[0.8px] uppercase w-[342px]" data-node-id="5:1191">
+            Cont
+          </p>
+          <div className="absolute bg-white h-[228px] left-[24px] overflow-clip rounded-[20px] shadow-[0px_1px_6px_0px_rgba(0,0,0,0.05)] top-[25px] w-[342px]" data-node-id="5:1192" data-name="Container+Shadow+BackgroundColor">
+            <div className="absolute bg-[rgba(0,0,0,0)] border-[#f5f4f0] border-b border-solid h-[83px] left-0 top-0 w-[342px]" data-node-id="5:1211" data-name="Container">
+              <div className="absolute bg-[rgba(64,145,108,0.12)] left-[20px] rounded-[12px] size-[40px] top-[21px]" data-node-id="5:1223" data-name="Container+BackgroundColor">
+                <div className="absolute bg-[rgba(0,0,0,0)] left-[11px] overflow-clip size-[18px] top-[11px]" data-node-id="5:1286" data-name="SVG">
+                  <div className="absolute left-0 size-[18px] top-0" data-node-id="5:1287" data-name="Frame">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame1} />
+                  </div>
+                </div>
+              </div>
+              <div className="[word-break:break-word] absolute bg-[rgba(0,0,0,0)] h-[50px] left-[74px] top-[16px] w-[218px]" data-node-id="5:1224" data-name="Container">
+                <p className="absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[19px] leading-[19px] left-0 text-[#31572c] text-[15px] top-0 w-[218px]" data-node-id="5:1292">
+                  Editează profilul
+                </p>
+                <p className="absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[30px] leading-[15px] left-0 text-[#9b9a94] text-[12px] top-[20px] w-[218px]" data-node-id="5:1295">
+                  Simone M. · simone.marton89@gmail.com
+                </p>
+              </div>
+              <div className="absolute bg-[rgba(0,0,0,0)] left-[306px] overflow-clip size-[16px] top-[33px]" data-node-id="5:1225" data-name="SVG">
+                <div className="absolute left-0 size-[16px] top-0" data-node-id="5:1226" data-name="Frame">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame2} />
+                </div>
+              </div>
+            </div>
+            <div className="absolute bg-[rgba(0,0,0,0)] border-[#f5f4f0] border-b border-solid h-[73px] left-0 top-[83px] w-[342px]" data-node-id="5:1212" data-name="Container">
+              <div className="absolute bg-[rgba(64,145,108,0.12)] left-[20px] rounded-[12px] size-[40px] top-[16px]" data-node-id="5:1228" data-name="Container+BackgroundColor">
+                <div className="absolute bg-[rgba(0,0,0,0)] left-[11px] overflow-clip size-[18px] top-[11px]" data-node-id="5:1296" data-name="SVG">
+                  <div className="absolute left-0 size-[18px] top-0" data-node-id="5:1297" data-name="Frame">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame3} />
+                  </div>
+                </div>
+              </div>
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[19px] leading-[19px] left-[74px] text-[#31572c] text-[15px] top-[26.5px] w-[218px]" data-node-id="5:1231">
+                Schimbă parola
+              </p>
+              <div className="absolute bg-[rgba(0,0,0,0)] left-[306px] overflow-clip size-[16px] top-[28px]" data-node-id="5:1232" data-name="SVG">
+                <div className="absolute left-0 size-[16px] top-0" data-node-id="5:1233" data-name="Frame">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame2} />
+                </div>
+              </div>
+            </div>
+            <div className="absolute bg-[rgba(0,0,0,0)] h-[72px] left-0 top-[156px] w-[342px]" data-node-id="5:1213" data-name="Container">
+              <div className="absolute bg-[rgba(64,145,108,0.12)] left-[20px] rounded-[12px] size-[40px] top-[16px]" data-node-id="5:1235" data-name="Container+BackgroundColor">
+                <div className="absolute bg-[rgba(0,0,0,0)] left-[11px] overflow-clip size-[18px] top-[11px]" data-node-id="5:1300" data-name="SVG">
+                  <div className="absolute left-0 size-[18px] top-0" data-node-id="5:1301" data-name="Frame">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame4} />
+                  </div>
+                </div>
+              </div>
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[19px] leading-[19px] left-[74px] text-[#31572c] text-[15px] top-[26.5px] w-[218px]" data-node-id="5:1238">
+                Adresă de email
+              </p>
+              <div className="absolute bg-[rgba(0,0,0,0)] left-[306px] overflow-clip size-[16px] top-[28px]" data-node-id="5:1239" data-name="SVG">
+                <div className="absolute left-0 size-[16px] top-0" data-node-id="5:1240" data-name="Frame">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame2} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[15px] leading-[15px] left-[24px] text-[#9b9a94] text-[12px] top-[273px] tracking-[0.8px] uppercase w-[342px]" data-node-id="5:1195">
+            Notificări
+          </p>
+          <div className="absolute bg-white h-[218px] left-[24px] overflow-clip rounded-[20px] shadow-[0px_1px_6px_0px_rgba(0,0,0,0.05)] top-[298px] w-[342px]" data-node-id="5:1196" data-name="Container+Shadow+BackgroundColor">
+            <div className="absolute bg-[rgba(0,0,0,0)] border-[#f5f4f0] border-b border-solid h-[73px] left-0 top-0 w-[342px]" data-node-id="5:1214" data-name="Container">
+              <div className="absolute bg-[rgba(64,145,108,0.12)] left-[20px] rounded-[12px] size-[40px] top-[16px]" data-node-id="5:1242" data-name="Container+BackgroundColor">
+                <div className="absolute bg-[rgba(0,0,0,0)] left-[11px] overflow-clip size-[18px] top-[11px]" data-node-id="5:1303" data-name="SVG">
+                  <div className="absolute left-0 size-[18px] top-0" data-node-id="5:1304" data-name="Frame">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame5} />
+                  </div>
+                </div>
+              </div>
+              <div className="[word-break:break-word] absolute bg-[rgba(0,0,0,0)] h-[35px] left-[74px] top-[18.5px] w-[190px]" data-node-id="5:1243" data-name="Container">
+                <p className="absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[19px] leading-[19px] left-0 text-[#31572c] text-[15px] top-0 w-[190px]" data-node-id="5:1308">
+                  Notificări push
+                </p>
+                <p className="absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[15px] leading-[15px] left-0 text-[#9b9a94] text-[12px] top-[20px] w-[190px]" data-node-id="5:1311">
+                  Oferte noi, expirare, comenzi
+                </p>
+              </div>
+              <div className="absolute bg-[#40916c] h-[26px] left-[278px] rounded-[13px] top-[23px] w-[44px]" data-node-id="5:1244" data-name="Container+BackgroundColor">
+                <div className="absolute bg-[#faf9f6] left-[21px] rounded-[50px] size-[20px] top-[3px]" data-node-id="5:1312" data-name="Container+BackgroundColor" />
+              </div>
+            </div>
+            <div className="absolute bg-[rgba(0,0,0,0)] border-[#f5f4f0] border-b border-solid h-[73px] left-0 top-[73px] w-[342px]" data-node-id="5:1215" data-name="Container">
+              <div className="absolute bg-[rgba(64,145,108,0.12)] left-[20px] rounded-[12px] size-[40px] top-[16px]" data-node-id="5:1245" data-name="Container+BackgroundColor">
+                <div className="absolute bg-[rgba(0,0,0,0)] left-[11px] overflow-clip size-[18px] top-[11px]" data-node-id="5:1313" data-name="SVG">
+                  <div className="absolute left-0 size-[18px] top-0" data-node-id="5:1314" data-name="Frame">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame4} />
+                  </div>
+                </div>
+              </div>
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[38px] leading-[19px] left-[74px] text-[#31572c] text-[15px] top-[17px] w-[190px]" data-node-id="5:1248">
+                Email rezumat săptămânal
+              </p>
+              <div className="absolute bg-[#40916c] h-[26px] left-[278px] rounded-[13px] top-[23px] w-[44px]" data-node-id="5:1249" data-name="Container+BackgroundColor">
+                <div className="absolute bg-[#faf9f6] left-[21px] rounded-[50px] size-[20px] top-[3px]" data-node-id="5:1316" data-name="Container+BackgroundColor" />
+              </div>
+            </div>
+            <div className="absolute bg-[rgba(0,0,0,0)] h-[72px] left-0 top-[146px] w-[342px]" data-node-id="5:1216" data-name="Container">
+              <div className="absolute bg-[rgba(64,145,108,0.12)] left-[20px] rounded-[12px] size-[40px] top-[16px]" data-node-id="5:1250" data-name="Container+BackgroundColor">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[23px] leading-[23px] left-[9px] text-[18px] text-black top-[8.5px] w-[22px]" data-node-id="5:1318">
+                  ⏰
+                </p>
+              </div>
+              <div className="[word-break:break-word] absolute bg-[rgba(0,0,0,0)] h-[35px] left-[74px] top-[18.5px] w-[190px]" data-node-id="5:1251" data-name="Container">
+                <p className="absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[19px] leading-[19px] left-0 text-[#31572c] text-[15px] top-0 w-[190px]" data-node-id="5:1321">
+                  Alertă expirare
+                </p>
+                <p className="absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[15px] leading-[15px] left-0 text-[#9b9a94] text-[12px] top-[20px] w-[190px]" data-node-id="5:1324">
+                  Cu 2 ore înainte de expirare
+                </p>
+              </div>
+              <div className="absolute bg-[#d1d0c9] h-[26px] left-[278px] rounded-[13px] top-[23px] w-[44px]" data-node-id="5:1252" data-name="Container+BackgroundColor">
+                <div className="absolute bg-[#faf9f6] left-[3px] rounded-[50px] size-[20px] top-[3px]" data-node-id="5:1325" data-name="Container+BackgroundColor" />
+              </div>
+            </div>
+          </div>
+          <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[15px] leading-[15px] left-[24px] text-[#9b9a94] text-[12px] top-[536px] tracking-[0.8px] uppercase w-[342px]" data-node-id="5:1199">
+            Preferințe
+          </p>
+          <div className="absolute bg-white h-[218px] left-[24px] overflow-clip rounded-[20px] shadow-[0px_1px_6px_0px_rgba(0,0,0,0.05)] top-[561px] w-[342px]" data-node-id="5:1200" data-name="Container+Shadow+BackgroundColor">
+            <div className="absolute bg-[rgba(0,0,0,0)] border-[#f5f4f0] border-b border-solid h-[73px] left-0 top-0 w-[342px]" data-node-id="5:1217" data-name="Container">
+              <div className="absolute bg-[rgba(64,145,108,0.12)] left-[20px] rounded-[12px] size-[40px] top-[16px]" data-node-id="5:1253" data-name="Container+BackgroundColor">
+                <div className="absolute bg-[rgba(0,0,0,0)] left-[11px] overflow-clip size-[18px] top-[11px]" data-node-id="5:1326" data-name="SVG">
+                  <div className="absolute left-0 size-[18px] top-0" data-node-id="5:1327" data-name="Frame">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame6} />
+                  </div>
+                </div>
+              </div>
+              <div className="[word-break:break-word] absolute bg-[rgba(0,0,0,0)] h-[35px] left-[74px] top-[18.5px] w-[218px]" data-node-id="5:1254" data-name="Container">
+                <p className="absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[19px] leading-[19px] left-0 text-[#31572c] text-[15px] top-0 w-[218px]" data-node-id="5:1332">
+                  Locație
+                </p>
+                <p className="absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[15px] leading-[15px] left-0 text-[#9b9a94] text-[12px] top-[20px] w-[218px]" data-node-id="5:1335">
+                  Cluj-Napoca, România
+                </p>
+              </div>
+              <div className="absolute bg-[rgba(0,0,0,0)] left-[306px] overflow-clip size-[16px] top-[28px]" data-node-id="5:1255" data-name="SVG">
+                <div className="absolute left-0 size-[16px] top-0" data-node-id="5:1256" data-name="Frame">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame2} />
+                </div>
+              </div>
+            </div>
+            <div className="absolute bg-[rgba(0,0,0,0)] border-[#f5f4f0] border-b border-solid h-[73px] left-0 top-[73px] w-[342px]" data-node-id="5:1218" data-name="Container">
+              <div className="absolute bg-[rgba(64,145,108,0.12)] left-[20px] rounded-[12px] size-[40px] top-[16px]" data-node-id="5:1258" data-name="Container+BackgroundColor">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[23px] leading-[23px] left-[9px] text-[18px] text-black top-[8.5px] w-[22px]" data-node-id="5:1338">
+                  🌐
+                </p>
+              </div>
+              <div className="[word-break:break-word] absolute bg-[rgba(0,0,0,0)] h-[35px] left-[74px] top-[18.5px] w-[218px]" data-node-id="5:1259" data-name="Container">
+                <p className="absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[19px] leading-[19px] left-0 text-[#31572c] text-[15px] top-0 w-[218px]" data-node-id="5:1341">
+                  Limbă
+                </p>
+                <p className="absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[15px] leading-[15px] left-0 text-[#9b9a94] text-[12px] top-[20px] w-[218px]" data-node-id="5:1344">
+                  Română
+                </p>
+              </div>
+              <div className="absolute bg-[rgba(0,0,0,0)] left-[306px] overflow-clip size-[16px] top-[28px]" data-node-id="5:1260" data-name="SVG">
+                <div className="absolute left-0 size-[16px] top-0" data-node-id="5:1261" data-name="Frame">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame2} />
+                </div>
+              </div>
+            </div>
+            <div className="absolute bg-[rgba(0,0,0,0)] h-[72px] left-0 top-[146px] w-[342px]" data-node-id="5:1219" data-name="Container">
+              <div className="absolute bg-[rgba(64,145,108,0.12)] left-[20px] rounded-[12px] size-[40px] top-[16px]" data-node-id="5:1263" data-name="Container+BackgroundColor">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[23px] leading-[23px] left-[9px] text-[18px] text-black top-[8.5px] w-[22px]" data-node-id="5:1347">
+                  🌙
+                </p>
+              </div>
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[19px] leading-[19px] left-[74px] text-[#31572c] text-[15px] top-[26.5px] w-[190px]" data-node-id="5:1266">
+                Temă întunecată
+              </p>
+              <div className="absolute bg-[#d1d0c9] h-[26px] left-[278px] rounded-[13px] top-[23px] w-[44px]" data-node-id="5:1267" data-name="Container+BackgroundColor">
+                <div className="absolute bg-[#faf9f6] left-[3px] rounded-[50px] size-[20px] top-[3px]" data-node-id="5:1348" data-name="Container+BackgroundColor" />
+              </div>
+            </div>
+          </div>
+          <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[15px] leading-[15px] left-[24px] text-[#9b9a94] text-[12px] top-[799px] tracking-[0.8px] uppercase w-[342px]" data-node-id="5:1203">
+            Despre
+          </p>
+          <div className="absolute bg-white h-[155px] left-[24px] overflow-clip rounded-[20px] shadow-[0px_1px_6px_0px_rgba(0,0,0,0.05)] top-[824px] w-[342px]" data-node-id="5:1204" data-name="Container+Shadow+BackgroundColor">
+            <div className="absolute bg-[rgba(0,0,0,0)] border-[#f5f4f0] border-b border-solid h-[52px] left-0 top-0 w-[342px]" data-node-id="5:1220" data-name="Container">
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[19px] leading-[19px] left-[20px] text-[#31572c] text-[15px] top-[16px] w-[272px]" data-node-id="5:1270">
+                Termeni și condiții
+              </p>
+              <div className="absolute bg-[rgba(0,0,0,0)] left-[306px] overflow-clip size-[16px] top-[17.5px]" data-node-id="5:1271" data-name="SVG">
+                <div className="absolute left-0 size-[16px] top-0" data-node-id="5:1272" data-name="Frame">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame2} />
+                </div>
+              </div>
+            </div>
+            <div className="absolute bg-[rgba(0,0,0,0)] border-[#f5f4f0] border-b border-solid h-[52px] left-0 top-[52px] w-[342px]" data-node-id="5:1221" data-name="Container">
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[19px] leading-[19px] left-[20px] text-[#31572c] text-[15px] top-[16px] w-[272px]" data-node-id="5:1276">
+                Politica de confidențialitate
+              </p>
+              <div className="absolute bg-[rgba(0,0,0,0)] left-[306px] overflow-clip size-[16px] top-[17.5px]" data-node-id="5:1277" data-name="SVG">
+                <div className="absolute left-0 size-[16px] top-0" data-node-id="5:1278" data-name="Frame">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame2} />
+                </div>
+              </div>
+            </div>
+            <div className="[word-break:break-word] absolute bg-[rgba(0,0,0,0)] h-[51px] left-0 top-[104px] w-[342px]" data-node-id="5:1222" data-name="Container">
+              <p className="absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[19px] leading-[19px] left-[20px] text-[#31572c] text-[14.769px] top-[16px] w-[62px]" data-node-id="5:1282">
+                Versiune
+              </p>
+              <p className="absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[16px] leading-[16px] left-[289px] text-[#9b9a94] text-[13px] top-[17.5px] w-[33px]" data-node-id="5:1285">
+                1.0.0
+              </p>
+            </div>
+          </div>
+          <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[21px] leading-[18px] left-[195px] text-[#d46464] text-[14px] text-center top-[1007px] w-[326px]" data-node-id="5:1207">
+            Șterge contul
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+Images and SVGs will be stored as constants, e.g. const image = 'https://www.figma.com/api/mcp/asset/550e8400-e29b-41d4-a716-446655440000.png'. These constants will be used in the code as the source for the image, ex: <img src={image} />. Image assets are stored on a remote server for 7 days and can be fetched using the provided URLs until they expire.

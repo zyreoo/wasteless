@@ -1,0 +1,372 @@
+const imgFrame = "https://www.figma.com/api/mcp/asset/03d0ca9e-5a1e-4f68-9552-e6019303b663.svg";
+const imgFrame1 = "https://www.figma.com/api/mcp/asset/957968ff-a76c-441d-8796-f7b70f9cc4f6.svg";
+const imgFrame2 = "https://www.figma.com/api/mcp/asset/d70522f9-1bbf-4204-afb9-fbd9fa7cb3be.svg";
+const imgFrame3 = "https://www.figma.com/api/mcp/asset/50b9755f-77b7-4977-8c39-c735803ad0f5.svg";
+const imgFrame4 = "https://www.figma.com/api/mcp/asset/72bceccb-e2df-4088-9079-2d6a6d90a049.svg";
+const imgFrame5 = "https://www.figma.com/api/mcp/asset/ab313e68-b57c-4fc4-be76-fe546ce4acb4.svg";
+const imgFrame6 = "https://www.figma.com/api/mcp/asset/1a9efc35-ed6c-4c90-bf7c-94aa1beec417.svg";
+const imgFrame7 = "https://www.figma.com/api/mcp/asset/a124a555-07a1-4a3c-a370-6715585dc3c0.svg";
+const imgFrame8 = "https://www.figma.com/api/mcp/asset/df0e2a5d-0f00-473c-8fca-6a70bd4025d3.svg";
+const imgFrame9 = "https://www.figma.com/api/mcp/asset/ffcde7b8-e2c9-4750-91b9-37b7197bfabd.svg";
+
+export default function BodyBackgroundColor() {
+  return (
+    <div className="relative size-full" data-node-id="5:564" style={{ backgroundImage: "linear-gradient(90deg, rgb(250, 249, 246) 0%, rgb(250, 249, 246) 100%), linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 100%)" }} data-name="Body+BackgroundColor">
+      <div className="absolute bg-[#faf9f6] h-[844px] left-0 overflow-clip top-0 w-[390px]" data-node-id="5:565" data-name="Container+BackgroundColor">
+        <div className="absolute bg-[#faf9f6] h-[167px] left-0 top-0 w-[390px]" data-node-id="5:566" data-name="Container+BackgroundColor">
+          <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[31px] leading-[30px] left-[24px] text-[#31572c] text-[24px] top-[52px] w-[342px]" data-node-id="5:572">
+            Caută oferte 🔍
+          </p>
+          <div className="absolute bg-white border border-[#e0dfd9] border-solid drop-shadow-[0px_2px_4px_rgba(0,0,0,0.05)] h-[52px] left-[24px] rounded-[16px] top-[99px] w-[342px]" data-node-id="5:573" data-name="Container+Shadow+BackgroundColor">
+            <div className="absolute bg-[rgba(0,0,0,0)] left-[16px] overflow-clip size-[18px] top-[16px]" data-node-id="5:586" data-name="SVG">
+              <div className="absolute left-0 size-[18px] top-0" data-node-id="5:587" data-name="Frame">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[19px] leading-[19px] left-[44px] text-[#b8b7b1] text-[15px] top-[15.5px] w-[238px]" data-node-id="5:592">
+              Caută produse, magazine...
+            </p>
+            <div className="absolute bg-[#40916c] left-[292px] rounded-[10px] size-[32px] top-[9px]" data-node-id="5:593" data-name="Container+BackgroundColor">
+              <div className="absolute bg-[rgba(0,0,0,0)] left-[8px] overflow-clip size-[16px] top-[8px]" data-node-id="5:651" data-name="SVG">
+                <div className="absolute left-0 size-[16px] top-0" data-node-id="5:652" data-name="Frame">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame1} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="absolute bg-[rgba(0,0,0,0)] h-[55px] left-0 overflow-clip top-[167px] w-[390px]" data-node-id="5:567" data-name="Container">
+          <div className="absolute bg-[#31572c] h-[39px] left-[24px] rounded-[20px] top-0 w-[67px]" data-node-id="5:574" data-name="Container+BackgroundColor">
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[16px] leading-[16px] left-[16px] text-[#ecf39e] text-[12.89px] top-[12px] w-[35px]" data-node-id="5:596">
+              Toate
+            </p>
+          </div>
+          <div className="absolute bg-white border border-[#e0dfd9] border-solid h-[39px] left-[99px] rounded-[20px] top-0 w-[104px]" data-node-id="5:575" data-name="Container+BackgroundColor">
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[16px] leading-[16px] left-[16px] text-[#6b6a63] text-[13px] top-[12px] w-[70px]" data-node-id="5:599">
+              🥬 Legume
+            </p>
+          </div>
+          <div className="absolute bg-white border border-[#e0dfd9] border-solid h-[39px] left-[211px] rounded-[20px] top-0 w-[103px]" data-node-id="5:576" data-name="Container+BackgroundColor">
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[16px] leading-[16px] left-[16px] text-[#6b6a63] text-[13px] top-[12px] w-[69px]" data-node-id="5:602">
+              🥐 Brutărie
+            </p>
+          </div>
+          <div className="absolute bg-white border border-[#e0dfd9] border-solid h-[39px] left-[322px] rounded-[20px] top-0 w-[101px]" data-node-id="5:577" data-name="Container+BackgroundColor">
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[16px] leading-[16px] left-[16px] text-[#6b6a63] text-[13px] top-[12px] w-[67px]" data-node-id="5:605">
+              🥛 Lactate
+            </p>
+          </div>
+          <div className="absolute bg-white border border-[#e0dfd9] border-solid h-[39px] left-[431px] rounded-[20px] top-0 w-[116px]" data-node-id="5:578" data-name="Container+BackgroundColor">
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[16px] leading-[16px] left-[16px] text-[#6b6a63] text-[13px] top-[12px] w-[82px]" data-node-id="5:608">
+              🍱 Preparate
+            </p>
+          </div>
+        </div>
+        <div className="absolute bg-[rgba(0,0,0,0)] h-[622px] left-0 overflow-clip top-[222px] w-[390px]" data-node-id="5:568" data-name="Container">
+          <div className="absolute bg-[rgba(0,0,0,0)] h-[18px] left-[24px] top-0 w-[342px]" data-node-id="5:579" data-name="Container">
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Medium'] font-medium h-[18px] leading-[18px] left-0 text-[#6b6a63] text-[14px] top-0 w-[109px]" data-node-id="5:611">
+              118 oferte găsite
+            </p>
+            <div className="absolute bg-[rgba(0,0,0,0)] h-[16px] left-[275px] top-px w-[67px]" data-node-id="5:612" data-name="Container">
+              <div className="absolute bg-[rgba(0,0,0,0)] left-0 overflow-clip size-[14px] top-px" data-node-id="5:654" data-name="SVG">
+                <div className="absolute left-0 size-[14px] top-0" data-node-id="5:655" data-name="Frame">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame2} />
+                </div>
+              </div>
+              <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[16px] leading-[16px] left-[20px] text-[#40916c] text-[12.818px] top-0 w-[47px]" data-node-id="5:659">
+                Sortare
+              </p>
+            </div>
+          </div>
+          <div className="absolute bg-[rgba(0,0,0,0)] h-[667px] left-[24px] top-[34px] w-[342px]" data-node-id="5:580" data-name="Container">
+            <div className="absolute bg-white h-[213px] left-0 overflow-clip rounded-[18px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.07)] top-0 w-[164px]" data-node-id="5:613" data-name="Container+Shadow+BackgroundColor">
+              <div className="absolute h-[120px] left-0 top-0 w-[164px]" data-node-id="5:660" style={{ backgroundImage: "linear-gradient(143.80679269443533deg, rgb(213, 232, 212) 0%, rgb(184, 207, 104) 100%), linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%)" }} data-name="Container+Gradient">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[62px] leading-[61px] left-[52px] text-[48px] text-black top-[29px] w-[60px]" data-node-id="5:674">
+                  🥬
+                </p>
+                <div className="absolute bg-[#31572c] h-[27px] left-[8px] rounded-[8px] top-[8px] w-[50px]" data-node-id="5:675" data-name="Container+BackgroundColor">
+                  <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[13px] leading-[13px] left-[8px] text-[#ecf39e] text-[11px] top-[9px] w-[34px]" data-node-id="5:743">
+                    −60%
+                  </p>
+                </div>
+                <div className="absolute bg-[rgba(0,0,0,0)] left-[136px] overflow-clip size-[20px] top-[8px]" data-node-id="5:676" data-name="Container / SVG">
+                  <div className="absolute left-0 size-[20px] top-0" data-node-id="5:677" data-name="Frame">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame3} />
+                  </div>
+                </div>
+              </div>
+              <div className="absolute bg-[rgba(0,0,0,0)] h-[93px] left-0 top-[120px] w-[164px]" data-node-id="5:661" data-name="Container">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[16px] leading-[16px] left-[12px] text-[#31572c] text-[13px] top-[12px] w-[140px]" data-node-id="5:681">
+                  Spanac proaspăt
+                </p>
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[13px] leading-[13px] left-[12px] text-[#9b9a94] text-[11px] top-[30px] w-[140px]" data-node-id="5:684">
+                  Piața Verde · 0,3 km
+                </p>
+                <div className="absolute bg-[rgba(0,0,0,0)] h-[30px] left-[12px] top-[51px] w-[140px]" data-node-id="5:685" data-name="Container">
+                  <div className="[word-break:break-word] absolute bg-[rgba(0,0,0,0)] h-[30px] left-0 top-0 w-[49px]" data-node-id="5:744" data-name="Container">
+                    <p className="absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[18px] leading-[18px] left-0 text-[#31572c] text-[14px] top-0 w-[49px]" data-node-id="5:773">
+                      1,20 lei
+                    </p>
+                    <p className="[text-decoration-skip-ink:none] [text-underline-position:from-font] absolute decoration-from-font decoration-solid font-['Plus_Jakarta_Sans:Regular'] font-normal h-[12px] leading-[12px] left-0 line-through text-[#b8b7b1] text-[10px] top-[18px] w-[49px]" data-node-id="5:776">
+                      3,00 lei
+                    </p>
+                  </div>
+                  <div className="absolute bg-[#40916c] left-[110px] rounded-[10px] size-[30px] top-0" data-node-id="5:745" data-name="Container+BackgroundColor">
+                    <div className="absolute bg-[rgba(0,0,0,0)] left-[8px] overflow-clip size-[14px] top-[8px]" data-node-id="5:777" data-name="SVG">
+                      <div className="absolute left-0 size-[14px] top-0" data-node-id="5:778" data-name="Frame">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame4} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="absolute bg-white h-[213px] left-[178px] overflow-clip rounded-[18px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.07)] top-0 w-[164px]" data-node-id="5:614" data-name="Container+Shadow+BackgroundColor">
+              <div className="absolute h-[120px] left-0 top-0 w-[164px]" data-node-id="5:662" style={{ backgroundImage: "linear-gradient(143.80679269443533deg, rgb(255, 248, 232) 0%, rgb(255, 224, 160) 100%), linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%)" }} data-name="Container+Gradient">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[62px] leading-[61px] left-[52px] text-[48px] text-black top-[29px] w-[60px]" data-node-id="5:688">
+                  🥐
+                </p>
+                <div className="absolute bg-[#31572c] h-[27px] left-[8px] rounded-[8px] top-[8px] w-[50px]" data-node-id="5:689" data-name="Container+BackgroundColor">
+                  <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[13px] leading-[13px] left-[8px] text-[#ecf39e] text-[11px] top-[9px] w-[34px]" data-node-id="5:748">
+                    −50%
+                  </p>
+                </div>
+              </div>
+              <div className="absolute bg-[rgba(0,0,0,0)] h-[93px] left-0 top-[120px] w-[164px]" data-node-id="5:663" data-name="Container">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[16px] leading-[16px] left-[12px] text-[#31572c] text-[13px] top-[12px] w-[140px]" data-node-id="5:692">
+                  Croissant cu unt
+                </p>
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[13px] leading-[13px] left-[12px] text-[#9b9a94] text-[11px] top-[30px] w-[140px]" data-node-id="5:695">
+                  Brutăria Artizanală · 0,8 km
+                </p>
+                <div className="absolute bg-[rgba(0,0,0,0)] h-[30px] left-[12px] top-[51px] w-[140px]" data-node-id="5:696" data-name="Container">
+                  <div className="[word-break:break-word] absolute bg-[rgba(0,0,0,0)] h-[30px] left-0 top-0 w-[53px]" data-node-id="5:749" data-name="Container">
+                    <p className="absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[18px] leading-[18px] left-0 text-[#31572c] text-[14px] top-0 w-[53px]" data-node-id="5:782">
+                      2,00 lei
+                    </p>
+                    <p className="[text-decoration-skip-ink:none] [text-underline-position:from-font] absolute decoration-from-font decoration-solid font-['Plus_Jakarta_Sans:Regular'] font-normal h-[12px] leading-[12px] left-0 line-through text-[#b8b7b1] text-[10px] top-[18px] w-[53px]" data-node-id="5:785">
+                      4,00 lei
+                    </p>
+                  </div>
+                  <div className="absolute bg-[#40916c] left-[110px] rounded-[10px] size-[30px] top-0" data-node-id="5:750" data-name="Container+BackgroundColor">
+                    <div className="absolute bg-[rgba(0,0,0,0)] left-[8px] overflow-clip size-[14px] top-[8px]" data-node-id="5:786" data-name="SVG">
+                      <div className="absolute left-0 size-[14px] top-0" data-node-id="5:787" data-name="Frame">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame4} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="absolute bg-white h-[213px] left-0 overflow-clip rounded-[18px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.07)] top-[227px] w-[164px]" data-node-id="5:615" data-name="Container+Shadow+BackgroundColor">
+              <div className="absolute h-[120px] left-0 top-0 w-[164px]" data-node-id="5:664" style={{ backgroundImage: "linear-gradient(143.80679269443533deg, rgb(232, 244, 232) 0%, rgb(200, 232, 200) 100%), linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%)" }} data-name="Container+Gradient">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[62px] leading-[61px] left-[52px] text-[48px] text-black top-[29px] w-[60px]" data-node-id="5:699">
+                  🍎
+                </p>
+                <div className="absolute bg-[#31572c] h-[27px] left-[8px] rounded-[8px] top-[8px] w-[49px]" data-node-id="5:700" data-name="Container+BackgroundColor">
+                  <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[13px] leading-[13px] left-[8px] text-[#ecf39e] text-[11px] top-[9px] w-[33px]" data-node-id="5:753">
+                    −35%
+                  </p>
+                </div>
+              </div>
+              <div className="absolute bg-[rgba(0,0,0,0)] h-[93px] left-0 top-[120px] w-[164px]" data-node-id="5:665" data-name="Container">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[16px] leading-[16px] left-[12px] text-[#31572c] text-[13px] top-[12px] w-[140px]" data-node-id="5:703">
+                  Mere Ionatan 1 kg
+                </p>
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[13px] leading-[13px] left-[12px] text-[#9b9a94] text-[11px] top-[30px] w-[140px]" data-node-id="5:706">
+                  Piața Verde · 0,3 km
+                </p>
+                <div className="absolute bg-[rgba(0,0,0,0)] h-[30px] left-[12px] top-[51px] w-[140px]" data-node-id="5:707" data-name="Container">
+                  <div className="[word-break:break-word] absolute bg-[rgba(0,0,0,0)] h-[30px] left-0 top-0 w-[51px]" data-node-id="5:754" data-name="Container">
+                    <p className="absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[18px] leading-[18px] left-0 text-[#31572c] text-[14px] top-0 w-[51px]" data-node-id="5:791">
+                      3,25 lei
+                    </p>
+                    <p className="[text-decoration-skip-ink:none] [text-underline-position:from-font] absolute decoration-from-font decoration-solid font-['Plus_Jakarta_Sans:Regular'] font-normal h-[12px] leading-[12px] left-0 line-through text-[#b8b7b1] text-[10px] top-[18px] w-[51px]" data-node-id="5:794">
+                      5,00 lei
+                    </p>
+                  </div>
+                  <div className="absolute bg-[#40916c] left-[110px] rounded-[10px] size-[30px] top-0" data-node-id="5:755" data-name="Container+BackgroundColor">
+                    <div className="absolute bg-[rgba(0,0,0,0)] left-[8px] overflow-clip size-[14px] top-[8px]" data-node-id="5:795" data-name="SVG">
+                      <div className="absolute left-0 size-[14px] top-0" data-node-id="5:796" data-name="Frame">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame4} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="absolute bg-white h-[213px] left-[178px] overflow-clip rounded-[18px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.07)] top-[227px] w-[164px]" data-node-id="5:616" data-name="Container+Shadow+BackgroundColor">
+              <div className="absolute h-[120px] left-0 top-0 w-[164px]" data-node-id="5:666" style={{ backgroundImage: "linear-gradient(143.80679269443533deg, rgb(237, 232, 248) 0%, rgb(212, 200, 240) 100%), linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%)" }} data-name="Container+Gradient">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[62px] leading-[61px] left-[52px] text-[48px] text-black top-[29px] w-[60px]" data-node-id="5:710">
+                  🍱
+                </p>
+                <div className="absolute bg-[#90a955] h-[27px] left-[8px] rounded-[8px] top-[8px] w-[49px]" data-node-id="5:711" data-name="Container+BackgroundColor">
+                  <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[13px] leading-[13px] left-[8px] text-[#faf9f6] text-[10.907px] top-[9px] w-[33px]" data-node-id="5:758">
+                    −45%
+                  </p>
+                </div>
+              </div>
+              <div className="absolute bg-[rgba(0,0,0,0)] h-[93px] left-0 top-[120px] w-[164px]" data-node-id="5:667" data-name="Container">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[16px] leading-[16px] left-[12px] text-[#31572c] text-[13px] top-[12px] w-[140px]" data-node-id="5:714">
+                  Platou sushi mixt
+                </p>
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[13px] leading-[13px] left-[12px] text-[#9b9a94] text-[11px] top-[30px] w-[140px]" data-node-id="5:717">
+                  Sakura Resto · 1,2 km
+                </p>
+                <div className="absolute bg-[rgba(0,0,0,0)] h-[30px] left-[12px] top-[51px] w-[140px]" data-node-id="5:718" data-name="Container">
+                  <div className="[word-break:break-word] absolute bg-[rgba(0,0,0,0)] h-[30px] left-0 top-0 w-[61px]" data-node-id="5:759" data-name="Container">
+                    <p className="absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[18px] leading-[18px] left-0 text-[#31572c] text-[14px] top-0 w-[61px]" data-node-id="5:800">
+                      22,00 lei
+                    </p>
+                    <p className="[text-decoration-skip-ink:none] [text-underline-position:from-font] absolute decoration-from-font decoration-solid font-['Plus_Jakarta_Sans:Regular'] font-normal h-[12px] leading-[12px] left-0 line-through text-[#b8b7b1] text-[10px] top-[18px] w-[61px]" data-node-id="5:803">
+                      40,00 lei
+                    </p>
+                  </div>
+                  <div className="absolute bg-[#40916c] left-[110px] rounded-[10px] size-[30px] top-0" data-node-id="5:760" data-name="Container+BackgroundColor">
+                    <div className="absolute bg-[rgba(0,0,0,0)] left-[8px] overflow-clip size-[14px] top-[8px]" data-node-id="5:804" data-name="SVG">
+                      <div className="absolute left-0 size-[14px] top-0" data-node-id="5:805" data-name="Frame">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame4} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="absolute bg-white h-[213px] left-0 overflow-clip rounded-[18px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.07)] top-[454px] w-[164px]" data-node-id="5:617" data-name="Container+Shadow+BackgroundColor">
+              <div className="absolute h-[120px] left-0 top-0 w-[164px]" data-node-id="5:668" style={{ backgroundImage: "linear-gradient(143.80679269443533deg, rgb(224, 240, 248) 0%, rgb(192, 223, 240) 100%), linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%)" }} data-name="Container+Gradient">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[62px] leading-[61px] left-[52px] text-[48px] text-black top-[29px] w-[60px]" data-node-id="5:721">
+                  🥛
+                </p>
+                <div className="absolute bg-[#31572c] h-[27px] left-[8px] rounded-[8px] top-[8px] w-[50px]" data-node-id="5:722" data-name="Container+BackgroundColor">
+                  <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[13px] leading-[13px] left-[8px] text-[#ecf39e] text-[10.927px] top-[9px] w-[34px]" data-node-id="5:763">
+                    −40%
+                  </p>
+                </div>
+              </div>
+              <div className="absolute bg-[rgba(0,0,0,0)] h-[93px] left-0 top-[120px] w-[164px]" data-node-id="5:669" data-name="Container">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[16px] leading-[16px] left-[12px] text-[#31572c] text-[13px] top-[12px] w-[140px]" data-node-id="5:725">
+                  Lapte bio 1L
+                </p>
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[13px] leading-[13px] left-[12px] text-[#9b9a94] text-[11px] top-[30px] w-[140px]" data-node-id="5:728">
+                  Metro Fresh · 0,5 km
+                </p>
+                <div className="absolute bg-[rgba(0,0,0,0)] h-[30px] left-[12px] top-[51px] w-[140px]" data-node-id="5:729" data-name="Container">
+                  <div className="[word-break:break-word] absolute bg-[rgba(0,0,0,0)] h-[30px] left-0 top-0 w-[52px]" data-node-id="5:764" data-name="Container">
+                    <p className="absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[18px] leading-[18px] left-0 text-[#31572c] text-[14px] top-0 w-[52px]" data-node-id="5:809">
+                      4,20 lei
+                    </p>
+                    <p className="[text-decoration-skip-ink:none] [text-underline-position:from-font] absolute decoration-from-font decoration-solid font-['Plus_Jakarta_Sans:Regular'] font-normal h-[12px] leading-[12px] left-0 line-through text-[#b8b7b1] text-[10px] top-[18px] w-[52px]" data-node-id="5:812">
+                      7,00 lei
+                    </p>
+                  </div>
+                  <div className="absolute bg-[#40916c] left-[110px] rounded-[10px] size-[30px] top-0" data-node-id="5:765" data-name="Container+BackgroundColor">
+                    <div className="absolute bg-[rgba(0,0,0,0)] left-[8px] overflow-clip size-[14px] top-[8px]" data-node-id="5:813" data-name="SVG">
+                      <div className="absolute left-0 size-[14px] top-0" data-node-id="5:814" data-name="Frame">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame4} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="absolute bg-white h-[213px] left-[178px] overflow-clip rounded-[18px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.07)] top-[454px] w-[164px]" data-node-id="5:618" data-name="Container+Shadow+BackgroundColor">
+              <div className="absolute h-[120px] left-0 top-0 w-[164px]" data-node-id="5:670" style={{ backgroundImage: "linear-gradient(143.80679269443533deg, rgb(248, 232, 224) 0%, rgb(240, 200, 176) 100%), linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%)" }} data-name="Container+Gradient">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[62px] leading-[61px] left-[52px] text-[48px] text-black top-[29px] w-[60px]" data-node-id="5:732">
+                  🧀
+                </p>
+                <div className="absolute bg-[#31572c] h-[27px] left-[8px] rounded-[8px] top-[8px] w-[50px]" data-node-id="5:733" data-name="Container+BackgroundColor">
+                  <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[13px] leading-[13px] left-[8px] text-[#ecf39e] text-[11px] top-[9px] w-[34px]" data-node-id="5:768">
+                    −30%
+                  </p>
+                </div>
+              </div>
+              <div className="absolute bg-[rgba(0,0,0,0)] h-[93px] left-0 top-[120px] w-[164px]" data-node-id="5:671" data-name="Container">
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[16px] leading-[16px] left-[12px] text-[#31572c] text-[13px] top-[12px] w-[140px]" data-node-id="5:736">
+                  Brânză telemea 300g
+                </p>
+                <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Regular'] font-normal h-[13px] leading-[13px] left-[12px] text-[#9b9a94] text-[11px] top-[30px] w-[140px]" data-node-id="5:739">
+                  Metro Fresh · 0,5 km
+                </p>
+                <div className="absolute bg-[rgba(0,0,0,0)] h-[30px] left-[12px] top-[51px] w-[140px]" data-node-id="5:740" data-name="Container">
+                  <div className="[word-break:break-word] absolute bg-[rgba(0,0,0,0)] h-[30px] left-0 top-0 w-[53px]" data-node-id="5:769" data-name="Container">
+                    <p className="absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[18px] leading-[18px] left-0 text-[#31572c] text-[14px] top-0 w-[53px]" data-node-id="5:818">
+                      8,40 lei
+                    </p>
+                    <p className="[text-decoration-skip-ink:none] [text-underline-position:from-font] absolute decoration-from-font decoration-solid font-['Plus_Jakarta_Sans:Regular'] font-normal h-[12px] leading-[12px] left-0 line-through text-[#b8b7b1] text-[10px] top-[18px] w-[53px]" data-node-id="5:821">
+                      12,00 lei
+                    </p>
+                  </div>
+                  <div className="absolute bg-[#40916c] left-[110px] rounded-[10px] size-[30px] top-0" data-node-id="5:770" data-name="Container+BackgroundColor">
+                    <div className="absolute bg-[rgba(0,0,0,0)] left-[8px] overflow-clip size-[14px] top-[8px]" data-node-id="5:822" data-name="SVG">
+                      <div className="absolute left-0 size-[14px] top-0" data-node-id="5:823" data-name="Frame">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame4} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="absolute bg-white border-[#eeeee9] border-solid border-t h-[80px] left-0 top-[764px] w-[390px]" data-node-id="5:569" data-name="Container+BackgroundColor">
+          <div className="absolute bg-[rgba(0,0,0,0)] h-[38px] left-[27.89px] top-[12.5px] w-[30px]" data-node-id="5:581" data-name="Container">
+            <div className="absolute bg-[rgba(0,0,0,0)] left-[4px] overflow-clip size-[22px] top-0" data-node-id="5:619" data-name="SVG">
+              <div className="absolute left-0 size-[22px] top-0" data-node-id="5:620" data-name="Frame">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame5} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[12px] leading-[12px] left-0 text-[#9b9a94] text-[10px] top-[26px] w-[30px]" data-node-id="5:624">
+              Acasă
+            </p>
+          </div>
+          <div className="absolute bg-[rgba(0,0,0,0)] h-[38px] left-[97.69px] top-[12.5px] w-[30px]" data-node-id="5:582" data-name="Container">
+            <div className="absolute bg-[rgba(0,0,0,0)] left-[4px] overflow-clip size-[22px] top-0" data-node-id="5:625" data-name="SVG">
+              <div className="absolute left-0 size-[22px] top-0" data-node-id="5:626" data-name="Frame">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame6} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:ExtraBold'] font-extrabold h-[12px] leading-[12px] left-0 text-[#40916c] text-[10px] top-[26px] w-[30px]" data-node-id="5:631">
+              Caută
+            </p>
+          </div>
+          <div className="absolute bg-[#40916c] drop-shadow-[0px_4px_8px_rgba(64,145,108,0.4)] left-[167.48px] rounded-[18px] size-[54px] top-[-5.5px]" data-node-id="5:583" data-name="Container+Shadow+BackgroundColor">
+            <div className="absolute bg-[rgba(0,0,0,0)] left-[15px] overflow-clip size-[24px] top-[15px]" data-node-id="5:632" data-name="SVG">
+              <div className="absolute left-0 size-[24px] top-0" data-node-id="5:633" data-name="Frame">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame7} />
+              </div>
+            </div>
+          </div>
+          <div className="absolute bg-[rgba(0,0,0,0)] h-[38px] left-[261.28px] top-[12.5px] w-[36px]" data-node-id="5:584" data-name="Container">
+            <div className="absolute bg-[rgba(0,0,0,0)] left-[7px] overflow-clip size-[22px] top-0" data-node-id="5:638" data-name="SVG">
+              <div className="absolute left-0 size-[22px] top-0" data-node-id="5:639" data-name="Frame">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame8} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[12px] leading-[12px] left-0 text-[#9b9a94] text-[9.962px] top-[26px] w-[36px]" data-node-id="5:643">
+              Salvate
+            </p>
+          </div>
+          <div className="absolute bg-[rgba(0,0,0,0)] h-[38px] left-[337.08px] top-[12.5px] w-[25px]" data-node-id="5:585" data-name="Container">
+            <div className="absolute bg-[rgba(0,0,0,0)] left-[1.5px] overflow-clip size-[22px] top-0" data-node-id="5:644" data-name="SVG">
+              <div className="absolute left-0 size-[22px] top-0" data-node-id="5:645" data-name="Frame">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame9} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] absolute font-['Plus_Jakarta_Sans:Bold'] font-bold h-[12px] leading-[12px] left-0 text-[#9b9a94] text-[9.841px] top-[26px] w-[25px]" data-node-id="5:650">
+              Profil
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+Images and SVGs will be stored as constants, e.g. const image = 'https://www.figma.com/api/mcp/asset/550e8400-e29b-41d4-a716-446655440000.png'. These constants will be used in the code as the source for the image, ex: <img src={image} />. Image assets are stored on a remote server for 7 days and can be fetched using the provided URLs until they expire.

@@ -1,0 +1,1848 @@
+<canvas id="0:1" name="Page 1" x="0" y="0" width="0" height="0">
+  <frame id="5:6" name="Body+BackgroundColor" x="-1" y="2094" width="390" height="844">
+    <frame id="5:7" name="Container+BackgroundColor" x="0" y="0" width="390" height="844">
+      <frame id="5:8" name="Container+BackgroundColor" x="150" y="-100" width="340" height="340" />
+      <frame id="5:9" name="Container+BackgroundColor" x="-80" y="644" width="280" height="280" />
+      <frame id="5:10" name="Container+BackgroundColor" x="30" y="60" width="80" height="80" />
+      <frame id="5:11" name="Container / SVG" x="147" y="196.3800048828125" width="96" height="96">
+        <frame id="5:12" name="Frame" x="0" y="0" width="96" height="96" />
+      </frame>
+      <text id="5:22" name="Wasteless" x="104.88999938964844" y="324.3800048828125" width="180" height="47" />
+      <text id="5:25" name="Mai puțină risipă. Mai multă valoare. Mai bine pentru comunitatea ta." x="70" y="381.3800048828125" width="250" height="74.25" />
+      <frame id="5:26" name="Container" x="32" y="519.6300048828125" width="326" height="128">
+        <frame id="5:30" name="Container+BackgroundColor" x="0" y="0" width="326" height="58">
+          <text id="5:34" name="Începe acum" x="112.44000244140625" y="18.5" width="101" height="21" />
+        </frame>
+        <frame id="5:31" name="Container+BackgroundColor" x="0" y="70" width="326" height="58">
+          <text id="5:37" name="Autentifică-te" x="108.5" y="18.5" width="109" height="21" />
+        </frame>
+      </frame>
+      <text id="5:29" name="Continuând, ești de acord cu Termenii &amp; Politica de Confidențialitate" x="2" y="789" width="386" height="15" />
+    </frame>
+  </frame>
+  <frame id="5:42" name="Body+BackgroundColor" x="618" y="2092" width="390" height="844">
+    <frame id="5:43" name="Container+BackgroundColor" x="0" y="0" width="390" height="844">
+      <frame id="5:44" name="Container /+BackgroundColor" x="271" y="20" width="95" height="37">
+        <text id="5:50" name="Sari peste" x="16" y="12" width="63" height="16" />
+      </frame>
+      <frame id="5:45" name="Container" x="0" y="57" width="390" height="458">
+        <frame id="5:51" name="Container+BackgroundColor" x="35" y="69.19000244140625" width="320" height="320" />
+        <frame id="5:52" name="Container+BackgroundColor" x="75" y="109.19000244140625" width="240" height="240" />
+      </frame>
+      <frame id="5:46" name="Container" x="167" y="515.3800048828125" width="56" height="8">
+        <frame id="5:71" name="Container+BackgroundColor" x="0" y="0" width="24" height="8" />
+        <frame id="5:72" name="Container+BackgroundColor" x="32" y="0" width="8" height="8" />
+        <frame id="5:73" name="Container+BackgroundColor" x="48" y="0" width="8" height="8" />
+      </frame>
+      <frame id="5:47" name="Container" x="0" y="559.3800048828125" width="390" height="285">
+        <text id="5:76" name="Salvează mâncare, un deal pe zi" x="32" y="0" width="326" height="62.375" />
+        <text id="5:79" name="Descoperă produse cu discount înainte de expirare de la magazine, brutării și restaurante locale — salvează-le înainte să fie aruncate." x="32" y="76.37000274658203" width="326" height="74.25" />
+        <frame id="5:80" name="Container+BackgroundColor" x="32" y="186.6199951171875" width="326" height="58">
+          <text id="5:83" name="Înainte" x="122" y="18.5" width="52" height="21" />
+          <frame id="5:84" name="SVG" x="184" y="19" width="20" height="20">
+            <frame id="5:85" name="Frame" x="0" y="0" width="20" height="20" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+  </frame>
+  <frame id="5:91" name="Body+BackgroundColor" x="2671" y="2086" width="390" height="844">
+    <frame id="5:92" name="Container+BackgroundColor" x="0" y="0" width="390" height="844">
+      <frame id="5:94" name="Container+BackgroundColor" x="0" y="0" width="390" height="220">
+        <frame id="5:100" name="Container+BackgroundColor" x="230" y="-60" width="220" height="220" />
+      </frame>
+      <frame id="5:95" name="Container" x="0" y="220" width="390" height="624">
+        <text id="5:104" name="Autentificare" x="28" y="36" width="334" height="28" />
+        <frame id="5:105" name="Container" x="28" y="92" width="334" height="78">
+          <text id="5:127" name="Adresă de email" x="0" y="0" width="334" height="16" />
+          <frame id="5:128" name="Container+BackgroundColor" x="0" y="24" width="334" height="54">
+            <frame id="5:143" name="SVG" x="17" y="18" width="18" height="18">
+              <frame id="5:144" name="Frame" x="0" y="0" width="18" height="18" />
+            </frame>
+            <text id="5:148" name="email@exemplu.ro" x="47" y="17.5" width="132" height="19" />
+          </frame>
+        </frame>
+        <frame id="5:106" name="Container" x="28" y="186" width="334" height="78">
+          <text id="5:131" name="Parolă" x="0" y="0" width="334" height="16" />
+          <frame id="5:132" name="Container+BackgroundColor" x="0" y="24" width="334" height="54">
+            <frame id="5:149" name="SVG" x="17" y="18" width="18" height="18">
+              <frame id="5:150" name="Frame" x="0" y="0" width="18" height="18" />
+            </frame>
+            <text id="5:156" name="••••••••" x="47" y="17.5" width="96" height="19" />
+            <frame id="5:157" name="Container / SVG" x="299" y="16" width="18" height="18">
+              <frame id="5:158" name="Frame" x="0" y="0" width="18" height="18" />
+            </frame>
+          </frame>
+        </frame>
+        <text id="5:109" name="Ai uitat parola?" x="28" y="272" width="334" height="21" />
+        <frame id="5:110" name="Container+BackgroundColor" x="28" y="325" width="334" height="58">
+          <text id="5:135" name="Autentifică-te" x="110.5" y="18.5" width="113" height="21" />
+        </frame>
+        <frame id="5:111" name="Container" x="28" y="407" width="334" height="16">
+          <frame id="5:136" name="Container+BackgroundColor" x="0" y="7.5" width="106" height="1" />
+          <text id="5:139" name="sau continuă cu" x="118" y="0" width="98" height="16" />
+          <frame id="5:140" name="Container+BackgroundColor" x="228" y="7.5" width="106" height="1" />
+        </frame>
+        <frame id="5:112" name="Container" x="28" y="447" width="334" height="52">
+          <frame id="5:141" name="Container+BackgroundColor" x="0" y="0" width="161" height="52">
+            <frame id="5:161" name="SVG" x="41.5" y="16" width="20" height="20">
+              <frame id="5:162" name="Frame" x="0" y="0" width="20" height="20" />
+            </frame>
+            <text id="5:169" name="Google" x="69.5" y="17" width="50" height="18" />
+          </frame>
+          <frame id="5:142" name="Container+BackgroundColor" x="173" y="0" width="161" height="52">
+            <frame id="5:170" name="SVG" x="47.5" y="16" width="18" height="20">
+              <frame id="5:171" name="Frame" x="0" y="0" width="18" height="20" />
+            </frame>
+            <text id="5:176" name="Apple" x="73.5" y="17" width="40" height="18" />
+          </frame>
+        </frame>
+        <text id="5:115" name="Nu ai cont? Înregistrează-te" x="28" y="574" width="334" height="18" />
+      </frame>
+    </frame>
+    <frame id="5:93" name="Container" x="32" y="128" width="291" height="64">
+      <frame id="5:96" name="Container" x="0" y="0" width="291" height="36">
+        <frame id="5:116" name="SVG" x="0" y="0" width="36" height="36">
+          <frame id="5:117" name="Frame" x="0" y="0" width="36" height="36" />
+        </frame>
+        <text id="5:124" name="Wasteless" x="46" y="4" width="109" height="28" />
+      </frame>
+      <text id="5:99" name="Bun revenit! Autentifică-te pentru a continua." x="0" y="46" width="291" height="18" />
+    </frame>
+  </frame>
+  <frame id="5:181" name="Body+BackgroundColor" x="1981" y="2094" width="390" height="842">
+    <frame id="5:182" name="Container+BackgroundColor" x="0" y="-24" width="390" height="845">
+      <frame id="5:184" name="Container+BackgroundColor" x="0" y="23" width="390" height="177">
+        <frame id="5:190" name="Container+BackgroundColor" x="230" y="-60" width="220" height="220" />
+      </frame>
+      <frame id="5:185" name="Container" x="0" y="200" width="390" height="644">
+        <text id="5:193" name="Înregistrare" x="28" y="28" width="334" height="28" />
+        <frame id="5:194" name="Container" x="28" y="80" width="334" height="76">
+          <text id="5:215" name="Numele tău complet" x="0" y="0" width="334" height="16" />
+          <frame id="5:216" name="Container+BackgroundColor" x="0" y="24" width="334" height="52">
+            <frame id="5:247" name="SVG" x="17" y="17" width="18" height="18">
+              <frame id="5:248" name="Frame" x="0" y="0" width="18" height="18" />
+            </frame>
+            <text id="5:253" name="Simone Marton" x="47" y="16.5" width="110" height="19" />
+          </frame>
+        </frame>
+        <frame id="5:195" name="Container" x="28" y="170" width="334" height="76">
+          <text id="5:219" name="Adresă de email" x="0" y="0" width="334" height="16" />
+          <frame id="5:220" name="Container+Shadow+BackgroundColor" x="0" y="24" width="334" height="52">
+            <frame id="5:254" name="SVG" x="17" y="17" width="18" height="18">
+              <frame id="5:255" name="Frame" x="0" y="0" width="18" height="18" />
+            </frame>
+            <text id="5:259" name="simone@email.com" x="47" y="16.5" width="142" height="19" />
+          </frame>
+        </frame>
+        <frame id="5:196" name="Container" x="28" y="260" width="334" height="76">
+          <text id="5:223" name="Număr de telefon" x="0" y="0" width="334" height="16" />
+          <frame id="5:224" name="Container+BackgroundColor" x="0" y="24" width="334" height="52">
+            <frame id="5:260" name="Container" x="17" y="17" width="64" height="18">
+              <text id="5:296" name="🇷🇴" x="0" y="0" width="17" height="18" />
+              <text id="5:299" name="+40" x="23" y="0" width="28" height="18" />
+            </frame>
+            <text id="5:263" name="7XX XXX XXX" x="93" y="16.5" width="86" height="19" />
+          </frame>
+        </frame>
+        <frame id="5:197" name="Container" x="28" y="350" width="334" height="105">
+          <text id="5:227" name="Parola" x="0" y="0" width="334" height="16" />
+          <frame id="5:228" name="Container+BackgroundColor" x="0" y="24" width="334" height="52">
+            <frame id="5:264" name="SVG" x="17" y="17" width="18" height="18">
+              <frame id="5:265" name="Frame" x="0" y="0" width="18" height="18" />
+            </frame>
+            <text id="5:270" name="••••••••" x="47" y="16.5" width="96" height="19" />
+          </frame>
+          <frame id="5:229" name="Container" x="0" y="84" width="334" height="4">
+            <frame id="5:271" name="Container+BackgroundColor" x="0" y="0" width="81" height="4" />
+            <frame id="5:272" name="Container+BackgroundColor" x="84.5" y="0" width="81" height="4" />
+            <frame id="5:273" name="Container+BackgroundColor" x="169" y="0" width="81" height="4" />
+            <frame id="5:274" name="Container+BackgroundColor" x="253.5" y="0" width="81" height="4" />
+          </frame>
+          <text id="5:232" name="Parolă moderată" x="0" y="92" width="334" height="13" />
+        </frame>
+        <frame id="5:198" name="Container" x="28" y="475" width="334" height="39">
+          <frame id="5:233" name="Container+BackgroundColor" x="0" y="1" width="22" height="22">
+            <frame id="5:275" name="SVG" x="5" y="5" width="12" height="12">
+              <frame id="5:276" name="Frame" x="0" y="0" width="12" height="12" />
+            </frame>
+          </frame>
+          <text id="5:236" name="Sunt de acord cu Termenii și condițiile și Politica de confidențialitate" x="34" y="0" width="300" height="39" />
+        </frame>
+        <frame id="5:199" name="Container+BackgroundColor" x="28" y="538" width="334" height="21">
+          <text id="5:239" name="Creează cont" x="115.5" y="0" width="103" height="21" />
+        </frame>
+        <frame id="5:200" name="Container" x="28" y="579" width="334" height="16">
+          <frame id="5:240" name="Container+BackgroundColor" x="0" y="7.5" width="144" height="1" />
+          <text id="5:243" name="sau" x="156" y="0" width="22" height="16" />
+          <frame id="5:244" name="Container+BackgroundColor" x="190" y="7.5" width="144" height="1" />
+        </frame>
+        <frame id="5:201" name="Container" x="28" y="615" width="334" height="50">
+          <frame id="5:245" name="Container+BackgroundColor" x="0" y="0" width="161" height="50">
+            <frame id="5:278" name="SVG" x="42.5" y="16" width="18" height="18">
+              <frame id="5:279" name="Frame" x="0" y="0" width="18" height="18" />
+            </frame>
+            <text id="5:286" name="Google" x="68.5" y="16" width="50" height="18" />
+          </frame>
+          <frame id="5:246" name="Container+BackgroundColor" x="173" y="0" width="161" height="50">
+            <frame id="5:287" name="SVG" x="48.5" y="16" width="16" height="18">
+              <frame id="5:288" name="Frame" x="0" y="0" width="16" height="18" />
+            </frame>
+            <text id="5:293" name="Apple" x="72.5" y="16" width="40" height="18" />
+          </frame>
+        </frame>
+        <text id="5:204" name="Ai deja cont? Autentifică-te" x="28" y="689" width="334" height="18" />
+      </frame>
+    </frame>
+    <frame id="5:183" name="Container" x="32" y="87" width="240" height="62">
+      <frame id="5:186" name="Container" x="0" y="0" width="240" height="36">
+        <frame id="5:205" name="SVG" x="0" y="0" width="36" height="36">
+          <frame id="5:206" name="Frame" x="0" y="0" width="36" height="36" />
+        </frame>
+        <text id="5:212" name="Wasteless" x="46" y="4" width="109" height="28" />
+      </frame>
+      <text id="5:189" name="Creează-ți contul și începe să salvezi!" x="0" y="44" width="240" height="18" />
+    </frame>
+  </frame>
+  <frame id="5:304" name="Body+BackgroundColor" x="3361" y="2099" width="390" height="837">
+    <frame id="5:305" name="Container+BackgroundColor" x="0" y="0" width="390" height="844">
+      <frame id="5:307" name="Container+BackgroundColor" x="0" y="0" width="390" height="224">
+        <frame id="5:312" name="Container+BackgroundColor" x="250" y="-40" width="180" height="180" />
+        <frame id="5:313" name="Container" x="24" y="52" width="342" height="36">
+          <frame id="5:337" name="Container" x="0" y="4" width="135" height="28">
+            <frame id="5:393" name="SVG" x="0" y="0" width="28" height="28">
+              <frame id="5:394" name="Frame" x="0" y="0" width="28" height="28" />
+            </frame>
+            <text id="5:400" name="Wasteless" x="36" y="1.5" width="99" height="25" />
+          </frame>
+          <frame id="5:338" name="Container" x="258" y="0" width="84" height="36">
+            <frame id="5:401" name="Container+BackgroundColor" x="0" y="0" width="36" height="36">
+              <frame id="5:425" name="SVG" x="9" y="9" width="18" height="18">
+                <frame id="5:426" name="Frame" x="0" y="0" width="18" height="18" />
+              </frame>
+              <frame id="5:429" name="Container+BackgroundColor" x="22" y="6" width="8" height="8" />
+            </frame>
+            <frame id="5:402" name="Container+BackgroundColor" x="48" y="0" width="36" height="36">
+              <text id="5:431" name="S" x="13.5" y="9" width="9" height="18" />
+            </frame>
+          </frame>
+        </frame>
+        <frame id="5:314" name="Container" x="24" y="106" width="342" height="46">
+          <text id="5:341" name="Bună dimineața 👋" x="0" y="0" width="342" height="16" />
+          <text id="5:344" name="Simone!" x="0" y="18" width="342" height="28" />
+        </frame>
+      </frame>
+      <frame id="5:308" name="Container" x="0" y="278" width="390" height="566">
+        <frame id="5:315" name="Container " x="24" y="20" width="342" height="22">
+          <text id="5:347" name="Ofertele zilei 🔥" x="0" y="0" width="127" height="22" />
+          <text id="5:350" name="Vezi toate" x="281" y="3" width="61" height="16" />
+        </frame>
+        <frame id="5:316" name="Container" x="0" y="56" width="390" height="195">
+          <frame id="5:351" name="Container+Shadow+BackgroundColor" x="24" y="0" width="160" height="191">
+            <frame id="5:403" name="Container+Gradient" x="0" y="0" width="160" height="110">
+              <frame id="5:432" name="SVG" x="50" y="25" width="60" height="60">
+                <frame id="5:433" name="Frame" x="0" y="0" width="60" height="60" />
+              </frame>
+              <frame id="5:436" name="Container+BackgroundColor" x="8" y="8" width="50" height="27">
+                <text id="5:511" name="−60%" x="8" y="9" width="34" height="13" />
+              </frame>
+            </frame>
+            <frame id="5:404" name="Container" x="0" y="110" width="160" height="81">
+              <text id="5:439" name="Spanac proaspăt" x="12" y="12" width="136" height="16" />
+              <text id="5:442" name="Piața Verde" x="12" y="30" width="136" height="13" />
+              <frame id="5:443" name="Container" x="12" y="51" width="136" height="18">
+                <text id="5:514" name="1,20 lei" x="0" y="0" width="49" height="18" />
+                <text id="5:517" name="3,00 lei" x="55" y="2.5" width="41" height="13" />
+              </frame>
+            </frame>
+          </frame>
+          <frame id="5:352" name="Container+Shadow+BackgroundColor" x="198" y="0" width="160" height="191">
+            <frame id="5:405" name="Container+Gradient" x="0" y="0" width="160" height="110">
+              <frame id="5:444" name="SVG" x="52.5" y="27.5" width="55" height="55">
+                <frame id="5:445" name="Frame" x="0" y="0" width="55" height="55" />
+              </frame>
+              <frame id="5:449" name="Container+BackgroundColor" x="8" y="8" width="50" height="27">
+                <text id="5:520" name="−40%" x="8" y="9" width="34" height="13" />
+              </frame>
+            </frame>
+            <frame id="5:406" name="Container" x="0" y="110" width="160" height="81">
+              <text id="5:452" name="Iaurt grecesc" x="12" y="12" width="136" height="16" />
+              <text id="5:455" name="Metro Fresh" x="12" y="30" width="136" height="13" />
+              <frame id="5:456" name="Container" x="12" y="51" width="136" height="18">
+                <text id="5:523" name="2,40 lei" x="0" y="0" width="52" height="18" />
+                <text id="5:526" name="4,00 lei" x="58" y="2.5" width="41" height="13" />
+              </frame>
+            </frame>
+          </frame>
+          <frame id="5:353" name="Container+Shadow+BackgroundColor" x="372" y="0" width="160" height="191">
+            <frame id="5:407" name="Container+Gradient" x="0" y="0" width="160" height="110">
+              <frame id="5:457" name="SVG" x="52.5" y="27.5" width="55" height="55">
+                <frame id="5:458" name="Frame" x="0" y="0" width="55" height="55" />
+              </frame>
+              <frame id="5:461" name="Container+BackgroundColor" x="8" y="8" width="49" height="27">
+                <text id="5:529" name="−25%" x="8" y="9" width="33" height="13" />
+              </frame>
+            </frame>
+            <frame id="5:408" name="Container" x="0" y="110" width="160" height="81">
+              <text id="5:464" name="Pâine integrală" x="12" y="12" width="136" height="16" />
+              <text id="5:467" name="Brutăria Artizanală" x="12" y="30" width="136" height="13" />
+              <frame id="5:468" name="Container" x="12" y="51" width="136" height="18">
+                <text id="5:532" name="3,75 lei" x="0" y="0" width="51" height="18" />
+                <text id="5:535" name="5,00 lei" x="57" y="2.5" width="41" height="13" />
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+        <frame id="5:317" name="Container" x="0" y="279" width="390" height="204">
+          <text id="5:356" name="Categorii" x="24" y="0" width="342" height="22" />
+          <frame id="5:357" name="Container" x="24" y="36" width="342" height="168">
+            <frame id="5:409" name="Container+BackgroundColor" x="0" y="0" width="165" height="87">
+              <text id="5:471" name="🥬" x="16" y="28" width="30" height="31" />
+              <frame id="5:472" name="Container" x="58" y="18" width="91" height="51">
+                <text id="5:538" name="Legume &amp; Fructe" x="0" y="0" width="91" height="36" />
+                <text id="5:541" name="48 oferte" x="0" y="38" width="91" height="13" />
+              </frame>
+            </frame>
+            <frame id="5:410" name="Container+BackgroundColor" x="177" y="0" width="165" height="87">
+              <text id="5:475" name="🥐" x="16" y="28" width="30" height="31" />
+              <frame id="5:476" name="Container" x="58" y="27" width="55" height="33">
+                <text id="5:544" name="Brutărie" x="0" y="0" width="55" height="18" />
+                <text id="5:547" name="31 oferte" x="0" y="20" width="55" height="13" />
+              </frame>
+            </frame>
+            <frame id="5:411" name="Container+BackgroundColor" x="0" y="99" width="165" height="69">
+              <text id="5:479" name="🥛" x="16" y="19" width="30" height="31" />
+              <frame id="5:480" name="Container" x="58" y="18" width="54" height="33">
+                <text id="5:550" name="Lactate" x="0" y="0" width="54" height="18" />
+                <text id="5:553" name="22 oferte" x="0" y="20" width="54" height="13" />
+              </frame>
+            </frame>
+            <frame id="5:412" name="Container+BackgroundColor" x="177" y="99" width="165" height="69">
+              <text id="5:483" name="🍱" x="16" y="19" width="30" height="31" />
+              <frame id="5:484" name="Container" x="58" y="18" width="68" height="33">
+                <text id="5:556" name="Preparate" x="0" y="0" width="68" height="18" />
+                <text id="5:559" name="17 oferte" x="0" y="20" width="68" height="13" />
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+        <frame id="5:318" name="Container" x="0" y="507" width="390" height="206">
+          <frame id="5:358" name="Container" x="24" y="0" width="342" height="22">
+            <text id="5:415" name="Magazine aproape 📍" x="0" y="0" width="176" height="22" />
+            <text id="5:418" name="Hartă" x="306" y="3" width="36" height="16" />
+          </frame>
+          <frame id="5:359" name="Container+Shadow+BackgroundColor" x="24" y="36" width="342" height="80">
+            <frame id="5:419" name="Container+BackgroundColor" x="16" y="16" width="48" height="48">
+              <text id="5:487" name="🥬" x="10.5" y="10" width="27" height="28" />
+            </frame>
+            <frame id="5:420" name="Container" x="78" y="22.5" width="169" height="35">
+              <text id="5:490" name="Piața Verde" x="0" y="0" width="169" height="18" />
+              <text id="5:493" name="0,3 km · 12 oferte" x="0" y="20" width="169" height="15" />
+            </frame>
+            <frame id="5:421" name="Container+BackgroundColor" x="261" y="28.5" width="65" height="23">
+              <text id="5:496" name="Deschis" x="10" y="4" width="45" height="15" />
+            </frame>
+          </frame>
+          <frame id="5:360" name="Container+Shadow+BackgroundColor" x="24" y="126" width="342" height="80">
+            <frame id="5:422" name="Container+BackgroundColor" x="16" y="16" width="48" height="48">
+              <text id="5:499" name="🥐" x="10.5" y="10" width="27" height="28" />
+            </frame>
+            <frame id="5:423" name="Container" x="78" y="22.5" width="169" height="35">
+              <text id="5:502" name="Brutăria Artizanală" x="0" y="0" width="169" height="18" />
+              <text id="5:505" name="0,8 km · 7 oferte" x="0" y="20" width="169" height="15" />
+            </frame>
+            <frame id="5:424" name="Container+BackgroundColor" x="261" y="28.5" width="65" height="23">
+              <text id="5:508" name="Deschis" x="10" y="4" width="45" height="15" />
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+      <frame id="5:309" name="Container+BackgroundColor" x="0" y="764" width="390" height="80">
+        <frame id="5:319" name="Container" x="27.889999389648438" y="13.5" width="30" height="38">
+          <frame id="5:361" name="SVG" x="4" y="0" width="22" height="22">
+            <frame id="5:362" name="Frame" x="0" y="0" width="22" height="22" />
+          </frame>
+          <text id="5:366" name="Acasă" x="0" y="26" width="30" height="12" />
+        </frame>
+        <frame id="5:320" name="Container" x="97.69000244140625" y="13.5" width="30" height="38">
+          <frame id="5:367" name="SVG" x="4" y="0" width="22" height="22">
+            <frame id="5:368" name="Frame" x="0" y="0" width="22" height="22" />
+          </frame>
+          <text id="5:373" name="Caută" x="0" y="26" width="30" height="12" />
+        </frame>
+        <frame id="5:321" name="Container+Shadow+BackgroundColor" x="167.47999572753906" y="-4.5" width="54" height="54">
+          <frame id="5:374" name="SVG" x="15" y="15" width="24" height="24">
+            <frame id="5:375" name="Frame" x="0" y="0" width="24" height="24" />
+          </frame>
+        </frame>
+        <frame id="5:322" name="Container" x="261.2799987792969" y="13.5" width="36" height="38">
+          <frame id="5:380" name="SVG" x="7" y="0" width="22" height="22">
+            <frame id="5:381" name="Frame" x="0" y="0" width="22" height="22" />
+          </frame>
+          <text id="5:385" name="Salvate" x="0" y="26" width="36" height="12" />
+        </frame>
+        <frame id="5:323" name="Container" x="337.0799865722656" y="13.5" width="25" height="38">
+          <frame id="5:386" name="SVG" x="1.5" y="0" width="22" height="22">
+            <frame id="5:387" name="Frame" x="0" y="0" width="22" height="22" />
+          </frame>
+          <text id="5:392" name="Profil" x="0" y="26" width="25" height="12" />
+        </frame>
+      </frame>
+    </frame>
+    <frame id="5:306" name="Container+Shadow+BackgroundColor" x="20" y="180" width="350" height="98">
+      <frame id="5:310" name="Container" x="20" y="18" width="180" height="62">
+        <text id="5:326" name="Impactul tău azi" x="0" y="0" width="180" height="15" />
+        <text id="5:329" name="12 produse salvate" x="0" y="17" width="180" height="25" />
+        <text id="5:332" name="3,4 kg CO₂ economisit" x="0" y="44" width="180" height="18" />
+      </frame>
+      <frame id="5:311" name="Container+BackgroundColor" x="278" y="23" width="52" height="52">
+        <frame id="5:333" name="SVG" x="13" y="13" width="26" height="26">
+          <frame id="5:334" name="Frame" x="0" y="0" width="26" height="26" />
+        </frame>
+      </frame>
+    </frame>
+  </frame>
+  <frame id="5:564" name="Body+BackgroundColor" x="1291" y="2094" width="390" height="842">
+    <frame id="5:565" name="Container+BackgroundColor" x="0" y="0" width="390" height="844">
+      <frame id="5:566" name="Container+BackgroundColor" x="0" y="0" width="390" height="167">
+        <text id="5:572" name="Caută oferte 🔍" x="24" y="52" width="342" height="31" />
+        <frame id="5:573" name="Container+Shadow+BackgroundColor" x="24" y="99" width="342" height="52">
+          <frame id="5:586" name="SVG" x="17" y="17" width="18" height="18">
+            <frame id="5:587" name="Frame" x="0" y="0" width="18" height="18" />
+          </frame>
+          <text id="5:592" name="Caută produse, magazine..." x="45" y="16.5" width="238" height="19" />
+          <frame id="5:593" name="Container+BackgroundColor" x="293" y="10" width="32" height="32">
+            <frame id="5:651" name="SVG" x="8" y="8" width="16" height="16">
+              <frame id="5:652" name="Frame" x="0" y="0" width="16" height="16" />
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+      <frame id="5:567" name="Container" x="0" y="167" width="390" height="55">
+        <frame id="5:574" name="Container+BackgroundColor" x="24" y="0" width="67" height="39">
+          <text id="5:596" name="Toate" x="16" y="12" width="35" height="16" />
+        </frame>
+        <frame id="5:575" name="Container+BackgroundColor" x="99" y="0" width="104" height="39">
+          <text id="5:599" name="🥬 Legume" x="17" y="13" width="70" height="16" />
+        </frame>
+        <frame id="5:576" name="Container+BackgroundColor" x="211" y="0" width="103" height="39">
+          <text id="5:602" name="🥐 Brutărie" x="17" y="13" width="69" height="16" />
+        </frame>
+        <frame id="5:577" name="Container+BackgroundColor" x="322" y="0" width="101" height="39">
+          <text id="5:605" name="🥛 Lactate" x="17" y="13" width="67" height="16" />
+        </frame>
+        <frame id="5:578" name="Container+BackgroundColor" x="431" y="0" width="116" height="39">
+          <text id="5:608" name="🍱 Preparate" x="17" y="13" width="82" height="16" />
+        </frame>
+      </frame>
+      <frame id="5:568" name="Container" x="0" y="222" width="390" height="622">
+        <frame id="5:579" name="Container" x="24" y="0" width="342" height="18">
+          <text id="5:611" name="118 oferte găsite" x="0" y="0" width="109" height="18" />
+          <frame id="5:612" name="Container" x="275" y="1" width="67" height="16">
+            <frame id="5:654" name="SVG" x="0" y="1" width="14" height="14">
+              <frame id="5:655" name="Frame" x="0" y="0" width="14" height="14" />
+            </frame>
+            <text id="5:659" name="Sortare" x="20" y="0" width="47" height="16" />
+          </frame>
+        </frame>
+        <frame id="5:580" name="Container" x="24" y="34" width="342" height="667">
+          <frame id="5:613" name="Container+Shadow+BackgroundColor" x="0" y="0" width="164" height="213">
+            <frame id="5:660" name="Container+Gradient" x="0" y="0" width="164" height="120">
+              <text id="5:674" name="🥬" x="52" y="29" width="60" height="62" />
+              <frame id="5:675" name="Container+BackgroundColor" x="8" y="8" width="50" height="27">
+                <text id="5:743" name="−60%" x="8" y="9" width="34" height="13" />
+              </frame>
+              <frame id="5:676" name="Container / SVG" x="136" y="8" width="20" height="20">
+                <frame id="5:677" name="Frame" x="0" y="0" width="20" height="20" />
+              </frame>
+            </frame>
+            <frame id="5:661" name="Container" x="0" y="120" width="164" height="93">
+              <text id="5:681" name="Spanac proaspăt" x="12" y="12" width="140" height="16" />
+              <text id="5:684" name="Piața Verde · 0,3 km" x="12" y="30" width="140" height="13" />
+              <frame id="5:685" name="Container" x="12" y="51" width="140" height="30">
+                <frame id="5:744" name="Container" x="0" y="0" width="49" height="30">
+                  <text id="5:773" name="1,20 lei" x="0" y="0" width="49" height="18" />
+                  <text id="5:776" name="3,00 lei" x="0" y="18" width="49" height="12" />
+                </frame>
+                <frame id="5:745" name="Container+BackgroundColor" x="110" y="0" width="30" height="30">
+                  <frame id="5:777" name="SVG" x="8" y="8" width="14" height="14">
+                    <frame id="5:778" name="Frame" x="0" y="0" width="14" height="14" />
+                  </frame>
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+          <frame id="5:614" name="Container+Shadow+BackgroundColor" x="178" y="0" width="164" height="213">
+            <frame id="5:662" name="Container+Gradient" x="0" y="0" width="164" height="120">
+              <text id="5:688" name="🥐" x="52" y="29" width="60" height="62" />
+              <frame id="5:689" name="Container+BackgroundColor" x="8" y="8" width="50" height="27">
+                <text id="5:748" name="−50%" x="8" y="9" width="34" height="13" />
+              </frame>
+            </frame>
+            <frame id="5:663" name="Container" x="0" y="120" width="164" height="93">
+              <text id="5:692" name="Croissant cu unt" x="12" y="12" width="140" height="16" />
+              <text id="5:695" name="Brutăria Artizanală · 0,8 km" x="12" y="30" width="140" height="13" />
+              <frame id="5:696" name="Container" x="12" y="51" width="140" height="30">
+                <frame id="5:749" name="Container" x="0" y="0" width="53" height="30">
+                  <text id="5:782" name="2,00 lei" x="0" y="0" width="53" height="18" />
+                  <text id="5:785" name="4,00 lei" x="0" y="18" width="53" height="12" />
+                </frame>
+                <frame id="5:750" name="Container+BackgroundColor" x="110" y="0" width="30" height="30">
+                  <frame id="5:786" name="SVG" x="8" y="8" width="14" height="14">
+                    <frame id="5:787" name="Frame" x="0" y="0" width="14" height="14" />
+                  </frame>
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+          <frame id="5:615" name="Container+Shadow+BackgroundColor" x="0" y="227" width="164" height="213">
+            <frame id="5:664" name="Container+Gradient" x="0" y="0" width="164" height="120">
+              <text id="5:699" name="🍎" x="52" y="29" width="60" height="62" />
+              <frame id="5:700" name="Container+BackgroundColor" x="8" y="8" width="49" height="27">
+                <text id="5:753" name="−35%" x="8" y="9" width="33" height="13" />
+              </frame>
+            </frame>
+            <frame id="5:665" name="Container" x="0" y="120" width="164" height="93">
+              <text id="5:703" name="Mere Ionatan 1 kg" x="12" y="12" width="140" height="16" />
+              <text id="5:706" name="Piața Verde · 0,3 km" x="12" y="30" width="140" height="13" />
+              <frame id="5:707" name="Container" x="12" y="51" width="140" height="30">
+                <frame id="5:754" name="Container" x="0" y="0" width="51" height="30">
+                  <text id="5:791" name="3,25 lei" x="0" y="0" width="51" height="18" />
+                  <text id="5:794" name="5,00 lei" x="0" y="18" width="51" height="12" />
+                </frame>
+                <frame id="5:755" name="Container+BackgroundColor" x="110" y="0" width="30" height="30">
+                  <frame id="5:795" name="SVG" x="8" y="8" width="14" height="14">
+                    <frame id="5:796" name="Frame" x="0" y="0" width="14" height="14" />
+                  </frame>
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+          <frame id="5:616" name="Container+Shadow+BackgroundColor" x="178" y="227" width="164" height="213">
+            <frame id="5:666" name="Container+Gradient" x="0" y="0" width="164" height="120">
+              <text id="5:710" name="🍱" x="52" y="29" width="60" height="62" />
+              <frame id="5:711" name="Container+BackgroundColor" x="8" y="8" width="49" height="27">
+                <text id="5:758" name="−45%" x="8" y="9" width="33" height="13" />
+              </frame>
+            </frame>
+            <frame id="5:667" name="Container" x="0" y="120" width="164" height="93">
+              <text id="5:714" name="Platou sushi mixt" x="12" y="12" width="140" height="16" />
+              <text id="5:717" name="Sakura Resto · 1,2 km" x="12" y="30" width="140" height="13" />
+              <frame id="5:718" name="Container" x="12" y="51" width="140" height="30">
+                <frame id="5:759" name="Container" x="0" y="0" width="61" height="30">
+                  <text id="5:800" name="22,00 lei" x="0" y="0" width="61" height="18" />
+                  <text id="5:803" name="40,00 lei" x="0" y="18" width="61" height="12" />
+                </frame>
+                <frame id="5:760" name="Container+BackgroundColor" x="110" y="0" width="30" height="30">
+                  <frame id="5:804" name="SVG" x="8" y="8" width="14" height="14">
+                    <frame id="5:805" name="Frame" x="0" y="0" width="14" height="14" />
+                  </frame>
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+          <frame id="5:617" name="Container+Shadow+BackgroundColor" x="0" y="454" width="164" height="213">
+            <frame id="5:668" name="Container+Gradient" x="0" y="0" width="164" height="120">
+              <text id="5:721" name="🥛" x="52" y="29" width="60" height="62" />
+              <frame id="5:722" name="Container+BackgroundColor" x="8" y="8" width="50" height="27">
+                <text id="5:763" name="−40%" x="8" y="9" width="34" height="13" />
+              </frame>
+            </frame>
+            <frame id="5:669" name="Container" x="0" y="120" width="164" height="93">
+              <text id="5:725" name="Lapte bio 1L" x="12" y="12" width="140" height="16" />
+              <text id="5:728" name="Metro Fresh · 0,5 km" x="12" y="30" width="140" height="13" />
+              <frame id="5:729" name="Container" x="12" y="51" width="140" height="30">
+                <frame id="5:764" name="Container" x="0" y="0" width="52" height="30">
+                  <text id="5:809" name="4,20 lei" x="0" y="0" width="52" height="18" />
+                  <text id="5:812" name="7,00 lei" x="0" y="18" width="52" height="12" />
+                </frame>
+                <frame id="5:765" name="Container+BackgroundColor" x="110" y="0" width="30" height="30">
+                  <frame id="5:813" name="SVG" x="8" y="8" width="14" height="14">
+                    <frame id="5:814" name="Frame" x="0" y="0" width="14" height="14" />
+                  </frame>
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+          <frame id="5:618" name="Container+Shadow+BackgroundColor" x="178" y="454" width="164" height="213">
+            <frame id="5:670" name="Container+Gradient" x="0" y="0" width="164" height="120">
+              <text id="5:732" name="🧀" x="52" y="29" width="60" height="62" />
+              <frame id="5:733" name="Container+BackgroundColor" x="8" y="8" width="50" height="27">
+                <text id="5:768" name="−30%" x="8" y="9" width="34" height="13" />
+              </frame>
+            </frame>
+            <frame id="5:671" name="Container" x="0" y="120" width="164" height="93">
+              <text id="5:736" name="Brânză telemea 300g" x="12" y="12" width="140" height="16" />
+              <text id="5:739" name="Metro Fresh · 0,5 km" x="12" y="30" width="140" height="13" />
+              <frame id="5:740" name="Container" x="12" y="51" width="140" height="30">
+                <frame id="5:769" name="Container" x="0" y="0" width="53" height="30">
+                  <text id="5:818" name="8,40 lei" x="0" y="0" width="53" height="18" />
+                  <text id="5:821" name="12,00 lei" x="0" y="18" width="53" height="12" />
+                </frame>
+                <frame id="5:770" name="Container+BackgroundColor" x="110" y="0" width="30" height="30">
+                  <frame id="5:822" name="SVG" x="8" y="8" width="14" height="14">
+                    <frame id="5:823" name="Frame" x="0" y="0" width="14" height="14" />
+                  </frame>
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+      <frame id="5:569" name="Container+BackgroundColor" x="0" y="764" width="390" height="80">
+        <frame id="5:581" name="Container" x="27.889999389648438" y="13.5" width="30" height="38">
+          <frame id="5:619" name="SVG" x="4" y="0" width="22" height="22">
+            <frame id="5:620" name="Frame" x="0" y="0" width="22" height="22" />
+          </frame>
+          <text id="5:624" name="Acasă" x="0" y="26" width="30" height="12" />
+        </frame>
+        <frame id="5:582" name="Container" x="97.69000244140625" y="13.5" width="30" height="38">
+          <frame id="5:625" name="SVG" x="4" y="0" width="22" height="22">
+            <frame id="5:626" name="Frame" x="0" y="0" width="22" height="22" />
+          </frame>
+          <text id="5:631" name="Caută" x="0" y="26" width="30" height="12" />
+        </frame>
+        <frame id="5:583" name="Container+Shadow+BackgroundColor" x="167.47999572753906" y="-4.5" width="54" height="54">
+          <frame id="5:632" name="SVG" x="15" y="15" width="24" height="24">
+            <frame id="5:633" name="Frame" x="0" y="0" width="24" height="24" />
+          </frame>
+        </frame>
+        <frame id="5:584" name="Container" x="261.2799987792969" y="13.5" width="36" height="38">
+          <frame id="5:638" name="SVG" x="7" y="0" width="22" height="22">
+            <frame id="5:639" name="Frame" x="0" y="0" width="22" height="22" />
+          </frame>
+          <text id="5:643" name="Salvate" x="0" y="26" width="36" height="12" />
+        </frame>
+        <frame id="5:585" name="Container" x="337.0799865722656" y="13.5" width="25" height="38">
+          <frame id="5:644" name="SVG" x="1.5" y="0" width="22" height="22">
+            <frame id="5:645" name="Frame" x="0" y="0" width="22" height="22" />
+          </frame>
+          <text id="5:650" name="Profil" x="0" y="26" width="25" height="12" />
+        </frame>
+      </frame>
+    </frame>
+  </frame>
+  <frame id="5:829" name="Body+BackgroundColor" x="4057" y="2099" width="390" height="843">
+    <frame id="5:830" name="Container+BackgroundColor" x="0" y="0" width="390" height="844">
+      <frame id="5:831" name="Container" x="0" y="0" width="390" height="112">
+        <frame id="5:833" name="Container" x="24" y="52" width="151" height="40">
+          <frame id="5:853" name="Container+BackgroundColor" x="0" y="0" width="40" height="40">
+            <frame id="5:873" name="SVG" x="10" y="10" width="20" height="20">
+              <frame id="5:874" name="Frame" x="0" y="0" width="20" height="20" />
+            </frame>
+          </frame>
+          <text id="5:856" name="Notificări" x="52" y="6" width="99" height="28" />
+        </frame>
+        <text id="5:836" name="Marchează tot" x="276" y="64" width="90" height="16" />
+      </frame>
+      <frame id="5:832" name="Container" x="0" y="112" width="390" height="732">
+        <text id="5:839" name="Astăzi" x="24" y="0" width="342" height="15" />
+        <frame id="5:840" name="Container+Shadow+BackgroundColor" x="24" y="27" width="342" height="114">
+          <frame id="5:857" name="Container+BackgroundColor" x="20" y="16" width="48" height="48">
+            <text id="5:878" name="🔥" x="10.5" y="10" width="27" height="28" />
+          </frame>
+          <frame id="5:858" name="Container" x="82" y="16" width="222" height="82">
+            <text id="5:881" name="Ofertă nouă la Piața Verde!" x="0" y="0" width="222" height="18" />
+            <text id="5:884" name="Spanac proaspăt disponibil cu −60%. Grabă, mai sunt doar 3!" x="0" y="22" width="222" height="39" />
+            <text id="5:887" name="acum 5 min" x="0" y="69" width="222" height="13" />
+          </frame>
+          <frame id="5:859" name="Container+BackgroundColor" x="318" y="20" width="8" height="8" />
+        </frame>
+        <frame id="5:841" name="Container+Shadow+BackgroundColor" x="24" y="151" width="342" height="134">
+          <frame id="5:860" name="Container+BackgroundColor" x="20" y="16" width="48" height="48">
+            <text id="5:889" name="✅" x="10.5" y="10" width="27" height="28" />
+          </frame>
+          <frame id="5:861" name="Container" x="82" y="16" width="222" height="102">
+            <text id="5:892" name="Comandă ridicată cu succes" x="0" y="0" width="222" height="18" />
+            <text id="5:895" name="Ai ridicat comanda #1042 de la Brutăria Artizanală. Mulțumim că salvezi!" x="0" y="22" width="222" height="58.5" />
+            <text id="5:898" name="acum 1 oră" x="0" y="88.5" width="222" height="13" />
+          </frame>
+          <frame id="5:862" name="Container+BackgroundColor" x="318" y="20" width="8" height="8" />
+        </frame>
+        <frame id="5:842" name="Container+Gradient" x="24" y="294.5" width="342" height="115">
+          <frame id="5:863" name="Container+BackgroundColor" x="16" y="16" width="48" height="48">
+            <text id="5:901" name="🌱" x="10.5" y="10" width="27" height="28" />
+          </frame>
+          <frame id="5:864" name="Container" x="78" y="16" width="248" height="83">
+            <text id="5:904" name="Felicitări! Ai salvat 10 kg CO₂" x="0" y="0" width="248" height="19" />
+            <text id="5:907" name="Ai atins un nou nivel de impact. Continuă să salvezi mâncare!" x="0" y="23" width="248" height="39" />
+            <text id="5:910" name="acum 3 ore" x="0" y="70" width="248" height="13" />
+          </frame>
+        </frame>
+        <text id="5:845" name="Ieri" x="24" y="429.5" width="342" height="15" />
+        <frame id="5:846" name="Container+Shadow+BackgroundColor" x="24" y="456.5" width="342" height="114">
+          <frame id="5:865" name="Container+BackgroundColor" x="16" y="16" width="48" height="48">
+            <text id="5:912" name="⏰" x="10.5" y="10" width="27" height="28" />
+          </frame>
+          <frame id="5:866" name="Container" x="78" y="16" width="248" height="82">
+            <text id="5:915" name="Ultima șansă — expiră în 1 oră" x="0" y="0" width="248" height="18" />
+            <text id="5:918" name="Iaurt grecesc de la Metro Fresh expiră în curând. −40%" x="0" y="22" width="248" height="39" />
+            <text id="5:921" name="ieri, 18:30" x="0" y="69" width="248" height="13" />
+          </frame>
+        </frame>
+        <frame id="5:847" name="Container+Shadow+BackgroundColor" x="24" y="580.5" width="342" height="114">
+          <frame id="5:867" name="Container+BackgroundColor" x="16" y="16" width="48" height="48">
+            <text id="5:924" name="🎁" x="10.5" y="10" width="27" height="28" />
+          </frame>
+          <frame id="5:868" name="Container" x="78" y="16" width="248" height="82">
+            <text id="5:927" name="Magazin nou în zona ta!" x="0" y="0" width="248" height="18" />
+            <text id="5:930" name="Sakura Resto tocmai a adăugat oferte. 8 produse disponibile." x="0" y="22" width="248" height="39" />
+            <text id="5:933" name="ieri, 14:00" x="0" y="69" width="248" height="13" />
+          </frame>
+        </frame>
+        <frame id="5:848" name="Container+Shadow+BackgroundColor" x="24" y="704.5" width="342" height="132">
+          <frame id="5:869" name="Container+BackgroundColor" x="16" y="16" width="48" height="48">
+            <text id="5:936" name="💰" x="10.5" y="10" width="27" height="28" />
+          </frame>
+          <frame id="5:870" name="Container" x="78" y="16" width="248" height="100">
+            <text id="5:939" name="Ai economisit 45 lei această săptămână" x="0" y="0" width="248" height="36" />
+            <text id="5:942" name="Rezumatul tău săptămânal este gata. Bravo!" x="0" y="40" width="248" height="39" />
+            <text id="5:945" name="ieri, 09:00" x="0" y="87" width="248" height="13" />
+          </frame>
+        </frame>
+        <text id="5:851" name="Săptămâna trecută" x="24" y="856.5" width="342" height="15" />
+        <frame id="5:852" name="Container+Shadow+BackgroundColor" x="24" y="883.5" width="342" height="114">
+          <frame id="5:871" name="Container+BackgroundColor" x="16" y="16" width="48" height="48">
+            <text id="5:947" name="⭐" x="10.5" y="10" width="27" height="28" />
+          </frame>
+          <frame id="5:872" name="Container" x="78" y="16" width="248" height="82">
+            <text id="5:950" name="Evaluează comanda ta" x="0" y="0" width="248" height="18" />
+            <text id="5:953" name="Cum a fost experiența de la Piața Verde? Spune-ne!" x="0" y="22" width="248" height="39" />
+            <text id="5:956" name="3 mar, 11:15" x="0" y="69" width="248" height="13" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+  </frame>
+  <frame id="5:961" name="Body+BackgroundColor" x="4753" y="2099" width="390" height="830">
+    <frame id="5:962" name="Container+BackgroundColor" x="0" y="0" width="390" height="844">
+      <frame id="5:963" name="Container+BackgroundColor" x="0" y="0" width="390" height="226">
+        <frame id="5:967" name="Container+BackgroundColor" x="240" y="-50" width="200" height="200" />
+        <frame id="5:968" name="Container+BackgroundColor" x="-30" y="136" width="120" height="120" />
+        <frame id="5:969" name="Container" x="24" y="52" width="342" height="36">
+          <text id="5:989" name="Profilul meu" x="0" y="6.5" width="105" height="23" />
+          <frame id="5:990" name="Container+BackgroundColor" x="306" y="0" width="36" height="36">
+            <frame id="5:1053" name="SVG" x="9" y="9" width="18" height="18">
+              <frame id="5:1054" name="Frame" x="0" y="0" width="18" height="18" />
+            </frame>
+          </frame>
+        </frame>
+        <frame id="5:970" name="Container" x="24" y="112" width="342" height="78">
+          <frame id="5:991" name="Container+BackgroundColor" x="0" y="3" width="72" height="72">
+            <text id="5:1059" name="S" x="27" y="18.5" width="18" height="35" />
+          </frame>
+          <frame id="5:992" name="Container" x="88" y="0" width="189" height="78">
+            <text id="5:1062" name="Simone M." x="0" y="0" width="189" height="25" />
+            <text id="5:1065" name="simone.marton89@gmail.com" x="0" y="27" width="189" height="16" />
+            <frame id="5:1066" name="Container /+BackgroundColor" x="0" y="51" width="101" height="27">
+              <text id="5:1116" name="🌱 Nivel Verde" x="10" y="8" width="81" height="15" />
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+      <frame id="5:964" name="Container+BackgroundColor" x="0" y="226" width="390" height="99">
+        <frame id="5:971" name="Container" x="39.5" y="20" width="44" height="58">
+          <text id="5:995" name="47" x="0" y="0" width="44" height="28" />
+          <text id="5:998" name="Produse salvate" x="0" y="30" width="44" height="26" />
+        </frame>
+        <frame id="5:972" name="Container+BackgroundColor" x="114.5" y="20" width="1" height="58" />
+        <frame id="5:973" name="Container" x="146.5" y="20" width="77" height="58">
+          <text id="5:1001" name="18,4 kg" x="0" y="0" width="77" height="28" />
+          <text id="5:1004" name="CO₂ economisit" x="0" y="30" width="77" height="28" />
+        </frame>
+        <frame id="5:974" name="Container+BackgroundColor" x="254.5" y="20" width="1" height="58" />
+        <frame id="5:975" name="Container" x="286.5" y="20" width="64" height="58">
+          <text id="5:1007" name="187 lei" x="0" y="0" width="64" height="28" />
+          <text id="5:1010" name="Economii totale" x="0" y="30" width="64" height="26" />
+        </frame>
+      </frame>
+      <frame id="5:965" name="Container" x="0" y="325" width="390" height="519">
+        <frame id="5:976" name="Container" x="24" y="20" width="342" height="127">
+          <text id="5:1013" name="Realizările mele 🏆" x="0" y="0" width="342" height="21" />
+          <frame id="5:1014" name="Container" x="0" y="35" width="342" height="92">
+            <frame id="5:1067" name="Container" x="0" y="0" width="80" height="88">
+              <frame id="5:1117" name="Container+BackgroundColor" x="12" y="0" width="56" height="56">
+                <text id="5:1164" name="🌱" x="12" y="11.5" width="32" height="33" />
+              </frame>
+              <text id="5:1120" name="Primul pas" x="0" y="62" width="80" height="13" />
+            </frame>
+            <frame id="5:1068" name="Container" x="90" y="0" width="80" height="88">
+              <frame id="5:1121" name="Container+BackgroundColor" x="12" y="0" width="56" height="56">
+                <text id="5:1167" name="🥐" x="12" y="11.5" width="32" height="33" />
+              </frame>
+              <text id="5:1124" name="Amorezul Brutăriei" x="0" y="62" width="80" height="26" />
+            </frame>
+            <frame id="5:1069" name="Container" x="180" y="0" width="80" height="88">
+              <frame id="5:1125" name="Container+BackgroundColor" x="12" y="0" width="56" height="56">
+                <text id="5:1170" name="♻️" x="12" y="11.5" width="32" height="33" />
+              </frame>
+              <text id="5:1128" name="10 kg CO₂" x="0" y="62" width="80" height="15" />
+            </frame>
+            <frame id="5:1070" name="Container" x="270" y="0" width="80" height="88">
+              <frame id="5:1129" name="Container+BackgroundColor" x="12" y="0" width="56" height="56">
+                <text id="5:1173" name="🌍" x="12" y="11.5" width="32" height="33" />
+              </frame>
+              <text id="5:1132" name="50 kg CO₂" x="0" y="62" width="80" height="15" />
+            </frame>
+            <frame id="5:1071" name="Container" x="360" y="0" width="80" height="88">
+              <frame id="5:1133" name="Container+BackgroundColor" x="12" y="0" width="56" height="56">
+                <text id="5:1176" name="🏅" x="12" y="11.5" width="32" height="33" />
+              </frame>
+              <text id="5:1136" name="100 salvări" x="0" y="62" width="80" height="13" />
+            </frame>
+          </frame>
+        </frame>
+        <frame id="5:977" name="Container+Shadow+BackgroundColor" x="24" y="171" width="342" height="291">
+          <frame id="5:1015" name="Container" x="0" y="0" width="342" height="73">
+            <frame id="5:1072" name="Container+BackgroundColor" x="20" y="16" width="40" height="40">
+              <frame id="5:1137" name="SVG" x="11" y="11" width="18" height="18">
+                <frame id="5:1138" name="Frame" x="0" y="0" width="18" height="18" />
+              </frame>
+            </frame>
+            <text id="5:1075" name="Date personale" x="74" y="26.5" width="218" height="19" />
+            <frame id="5:1076" name="SVG" x="306" y="28" width="16" height="16">
+              <frame id="5:1077" name="Frame" x="0" y="0" width="16" height="16" />
+            </frame>
+          </frame>
+          <frame id="5:1016" name="Container" x="0" y="73" width="342" height="73">
+            <frame id="5:1079" name="Container+BackgroundColor" x="20" y="16" width="40" height="40">
+              <frame id="5:1141" name="SVG" x="11" y="11" width="18" height="18">
+                <frame id="5:1142" name="Frame" x="0" y="0" width="18" height="18" />
+              </frame>
+            </frame>
+            <text id="5:1082" name="Istoricul comenzilor" x="74" y="26.5" width="218" height="19" />
+            <frame id="5:1083" name="SVG" x="306" y="28" width="16" height="16">
+              <frame id="5:1084" name="Frame" x="0" y="0" width="16" height="16" />
+            </frame>
+          </frame>
+          <frame id="5:1017" name="Container" x="0" y="146" width="342" height="73">
+            <frame id="5:1086" name="Container+BackgroundColor" x="20" y="16" width="40" height="40">
+              <frame id="5:1147" name="SVG" x="11" y="11" width="18" height="18">
+                <frame id="5:1148" name="Frame" x="0" y="0" width="18" height="18" />
+              </frame>
+            </frame>
+            <text id="5:1089" name="Produse favorite" x="74" y="26.5" width="218" height="19" />
+            <frame id="5:1090" name="SVG" x="306" y="28" width="16" height="16">
+              <frame id="5:1091" name="Frame" x="0" y="0" width="16" height="16" />
+            </frame>
+          </frame>
+          <frame id="5:1018" name="Container" x="0" y="219" width="342" height="72">
+            <frame id="5:1093" name="Container+BackgroundColor" x="20" y="16" width="40" height="40">
+              <frame id="5:1150" name="SVG" x="11" y="11" width="18" height="18">
+                <frame id="5:1151" name="Frame" x="0" y="0" width="18" height="18" />
+              </frame>
+            </frame>
+            <text id="5:1096" name="Impactul meu CO₂" x="74" y="26" width="218" height="20" />
+            <frame id="5:1097" name="SVG" x="306" y="28" width="16" height="16">
+              <frame id="5:1098" name="Frame" x="0" y="0" width="16" height="16" />
+            </frame>
+          </frame>
+        </frame>
+        <frame id="5:978" name="Container+Shadow+BackgroundColor" x="24" y="478" width="342" height="145">
+          <frame id="5:1019" name="Container" x="0" y="0" width="342" height="73">
+            <frame id="5:1100" name="Container+BackgroundColor" x="20" y="16" width="40" height="40">
+              <frame id="5:1155" name="SVG" x="11" y="11" width="18" height="18">
+                <frame id="5:1156" name="Frame" x="0" y="0" width="18" height="18" />
+              </frame>
+            </frame>
+            <text id="5:1103" name="Setări" x="74" y="26.5" width="218" height="19" />
+            <frame id="5:1104" name="SVG" x="306" y="28" width="16" height="16">
+              <frame id="5:1105" name="Frame" x="0" y="0" width="16" height="16" />
+            </frame>
+          </frame>
+          <frame id="5:1020" name="Container" x="0" y="73" width="342" height="72">
+            <frame id="5:1107" name="Container+BackgroundColor" x="20" y="16" width="40" height="40">
+              <frame id="5:1159" name="SVG" x="11" y="11" width="18" height="18">
+                <frame id="5:1160" name="Frame" x="0" y="0" width="18" height="18" />
+              </frame>
+            </frame>
+            <text id="5:1110" name="Deconectare" x="74" y="26.5" width="218" height="19" />
+            <frame id="5:1111" name="SVG" x="306" y="28" width="16" height="16">
+              <frame id="5:1112" name="Frame" x="0" y="0" width="16" height="16" />
+            </frame>
+          </frame>
+        </frame>
+        <text id="5:981" name="Wasteless v1.0.0 · Termeni &amp; Confidențialitate" x="24" y="639" width="342" height="15" />
+      </frame>
+      <frame id="5:966" name="Container+BackgroundColor" x="0" y="764" width="390" height="80">
+        <frame id="5:982" name="Container" x="27.799999237060547" y="13.5" width="30" height="38">
+          <frame id="5:1021" name="SVG" x="4" y="0" width="22" height="22">
+            <frame id="5:1022" name="Frame" x="0" y="0" width="22" height="22" />
+          </frame>
+          <text id="5:1026" name="Acasă" x="0" y="26" width="30" height="12" />
+        </frame>
+        <frame id="5:983" name="Container" x="97.38999938964844" y="13.5" width="30" height="38">
+          <frame id="5:1027" name="SVG" x="4" y="0" width="22" height="22">
+            <frame id="5:1028" name="Frame" x="0" y="0" width="22" height="22" />
+          </frame>
+          <text id="5:1033" name="Caută" x="0" y="26" width="30" height="12" />
+        </frame>
+        <frame id="5:984" name="Container+Shadow+BackgroundColor" x="166.97999572753906" y="-4.5" width="54" height="54">
+          <frame id="5:1034" name="SVG" x="15" y="15" width="24" height="24">
+            <frame id="5:1035" name="Frame" x="0" y="0" width="24" height="24" />
+          </frame>
+        </frame>
+        <frame id="5:985" name="Container" x="260.5799865722656" y="13.5" width="36" height="38">
+          <frame id="5:1040" name="SVG" x="7" y="0" width="22" height="22">
+            <frame id="5:1041" name="Frame" x="0" y="0" width="22" height="22" />
+          </frame>
+          <text id="5:1045" name="Salvate" x="0" y="26" width="36" height="12" />
+        </frame>
+        <frame id="5:986" name="Container" x="336.1700134277344" y="13.5" width="26" height="38">
+          <frame id="5:1046" name="SVG" x="2" y="0" width="22" height="22">
+            <frame id="5:1047" name="Frame" x="0" y="0" width="22" height="22" />
+          </frame>
+          <text id="5:1052" name="Profil" x="0" y="26" width="26" height="12" />
+        </frame>
+      </frame>
+    </frame>
+  </frame>
+  <frame id="5:1181" name="Body+BackgroundColor" x="5449" y="2104" width="390" height="819">
+    <frame id="5:1182" name="Container+BackgroundColor" x="0" y="0" width="390" height="844">
+      <frame id="5:1183" name="Container" x="0" y="0" width="390" height="112">
+        <frame id="5:1185" name="Container+BackgroundColor" x="24" y="52" width="40" height="40">
+          <frame id="5:1208" name="SVG" x="10" y="10" width="20" height="20">
+            <frame id="5:1209" name="Frame" x="0" y="0" width="20" height="20" />
+          </frame>
+        </frame>
+        <text id="5:1188" name="Setări" x="76" y="58" width="63" height="28" />
+      </frame>
+      <frame id="5:1184" name="Container" x="0" y="112" width="390" height="732">
+        <text id="5:1191" name="Cont" x="24" y="0" width="342" height="15" />
+        <frame id="5:1192" name="Container+Shadow+BackgroundColor" x="24" y="25" width="342" height="228">
+          <frame id="5:1211" name="Container" x="0" y="0" width="342" height="83">
+            <frame id="5:1223" name="Container+BackgroundColor" x="20" y="21" width="40" height="40">
+              <frame id="5:1286" name="SVG" x="11" y="11" width="18" height="18">
+                <frame id="5:1287" name="Frame" x="0" y="0" width="18" height="18" />
+              </frame>
+            </frame>
+            <frame id="5:1224" name="Container" x="74" y="16" width="218" height="50">
+              <text id="5:1292" name="Editează profilul" x="0" y="0" width="218" height="19" />
+              <text id="5:1295" name="Simone M. · simone.marton89@gmail.com" x="0" y="20" width="218" height="30" />
+            </frame>
+            <frame id="5:1225" name="SVG" x="306" y="33" width="16" height="16">
+              <frame id="5:1226" name="Frame" x="0" y="0" width="16" height="16" />
+            </frame>
+          </frame>
+          <frame id="5:1212" name="Container" x="0" y="83" width="342" height="73">
+            <frame id="5:1228" name="Container+BackgroundColor" x="20" y="16" width="40" height="40">
+              <frame id="5:1296" name="SVG" x="11" y="11" width="18" height="18">
+                <frame id="5:1297" name="Frame" x="0" y="0" width="18" height="18" />
+              </frame>
+            </frame>
+            <text id="5:1231" name="Schimbă parola" x="74" y="26.5" width="218" height="19" />
+            <frame id="5:1232" name="SVG" x="306" y="28" width="16" height="16">
+              <frame id="5:1233" name="Frame" x="0" y="0" width="16" height="16" />
+            </frame>
+          </frame>
+          <frame id="5:1213" name="Container" x="0" y="156" width="342" height="72">
+            <frame id="5:1235" name="Container+BackgroundColor" x="20" y="16" width="40" height="40">
+              <frame id="5:1300" name="SVG" x="11" y="11" width="18" height="18">
+                <frame id="5:1301" name="Frame" x="0" y="0" width="18" height="18" />
+              </frame>
+            </frame>
+            <text id="5:1238" name="Adresă de email" x="74" y="26.5" width="218" height="19" />
+            <frame id="5:1239" name="SVG" x="306" y="28" width="16" height="16">
+              <frame id="5:1240" name="Frame" x="0" y="0" width="16" height="16" />
+            </frame>
+          </frame>
+        </frame>
+        <text id="5:1195" name="Notificări" x="24" y="273" width="342" height="15" />
+        <frame id="5:1196" name="Container+Shadow+BackgroundColor" x="24" y="298" width="342" height="218">
+          <frame id="5:1214" name="Container" x="0" y="0" width="342" height="73">
+            <frame id="5:1242" name="Container+BackgroundColor" x="20" y="16" width="40" height="40">
+              <frame id="5:1303" name="SVG" x="11" y="11" width="18" height="18">
+                <frame id="5:1304" name="Frame" x="0" y="0" width="18" height="18" />
+              </frame>
+            </frame>
+            <frame id="5:1243" name="Container" x="74" y="18.5" width="190" height="35">
+              <text id="5:1308" name="Notificări push" x="0" y="0" width="190" height="19" />
+              <text id="5:1311" name="Oferte noi, expirare, comenzi" x="0" y="20" width="190" height="15" />
+            </frame>
+            <frame id="5:1244" name="Container+BackgroundColor" x="278" y="23" width="44" height="26">
+              <frame id="5:1312" name="Container+BackgroundColor" x="21" y="3" width="20" height="20" />
+            </frame>
+          </frame>
+          <frame id="5:1215" name="Container" x="0" y="73" width="342" height="73">
+            <frame id="5:1245" name="Container+BackgroundColor" x="20" y="16" width="40" height="40">
+              <frame id="5:1313" name="SVG" x="11" y="11" width="18" height="18">
+                <frame id="5:1314" name="Frame" x="0" y="0" width="18" height="18" />
+              </frame>
+            </frame>
+            <text id="5:1248" name="Email rezumat săptămânal" x="74" y="17" width="190" height="38" />
+            <frame id="5:1249" name="Container+BackgroundColor" x="278" y="23" width="44" height="26">
+              <frame id="5:1316" name="Container+BackgroundColor" x="21" y="3" width="20" height="20" />
+            </frame>
+          </frame>
+          <frame id="5:1216" name="Container" x="0" y="146" width="342" height="72">
+            <frame id="5:1250" name="Container+BackgroundColor" x="20" y="16" width="40" height="40">
+              <text id="5:1318" name="⏰" x="9" y="8.5" width="22" height="23" />
+            </frame>
+            <frame id="5:1251" name="Container" x="74" y="18.5" width="190" height="35">
+              <text id="5:1321" name="Alertă expirare" x="0" y="0" width="190" height="19" />
+              <text id="5:1324" name="Cu 2 ore înainte de expirare" x="0" y="20" width="190" height="15" />
+            </frame>
+            <frame id="5:1252" name="Container+BackgroundColor" x="278" y="23" width="44" height="26">
+              <frame id="5:1325" name="Container+BackgroundColor" x="3" y="3" width="20" height="20" />
+            </frame>
+          </frame>
+        </frame>
+        <text id="5:1199" name="Preferințe" x="24" y="536" width="342" height="15" />
+        <frame id="5:1200" name="Container+Shadow+BackgroundColor" x="24" y="561" width="342" height="218">
+          <frame id="5:1217" name="Container" x="0" y="0" width="342" height="73">
+            <frame id="5:1253" name="Container+BackgroundColor" x="20" y="16" width="40" height="40">
+              <frame id="5:1326" name="SVG" x="11" y="11" width="18" height="18">
+                <frame id="5:1327" name="Frame" x="0" y="0" width="18" height="18" />
+              </frame>
+            </frame>
+            <frame id="5:1254" name="Container" x="74" y="18.5" width="218" height="35">
+              <text id="5:1332" name="Locație" x="0" y="0" width="218" height="19" />
+              <text id="5:1335" name="Cluj-Napoca, România" x="0" y="20" width="218" height="15" />
+            </frame>
+            <frame id="5:1255" name="SVG" x="306" y="28" width="16" height="16">
+              <frame id="5:1256" name="Frame" x="0" y="0" width="16" height="16" />
+            </frame>
+          </frame>
+          <frame id="5:1218" name="Container" x="0" y="73" width="342" height="73">
+            <frame id="5:1258" name="Container+BackgroundColor" x="20" y="16" width="40" height="40">
+              <text id="5:1338" name="🌐" x="9" y="8.5" width="22" height="23" />
+            </frame>
+            <frame id="5:1259" name="Container" x="74" y="18.5" width="218" height="35">
+              <text id="5:1341" name="Limbă" x="0" y="0" width="218" height="19" />
+              <text id="5:1344" name="Română" x="0" y="20" width="218" height="15" />
+            </frame>
+            <frame id="5:1260" name="SVG" x="306" y="28" width="16" height="16">
+              <frame id="5:1261" name="Frame" x="0" y="0" width="16" height="16" />
+            </frame>
+          </frame>
+          <frame id="5:1219" name="Container" x="0" y="146" width="342" height="72">
+            <frame id="5:1263" name="Container+BackgroundColor" x="20" y="16" width="40" height="40">
+              <text id="5:1347" name="🌙" x="9" y="8.5" width="22" height="23" />
+            </frame>
+            <text id="5:1266" name="Temă întunecată" x="74" y="26.5" width="190" height="19" />
+            <frame id="5:1267" name="Container+BackgroundColor" x="278" y="23" width="44" height="26">
+              <frame id="5:1348" name="Container+BackgroundColor" x="3" y="3" width="20" height="20" />
+            </frame>
+          </frame>
+        </frame>
+        <text id="5:1203" name="Despre" x="24" y="799" width="342" height="15" />
+        <frame id="5:1204" name="Container+Shadow+BackgroundColor" x="24" y="824" width="342" height="155">
+          <frame id="5:1220" name="Container" x="0" y="0" width="342" height="52">
+            <text id="5:1270" name="Termeni și condiții" x="20" y="16" width="272" height="19" />
+            <frame id="5:1271" name="SVG" x="306" y="17.5" width="16" height="16">
+              <frame id="5:1272" name="Frame" x="0" y="0" width="16" height="16" />
+            </frame>
+          </frame>
+          <frame id="5:1221" name="Container" x="0" y="52" width="342" height="52">
+            <text id="5:1276" name="Politica de confidențialitate" x="20" y="16" width="272" height="19" />
+            <frame id="5:1277" name="SVG" x="306" y="17.5" width="16" height="16">
+              <frame id="5:1278" name="Frame" x="0" y="0" width="16" height="16" />
+            </frame>
+          </frame>
+          <frame id="5:1222" name="Container" x="0" y="104" width="342" height="51">
+            <text id="5:1282" name="Versiune" x="20" y="16" width="62" height="19" />
+            <text id="5:1285" name="1.0.0" x="289" y="17.5" width="33" height="16" />
+          </frame>
+        </frame>
+        <text id="5:1207" name="Șterge contul" x="32" y="1007" width="326" height="21" />
+      </frame>
+    </frame>
+  </frame>
+  <frame id="5:1353" name="Body+BackgroundColor" x="6145" y="2079" width="390" height="844">
+    <frame id="5:1354" name="Container+BackgroundColor" x="0" y="0" width="390" height="844">
+      <frame id="5:1355" name="Container" x="0" y="0" width="390" height="104">
+        <text id="5:1361" name="În apropiere" x="24" y="57" width="128" height="28" />
+        <frame id="5:1362" name="Container" x="282" y="52" width="84" height="38">
+          <frame id="5:1411" name="Container+BackgroundColor" x="0" y="0" width="38" height="38">
+            <frame id="5:1435" name="SVG" x="10" y="10" width="18" height="18">
+              <frame id="5:1436" name="Frame" x="0" y="0" width="18" height="18" />
+            </frame>
+          </frame>
+          <frame id="5:1412" name="Container+BackgroundColor" x="46" y="0" width="38" height="38">
+            <frame id="5:1441" name="SVG" x="10" y="10" width="18" height="18">
+              <frame id="5:1442" name="Frame" x="0" y="0" width="18" height="18" />
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+      <frame id="5:1356" name="Container+Shadow+BackgroundColor" x="24" y="104" width="342" height="240">
+        <frame id="5:1400" name="Container+Shadow+BackgroundColor" x="292" y="190" width="38" height="38">
+          <frame id="5:1413" name="SVG" x="10" y="10" width="18" height="18">
+            <frame id="5:1414" name="Frame" x="0" y="0" width="18" height="18" />
+          </frame>
+        </frame>
+        <text id="10:4250" name="harta" x="63" y="57" width="193" height="95" />
+      </frame>
+      <frame id="5:1357" name="Container" x="0" y="344" width="390" height="61">
+        <frame id="5:1401" name="Container+BackgroundColor" x="24" y="12" width="85" height="37">
+          <text id="5:1419" name="Sub 1 km" x="16" y="11" width="53" height="16" />
+        </frame>
+        <frame id="5:1402" name="Container+BackgroundColor" x="117" y="12" width="90" height="37">
+          <text id="5:1422" name="Sub 2 km" x="17" y="12" width="56" height="16" />
+        </frame>
+        <frame id="5:1403" name="Container+BackgroundColor" x="215" y="12" width="90" height="37">
+          <text id="5:1425" name="Sub 5 km" x="17" y="12" width="56" height="16" />
+        </frame>
+        <frame id="5:1404" name="Container+BackgroundColor" x="313" y="12" width="86" height="37">
+          <text id="5:1428" name="Oriunde" x="17" y="12" width="52" height="16" />
+        </frame>
+      </frame>
+      <frame id="5:1358" name="Container" x="0" y="405" width="390" height="439">
+        <text id="5:1407" name="3 magazine în apropiere" x="24" y="4" width="342" height="18" />
+        <frame id="5:1408" name="Container+Shadow+BackgroundColor" x="24" y="32" width="342" height="102">
+          <frame id="5:1429" name="Container+BackgroundColor" x="18" y="23" width="56" height="56">
+            <text id="5:1448" name="🥬" x="12" y="11.5" width="32" height="33" />
+          </frame>
+          <frame id="5:1430" name="Container" x="88" y="16" width="236" height="70">
+            <frame id="5:1449" name="Container" x="0" y="0" width="236" height="19">
+              <text id="5:1472" name="Piața Verde" x="0" y="0" width="84" height="19" />
+              <text id="5:1475" name="0,4 km" x="195" y="2" width="41" height="15" />
+            </frame>
+            <text id="5:1452" name="Legume, lactate, fructe" x="0" y="22" width="236" height="15" />
+            <frame id="5:1453" name="Container" x="0" y="43" width="236" height="27">
+              <frame id="5:1476" name="Container+BackgroundColor" x="0" y="0" width="70" height="27">
+                <text id="5:1511" name="12 oferte" x="10" y="8" width="50" height="15" />
+              </frame>
+              <text id="5:1479" name="⭐ 4.8" x="76" y="6" width="36" height="15" />
+              <text id="5:1482" name="· Deschis" x="118" y="6" width="51" height="15" />
+            </frame>
+          </frame>
+        </frame>
+        <frame id="5:1409" name="Container+Shadow+BackgroundColor" x="24" y="146" width="342" height="102">
+          <frame id="5:1431" name="Container+BackgroundColor" x="18" y="23" width="56" height="56">
+            <text id="5:1456" name="🥐" x="12" y="11.5" width="32" height="33" />
+          </frame>
+          <frame id="5:1432" name="Container" x="88" y="16" width="236" height="70">
+            <frame id="5:1457" name="Container" x="0" y="0" width="236" height="19">
+              <text id="5:1485" name="Brutăria Artizanală" x="0" y="0" width="136" height="19" />
+              <text id="5:1488" name="0,7 km" x="196" y="2" width="40" height="15" />
+            </frame>
+            <text id="5:1460" name="Pâine, patiserie, prăjituri" x="0" y="22" width="236" height="15" />
+            <frame id="5:1461" name="Container" x="0" y="43" width="236" height="27">
+              <frame id="5:1489" name="Container+BackgroundColor" x="0" y="0" width="65" height="27">
+                <text id="5:1514" name="7 oferte" x="10" y="8" width="45" height="15" />
+              </frame>
+              <text id="5:1492" name="⭐ 4.9" x="71" y="6" width="35" height="15" />
+              <text id="5:1495" name="· Deschis" x="112" y="6" width="51" height="15" />
+            </frame>
+          </frame>
+        </frame>
+        <frame id="5:1410" name="Container+Shadow+BackgroundColor" x="24" y="260" width="342" height="102">
+          <frame id="5:1433" name="Container+BackgroundColor" x="18" y="23" width="56" height="56">
+            <text id="5:1464" name="🍱" x="12" y="11.5" width="32" height="33" />
+          </frame>
+          <frame id="5:1434" name="Container" x="88" y="16" width="236" height="70">
+            <frame id="5:1465" name="Container" x="0" y="0" width="236" height="19">
+              <text id="5:1498" name="Sushi Express" x="0" y="0" width="101" height="19" />
+              <text id="5:1501" name="1,1 km" x="202" y="2" width="34" height="15" />
+            </frame>
+            <text id="5:1468" name="Sushi, preparate asiatice" x="0" y="22" width="236" height="15" />
+            <frame id="5:1469" name="Container" x="0" y="43" width="236" height="27">
+              <frame id="5:1502" name="Container+BackgroundColor" x="0" y="0" width="66" height="27">
+                <text id="5:1517" name="4 oferte" x="10" y="8" width="46" height="15" />
+              </frame>
+              <text id="5:1505" name="⭐ 4.6" x="72" y="6" width="35" height="15" />
+              <text id="5:1508" name="· Deschis" x="113" y="6" width="51" height="15" />
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+  </frame>
+  <frame id="10:3515" name="Body+BackgroundColor" x="6775" y="2085" width="390" height="844">
+    <frame id="10:3516" name="div" x="0" y="0" width="390" height="844">
+      <frame id="10:3517" name="div" x="0" y="0" width="390" height="110">
+        <frame id="10:3518" name="div" x="24" y="52" width="40" height="40">
+          <frame id="10:3519" name="svg" x="10" y="10" width="20" height="20" />
+        </frame>
+        <text id="10:3521" name="div" x="76" y="58" width="219.640625" height="28" />
+      </frame>
+      <frame id="10:3522" name="div" x="0" y="110" width="390" height="54">
+        <frame id="10:3523" name="div" x="24" y="0" width="70.9765625" height="38">
+          <text id="10:3524" name="span" x="18" y="11" width="36" height="17" />
+        </frame>
+        <frame id="10:3525" name="div" x="102.9765625" y="0" width="89.8515625" height="38">
+          <text id="10:3526" name="span" x="19" y="12" width="52" height="17" />
+        </frame>
+        <frame id="10:3527" name="div" x="200.828125" y="0" width="112.640625" height="38">
+          <text id="10:3528" name="span" x="19" y="12" width="75" height="17" />
+        </frame>
+        <frame id="10:3529" name="div" x="321.46875" y="0" width="85.890625" height="38">
+          <text id="10:3530" name="span" x="19" y="12" width="48" height="17" />
+        </frame>
+      </frame>
+      <frame id="10:3531" name="div" x="0" y="164" width="390" height="680">
+        <text id="10:3532" name="div" x="24" y="0" width="350" height="15" />
+        <frame id="10:3533" name="div" x="24" y="25" width="342" height="221.5">
+          <frame id="10:3534" name="div" x="18" y="18" width="306" height="36">
+            <frame id="10:3535" name="div" x="0" y="0" width="143.484375" height="36">
+              <text id="10:3536" name="div" x="0" y="0" width="151.484375" height="19" />
+              <text id="10:3537" name="div" x="0" y="21" width="151.484375" height="15" />
+            </frame>
+            <frame id="10:3538" name="div" x="221.5859375" y="0" width="84.4140625" height="28">
+              <text id="10:3539" name="span" x="12" y="8" width="68.4140625" height="15" />
+            </frame>
+          </frame>
+          <frame id="10:3540" name="div" x="18" y="66" width="306" height="36">
+            <text id="10:3541" name="div" x="0" y="0" width="30" height="28" />
+            <text id="10:3542" name="div" x="30" y="0" width="30" height="28" />
+            <text id="10:3543" name="div" x="60" y="0" width="30" height="28" />
+            <frame id="10:3544" name="div" x="90" y="0" width="36" height="36">
+              <text id="10:3545" name="span" x="11.625" y="10.5" width="20.75" height="15" />
+            </frame>
+          </frame>
+          <frame id="10:3546" name="div" x="18" y="116" width="306" height="39">
+            <frame id="10:3547" name="div" x="0" y="2" width="65.1875" height="35">
+              <text id="10:3548" name="div" x="0" y="0" width="73.1875" height="15" />
+              <text id="10:3549" name="div" x="0" y="15" width="73.1875" height="20" />
+            </frame>
+            <frame id="10:3550" name="div" x="123.4375" y="0" width="182.5625" height="39">
+              <frame id="10:3551" name="div" x="0" y="0" width="70.8359375" height="39">
+                <text id="10:3552" name="span" x="15.5" y="12.5" width="47.8359375" height="17" />
+              </frame>
+              <frame id="10:3553" name="div" x="78.8359375" y="0" width="103.7265625" height="39">
+                <text id="10:3554" name="span" x="14" y="11" width="83.7265625" height="17" />
+              </frame>
+            </frame>
+          </frame>
+          <frame id="10:3555" name="div" x="18" y="167" width="306" height="36.5">
+            <text id="10:3556" name="span" x="14" y="10" width="117.4765625" height="15" />
+            <text id="10:3557" name="span" x="139.4765625" y="10" width="131.3203125" height="15" />
+          </frame>
+        </frame>
+        <frame id="10:3558" name="div" x="24" y="258.5" width="342" height="164">
+          <frame id="10:3559" name="div" x="18" y="18" width="306" height="36">
+            <frame id="10:3560" name="div" x="0" y="0" width="179.96875" height="36">
+              <text id="10:3561" name="div" x="0" y="0" width="187.96875" height="19" />
+              <text id="10:3562" name="div" x="0" y="21" width="187.96875" height="15" />
+            </frame>
+            <frame id="10:3563" name="div" x="226.53125" y="0" width="79.46875" height="28">
+              <text id="10:3564" name="span" x="12" y="8" width="63.46875" height="15" />
+            </frame>
+          </frame>
+          <frame id="10:3565" name="div" x="18" y="66" width="306" height="30">
+            <text id="10:3566" name="div" x="0" y="0" width="30" height="28" />
+            <text id="10:3567" name="div" x="30" y="0" width="30" height="28" />
+          </frame>
+          <frame id="10:3568" name="div" x="18" y="110" width="306" height="36">
+            <frame id="10:3569" name="div" x="0" y="0.5" width="58.9140625" height="35">
+              <text id="10:3570" name="div" x="0" y="0" width="66.9140625" height="15" />
+              <text id="10:3571" name="div" x="0" y="15" width="66.9140625" height="20" />
+            </frame>
+            <frame id="10:3572" name="div" x="179.5390625" y="0" width="126.4609375" height="36">
+              <text id="10:3573" name="span" x="18" y="11" width="98.4609375" height="17" />
+            </frame>
+          </frame>
+        </frame>
+        <text id="10:3574" name="div" x="24" y="434.5" width="350" height="15" />
+        <frame id="10:3575" name="div" x="24" y="459.5" width="342" height="167">
+          <frame id="10:3576" name="div" x="18" y="18" width="306" height="36">
+            <frame id="10:3577" name="div" x="0" y="0" width="148.6875" height="36">
+              <text id="10:3578" name="div" x="0" y="0" width="156.6875" height="19" />
+              <text id="10:3579" name="div" x="0" y="21" width="156.6875" height="15" />
+            </frame>
+            <frame id="10:3580" name="div" x="221.5859375" y="0" width="84.4140625" height="28">
+              <text id="10:3581" name="span" x="12" y="8" width="68.4140625" height="15" />
+            </frame>
+          </frame>
+          <frame id="10:3582" name="div" x="18" y="66" width="306" height="30">
+            <text id="10:3583" name="div" x="0" y="0" width="30" height="28" />
+            <text id="10:3584" name="div" x="30" y="0" width="30" height="28" />
+            <text id="10:3585" name="div" x="60" y="0" width="30" height="28" />
+          </frame>
+          <frame id="10:3586" name="div" x="18" y="110" width="306" height="39">
+            <frame id="10:3587" name="div" x="0" y="2" width="58.9140625" height="35">
+              <text id="10:3588" name="div" x="0" y="0" width="66.9140625" height="15" />
+              <text id="10:3589" name="div" x="0" y="15" width="66.9140625" height="20" />
+            </frame>
+            <frame id="10:3590" name="div" x="235.1640625" y="0" width="70.8359375" height="39">
+              <text id="10:3591" name="span" x="15.5" y="12.5" width="47.8359375" height="17" />
+            </frame>
+          </frame>
+        </frame>
+        <frame id="10:3592" name="div" x="24" y="638.5" width="342" height="161">
+          <frame id="10:3593" name="div" x="18" y="18" width="306" height="36">
+            <frame id="10:3594" name="div" x="0" y="0" width="161.1796875" height="36">
+              <text id="10:3595" name="div" x="0" y="0" width="169.1796875" height="19" />
+              <text id="10:3596" name="div" x="0" y="21" width="169.1796875" height="15" />
+            </frame>
+            <frame id="10:3597" name="div" x="238.1015625" y="0" width="67.8984375" height="28">
+              <text id="10:3598" name="span" x="12" y="8" width="51.8984375" height="15" />
+            </frame>
+          </frame>
+          <text id="10:3599" name="div" x="18" y="66" width="30" height="28" />
+          <frame id="10:3600" name="div" x="18" y="108" width="61.8984375" height="35">
+            <text id="10:3601" name="div" x="0" y="0" width="69.8984375" height="15" />
+            <text id="10:3602" name="div" x="0" y="15" width="69.8984375" height="20" />
+          </frame>
+        </frame>
+        <frame id="10:3603" name="div" x="24" y="811.5" width="342" height="110.5" />
+      </frame>
+    </frame>
+  </frame>
+  <frame id="10:3617" name="Body+BackgroundColor" x="3668" y="3358" width="390" height="844">
+    <frame id="10:3618" name="div" x="0" y="0" width="390" height="844">
+      <frame id="10:3619" name="div" x="0" y="0" width="390" height="200" />
+      <frame id="10:3634" name="div" x="0" y="200" width="390" height="69.5">
+        <frame id="10:3635" name="div" x="24" y="16" width="113.328125" height="37.5">
+          <text id="10:3636" name="div" x="0" y="0" width="121.328125" height="20" />
+          <text id="10:3637" name="div" x="0" y="23.5" width="121.328125" height="14" />
+        </frame>
+        <frame id="10:3638" name="div" x="137.328125" y="16" width="1" height="37.5" />
+        <frame id="10:3639" name="div" x="138.328125" y="16" width="113.3359375" height="37.5">
+          <text id="10:3640" name="div" x="0" y="0" width="121.3359375" height="20" />
+          <text id="10:3641" name="div" x="0" y="22" width="121.3359375" height="14" />
+        </frame>
+        <frame id="10:3642" name="div" x="251.6640625" y="16" width="1" height="37.5" />
+        <frame id="10:3643" name="div" x="252.6640625" y="16" width="113.3359375" height="37.5">
+          <text id="10:3644" name="div" x="0" y="0" width="121.3359375" height="20" />
+          <text id="10:3645" name="div" x="0" y="22" width="121.3359375" height="14" />
+        </frame>
+      </frame>
+      <frame id="10:3646" name="div" x="0" y="269.5" width="390" height="574.5">
+        <frame id="10:3647" name="div" x="24" y="16" width="342" height="119.890625">
+          <text id="10:3648" name="div" x="18" y="16" width="314" height="18" />
+          <text id="10:3649" name="div" x="18" y="41.5" width="314" height="63" />
+        </frame>
+        <frame id="10:3650" name="div" x="24" y="151.890625" width="342" height="38">
+          <frame id="10:3651" name="div" x="0" y="0" width="91.2421875" height="36">
+            <text id="10:3652" name="span" x="16" y="10" width="60" height="17" />
+          </frame>
+          <frame id="10:3653" name="div" x="99.2421875" y="0" width="104.421875" height="36">
+            <text id="10:3654" name="span" x="17" y="11" width="71" height="17" />
+          </frame>
+          <frame id="10:3655" name="div" x="211.6640625" y="0" width="101.859375" height="36">
+            <text id="10:3656" name="span" x="17" y="11" width="68" height="17" />
+          </frame>
+          <frame id="10:3657" name="div" x="321.5234375" y="0" width="93.8359375" height="36">
+            <text id="10:3658" name="span" x="17" y="11" width="60" height="17" />
+          </frame>
+        </frame>
+        <text id="10:3659" name="div" x="24" y="203.890625" width="350" height="19" />
+        <frame id="10:3660" name="div" x="24" y="234.890625" width="342" height="419">
+          <frame id="10:3661" name="div" x="0" y="0" width="165" height="203.5">
+            <frame id="10:3662" name="div" x="0" y="0" width="165" height="110" />
+            <frame id="10:3666" name="div" x="0" y="110" width="165" height="93.5">
+              <text id="10:3667" name="div" x="12" y="10" width="149" height="17" />
+              <text id="10:3668" name="div" x="12" y="28.5" width="149" height="14" />
+              <frame id="10:3669" name="div" x="12" y="48.5" width="141" height="33">
+                <frame id="10:3670" name="div" x="0" y="0" width="55.0703125" height="33">
+                  <text id="10:3671" name="div" x="0" y="0" width="63.0703125" height="14" />
+                  <text id="10:3672" name="div" x="0" y="14" width="63.0703125" height="19" />
+                </frame>
+                <frame id="10:3673" name="div" x="111" y="1.5" width="30" height="30">
+                  <frame id="10:3674" name="svg" x="8" y="8" width="14" height="14" />
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+          <frame id="10:3676" name="div" x="177" y="0" width="165" height="203.5">
+            <frame id="10:3677" name="div" x="0" y="0" width="165" height="110" />
+            <frame id="10:3681" name="div" x="0" y="110" width="165" height="93.5">
+              <text id="10:3682" name="div" x="12" y="10" width="149" height="17" />
+              <text id="10:3683" name="div" x="12" y="28.5" width="149" height="14" />
+              <frame id="10:3684" name="div" x="12" y="48.5" width="141" height="33">
+                <frame id="10:3685" name="div" x="0" y="0" width="50.4921875" height="33">
+                  <text id="10:3686" name="div" x="0" y="0" width="58.4921875" height="14" />
+                  <text id="10:3687" name="div" x="0" y="14" width="58.4921875" height="19" />
+                </frame>
+                <frame id="10:3688" name="div" x="111" y="1.5" width="30" height="30">
+                  <frame id="10:3689" name="svg" x="8" y="8" width="14" height="14" />
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+          <frame id="10:3691" name="div" x="0" y="215.5" width="165" height="203.5">
+            <frame id="10:3692" name="div" x="0" y="0" width="165" height="110" />
+            <frame id="10:3696" name="div" x="0" y="110" width="165" height="93.5">
+              <text id="10:3697" name="div" x="12" y="10" width="149" height="17" />
+              <text id="10:3698" name="div" x="12" y="28.5" width="149" height="14" />
+              <frame id="10:3699" name="div" x="12" y="48.5" width="141" height="33">
+                <frame id="10:3700" name="div" x="0" y="0" width="54.3515625" height="33">
+                  <text id="10:3701" name="div" x="0" y="0" width="62.3515625" height="14" />
+                  <text id="10:3702" name="div" x="0" y="14" width="62.3515625" height="19" />
+                </frame>
+                <frame id="10:3703" name="div" x="111" y="1.5" width="30" height="30">
+                  <frame id="10:3704" name="svg" x="8" y="8" width="14" height="14" />
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+          <frame id="10:3706" name="div" x="177" y="215.5" width="165" height="203.5">
+            <frame id="10:3707" name="div" x="0" y="0" width="165" height="110" />
+            <frame id="10:3711" name="div" x="0" y="110" width="165" height="93.5">
+              <text id="10:3712" name="div" x="12" y="10" width="149" height="17" />
+              <text id="10:3713" name="div" x="12" y="28.5" width="149" height="14" />
+              <frame id="10:3714" name="div" x="12" y="48.5" width="141" height="33">
+                <frame id="10:3715" name="div" x="0" y="0" width="54.828125" height="33">
+                  <text id="10:3716" name="div" x="0" y="0" width="62.828125" height="14" />
+                  <text id="10:3717" name="div" x="0" y="14" width="62.828125" height="19" />
+                </frame>
+                <frame id="10:3718" name="div" x="111" y="1.5" width="30" height="30">
+                  <frame id="10:3719" name="svg" x="8" y="8" width="14" height="14" />
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+  </frame>
+  <frame id="10:3721" name="Body+BackgroundColor" x="3061" y="3358" width="390" height="844">
+    <frame id="10:3722" name="div" x="0" y="0" width="390" height="844">
+      <frame id="10:3723" name="div" x="0" y="0" width="390" height="260">
+        <frame id="10:3724" name="div" x="0" y="0" width="390" height="260" />
+        <frame id="10:3725" name="svg" x="0" y="0" width="390" height="260">
+          <vector id="10:3726" name="Vector" x="85" y="90" width="220" height="150" />
+          <vector id="10:3727" name="Vector" x="95" y="90" width="200" height="130" />
+          <vector id="10:3728" name="Vector" x="130" y="110" width="90" height="60" />
+          <vector id="10:3729" name="Vector" x="177" y="109" width="76" height="52" />
+          <vector id="10:3730" name="Vector" x="162" y="125" width="60" height="40" />
+          <vector id="10:3731" name="Vector" x="141" y="136" width="28" height="28" />
+          <vector id="10:3732" name="Vector" x="218" y="136" width="24" height="24" />
+          <vector id="10:3733" name="Vector" x="184" y="148" width="32" height="20" />
+          <vector id="10:3734" name="Vector" x="190" y="152" width="20" height="12" />
+          <vector id="10:3735" name="Vector" x="160" y="124.57299041748047" width="60" height="3.427011013031006" />
+        </frame>
+        <frame id="10:3736" name="div" x="20" y="20" width="40" height="40">
+          <frame id="10:3737" name="svg" x="10" y="10" width="20" height="20" />
+        </frame>
+        <frame id="10:3739" name="div" x="330" y="20" width="40" height="40">
+          <frame id="10:3740" name="svg" x="11" y="10" width="18" height="20" />
+        </frame>
+        <frame id="10:3742" name="div" x="271.7265625" y="217" width="102.2734375" height="27">
+          <frame id="10:3743" name="svg" x="14" y="6.5" width="14" height="14" />
+          <text id="10:3746" name="span" x="34" y="6" width="62.2734375" height="15" />
+        </frame>
+      </frame>
+      <frame id="10:3747" name="div" x="0" y="260" width="390" height="421">
+        <frame id="10:3748" name="div" x="24" y="20" width="342" height="28">
+          <frame id="10:3749" name="div" x="0" y="0" width="28" height="28">
+            <frame id="10:3750" name="svg" x="7" y="7" width="14" height="14" />
+          </frame>
+          <text id="10:3754" name="span" x="36" y="5.75" width="132.3125" height="17" />
+          <frame id="10:3755" name="div" x="305.890625" y="5.75" width="36.109375" height="16.5">
+            <frame id="10:3756" name="svg" x="0" y="2.25" width="12" height="12" />
+            <text id="10:3758" name="span" x="15" y="0" width="29.109375" height="17" />
+          </frame>
+        </frame>
+        <text id="10:3759" name="div" x="24" y="60" width="350" height="27" />
+        <text id="10:3760" name="div" x="24" y="94.3984375" width="350" height="70" />
+        <frame id="10:3761" name="div" x="24" y="177.6796875" width="342" height="32">
+          <frame id="10:3762" name="div" x="0" y="0" width="64.765625" height="32">
+            <text id="10:3763" name="span" x="14" y="10" width="44.765625" height="15" />
+          </frame>
+          <frame id="10:3764" name="div" x="72.765625" y="0" width="92.265625" height="32">
+            <text id="10:3765" name="span" x="14" y="10" width="72.265625" height="15" />
+          </frame>
+          <frame id="10:3766" name="div" x="173.03125" y="0" width="78.796875" height="32">
+            <text id="10:3767" name="span" x="14" y="10" width="58.796875" height="15" />
+          </frame>
+        </frame>
+        <frame id="10:3768" name="div" x="24" y="223.6796875" width="342" height="73.5">
+          <frame id="10:3769" name="div" x="16" y="17.75" width="38" height="38">
+            <frame id="10:3770" name="svg" x="9" y="9" width="20" height="20" />
+          </frame>
+          <frame id="10:3773" name="div" x="66" y="12" width="260" height="49.5">
+            <text id="10:3774" name="div" x="0" y="0" width="268" height="17" />
+            <text id="10:3775" name="div" x="0" y="33" width="268" height="17" />
+          </frame>
+        </frame>
+        <frame id="10:3776" name="div" x="24" y="311.1796875" width="342" height="38">
+          <text id="10:3777" name="span" x="0" y="9.5" width="76.3046875" height="19" />
+          <frame id="10:3778" name="div" x="214" y="0" width="128" height="38">
+            <frame id="10:3779" name="div" x="0" y="0" width="38" height="38">
+              <frame id="10:3780" name="svg" x="11" y="11" width="16" height="16" />
+            </frame>
+            <text id="10:3782" name="span" x="54" y="7.75" width="28" height="23" />
+            <frame id="10:3783" name="div" x="90" y="0" width="38" height="38">
+              <frame id="10:3784" name="svg" x="11" y="11" width="16" height="16" />
+            </frame>
+          </frame>
+        </frame>
+        <text id="10:3786" name="div" x="24" y="365.1796875" width="350" height="19" />
+        <frame id="10:3787" name="div" x="24" y="396.1796875" width="342" height="172">
+          <frame id="10:3788" name="div" x="0" y="0" width="140" height="168">
+            <frame id="10:3789" name="div" x="12" y="12" width="116" height="80" />
+            <text id="10:3791" name="div" x="12" y="100" width="126" height="17" />
+            <text id="10:3792" name="div" x="12" y="118.5" width="124" height="14" />
+            <frame id="10:3793" name="div" x="12" y="138.5" width="116" height="17.5">
+              <text id="10:3794" name="span" x="0" y="0" width="55.9375" height="18" />
+              <frame id="10:3795" name="span" x="71.7109375" y="0.5" width="44.2890625" height="16.5">
+                <text id="10:3796" name="−50%" x="7" y="2" width="31" height="13" />
+              </frame>
+            </frame>
+          </frame>
+          <frame id="10:3797" name="div" x="152" y="0" width="140" height="168">
+            <frame id="10:3798" name="div" x="12" y="12" width="116" height="80" />
+            <text id="10:3800" name="div" x="12" y="100" width="126" height="17" />
+            <text id="10:3801" name="div" x="12" y="118.5" width="124" height="14" />
+            <frame id="10:3802" name="div" x="12" y="138.5" width="116" height="17.5">
+              <text id="10:3803" name="span" x="0" y="0" width="55.125" height="18" />
+              <frame id="10:3804" name="span" x="71.3125" y="0.5" width="44.6875" height="16.5">
+                <text id="10:3805" name="−40%" x="7" y="2" width="31" height="13" />
+              </frame>
+            </frame>
+          </frame>
+          <frame id="10:3806" name="div" x="304" y="0" width="140" height="168">
+            <frame id="10:3807" name="div" x="12" y="12" width="116" height="80" />
+            <text id="10:3809" name="div" x="12" y="100" width="126" height="17" />
+            <text id="10:3810" name="div" x="12" y="118.5" width="124" height="14" />
+            <frame id="10:3811" name="div" x="12" y="138.5" width="116" height="17.5">
+              <text id="10:3812" name="span" x="0" y="0" width="58.765625" height="18" />
+              <frame id="10:3813" name="span" x="72.6484375" y="0.5" width="43.3515625" height="16.5">
+                <text id="10:3814" name="−55%" x="7" y="2" width="30" height="13" />
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+      <frame id="10:3815" name="div" x="0" y="681" width="390" height="163">
+        <frame id="10:3816" name="div" x="24" y="15" width="342" height="48">
+          <frame id="10:3817" name="div" x="0" y="0" width="152.8515625" height="48">
+            <text id="10:3818" name="div" x="0" y="0" width="160.8515625" height="15" />
+            <text id="10:3819" name="div" x="0" y="15" width="161.95156860351562" height="33" />
+          </frame>
+          <text id="10:3820" name="div" x="286.1875" y="15.75" width="63.8125" height="17" />
+        </frame>
+        <frame id="10:3821" name="div" x="24" y="75" width="342" height="56">
+          <frame id="10:3822" name="svg" x="102.2578125" y="18" width="20" height="20" />
+          <text id="10:3826" name="span" x="132.2578125" y="18" width="115.484375" height="20" />
+        </frame>
+      </frame>
+    </frame>
+  </frame>
+  <frame id="10:3827" name="Body+BackgroundColor" x="2371" y="3358" width="390" height="844">
+    <frame id="10:3828" name="div" x="0" y="0" width="390" height="844">
+      <frame id="10:3829" name="div" x="0" y="0" width="390" height="116">
+        <frame id="10:3830" name="div" x="24" y="56" width="40" height="40">
+          <frame id="10:3831" name="svg" x="10" y="10" width="20" height="20" />
+        </frame>
+        <text id="10:3833" name="div" x="137.28125" y="64.75" width="99.9140625" height="23" />
+        <text id="10:3834" name="div" x="302.46875" y="67.75" width="71.53125" height="17" />
+      </frame>
+      <frame id="10:3835" name="div" x="0" y="116" width="390" height="617">
+        <frame id="10:3836" name="div" x="24" y="0" width="342" height="105">
+          <frame id="10:3837" name="svg" x="30" y="30.5" width="44" height="44" />
+          <frame id="10:3842" name="div" x="102" y="16" width="224" height="73">
+            <text id="10:3843" name="div" x="0" y="0" width="234" height="19" />
+            <text id="10:3844" name="div" x="0" y="22" width="232" height="15" />
+            <frame id="10:3845" name="div" x="0" y="45" width="224" height="28">
+              <text id="10:3846" name="div" x="0" y="4.5" width="63.0703125" height="19" />
+              <frame id="10:3847" name="div" x="142.2109375" y="0" width="81.7890625" height="28">
+                <frame id="10:3848" name="div" x="0" y="0" width="28" height="28">
+                  <frame id="10:3849" name="svg" x="8" y="8" width="12" height="12" />
+                </frame>
+                <text id="10:3851" name="span" x="38" y="5.25" width="13.7890625" height="18" />
+                <frame id="10:3852" name="div" x="53.7890625" y="0" width="28" height="28">
+                  <frame id="10:3853" name="svg" x="8" y="8" width="12" height="12" />
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+        <frame id="10:3855" name="div" x="24" y="117" width="342" height="105">
+          <frame id="10:3856" name="svg" x="32" y="32.5" width="40" height="40" />
+          <frame id="10:3865" name="div" x="102" y="16" width="224" height="73">
+            <text id="10:3866" name="div" x="0" y="0" width="232" height="19" />
+            <text id="10:3867" name="div" x="0" y="22" width="232" height="15" />
+            <frame id="10:3868" name="div" x="0" y="45" width="224" height="28">
+              <text id="10:3869" name="div" x="0" y="4.5" width="62.390625" height="19" />
+              <frame id="10:3870" name="div" x="139.6484375" y="0" width="84.3515625" height="28">
+                <frame id="10:3871" name="div" x="0" y="0" width="28" height="28">
+                  <frame id="10:3872" name="svg" x="8" y="8" width="12" height="12" />
+                </frame>
+                <text id="10:3874" name="span" x="38" y="5.25" width="16.3515625" height="18" />
+                <frame id="10:3875" name="div" x="56.3515625" y="0" width="28" height="28">
+                  <frame id="10:3876" name="svg" x="8" y="8" width="12" height="12" />
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+        <frame id="10:3878" name="div" x="24" y="234" width="342" height="105">
+          <frame id="10:3879" name="svg" x="32" y="32.5" width="40" height="40" />
+          <frame id="10:3884" name="div" x="102" y="16" width="224" height="73">
+            <text id="10:3885" name="div" x="0" y="0" width="232" height="19" />
+            <text id="10:3886" name="div" x="0" y="22" width="232" height="15" />
+            <frame id="10:3887" name="div" x="0" y="45" width="224" height="28">
+              <text id="10:3888" name="div" x="0" y="4.5" width="59.09375" height="19" />
+              <frame id="10:3889" name="div" x="142.2109375" y="0" width="81.7890625" height="28">
+                <frame id="10:3890" name="div" x="0" y="0" width="28" height="28">
+                  <frame id="10:3891" name="svg" x="8" y="8" width="12" height="12" />
+                </frame>
+                <text id="10:3893" name="span" x="38" y="5.25" width="13.7890625" height="18" />
+                <frame id="10:3894" name="div" x="53.7890625" y="0" width="28" height="28">
+                  <frame id="10:3895" name="svg" x="8" y="8" width="12" height="12" />
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+        <frame id="10:3897" name="div" x="24" y="359" width="342" height="107" />
+        <frame id="10:3911" name="div" x="24" y="486" width="342" height="152">
+          <text id="10:3912" name="div" x="20" y="18" width="310" height="19" />
+          <frame id="10:3913" name="div" x="20" y="51" width="302" height="17.5">
+            <text id="10:3914" name="span" x="0" y="0" width="64.953125" height="18" />
+            <text id="10:3915" name="span" x="245.6171875" y="0" width="64.3828125" height="18" />
+          </frame>
+          <frame id="10:3916" name="div" x="20" y="76.5" width="302" height="17.5">
+            <text id="10:3917" name="span" x="0" y="0" width="89.9453125" height="18" />
+            <text id="10:3918" name="span" x="250.8671875" y="0" width="59.1328125" height="18" />
+          </frame>
+          <frame id="10:3919" name="div" x="20" y="104" width="302" height="1" />
+          <frame id="10:3920" name="div" x="20" y="115" width="302" height="19">
+            <text id="10:3921" name="span" x="0" y="0" width="43.3515625" height="19" />
+            <text id="10:3922" name="span" x="240.8828125" y="0" width="69.1171875" height="19" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="10:3923" name="div" x="0" y="733" width="390" height="111">
+        <frame id="10:3924" name="div" x="24" y="17" width="342" height="58">
+          <text id="10:3925" name="span" x="75.9296875" y="19" width="168.1328125" height="20" />
+          <frame id="10:3926" name="svg" x="246.0625" y="19" width="20" height="20" />
+        </frame>
+      </frame>
+    </frame>
+  </frame>
+  <frame id="10:3928" name="Body+BackgroundColor" x="1786" y="3358" width="390" height="844">
+    <frame id="10:3929" name="div" x="0" y="0" width="390" height="844">
+      <frame id="10:3930" name="div" x="0" y="0" width="390" height="112">
+        <frame id="10:3931" name="div" x="24" y="52" width="40" height="40">
+          <frame id="10:3932" name="svg" x="10" y="10" width="20" height="20" />
+        </frame>
+        <text id="10:3934" name="div" x="76" y="58" width="215.4609375" height="28" />
+      </frame>
+      <frame id="10:3935" name="div" x="0" y="112" width="390" height="581">
+        <frame id="10:3936" name="div" x="24" y="0" width="342" height="228.5">
+          <text id="10:3937" name="div" x="18" y="18" width="314" height="19" />
+          <frame id="10:3938" name="div" x="18" y="51" width="306" height="17.5">
+            <text id="10:3939" name="span" x="0" y="0" width="110.875" height="18" />
+            <text id="10:3940" name="span" x="255.9140625" y="0" width="58.0859375" height="18" />
+          </frame>
+          <frame id="10:3941" name="div" x="18" y="76.5" width="306" height="17.5">
+            <text id="10:3942" name="span" x="0" y="0" width="141.1875" height="18" />
+            <text id="10:3943" name="span" x="256.484375" y="0" width="57.515625" height="18" />
+          </frame>
+          <frame id="10:3944" name="div" x="18" y="102" width="306" height="17.5">
+            <text id="10:3945" name="span" x="0" y="0" width="113.7421875" height="18" />
+            <text id="10:3946" name="span" x="259.640625" y="0" width="54.359375" height="18" />
+          </frame>
+          <frame id="10:3947" name="div" x="18" y="131.5" width="306" height="1" />
+          <frame id="10:3948" name="div" x="18" y="144.5" width="306" height="17.5">
+            <text id="10:3949" name="span" x="0" y="0" width="64.953125" height="18" />
+            <text id="10:3950" name="span" x="249.6171875" y="0" width="64.3828125" height="18" />
+          </frame>
+          <frame id="10:3951" name="div" x="18" y="168" width="306" height="17.5">
+            <text id="10:3952" name="span" x="0" y="0" width="89.9453125" height="18" />
+            <text id="10:3953" name="span" x="254.8671875" y="0" width="59.1328125" height="18" />
+          </frame>
+          <frame id="10:3954" name="div" x="18" y="191.5" width="306" height="19">
+            <text id="10:3955" name="span" x="0" y="0" width="43.8125" height="19" />
+            <text id="10:3956" name="span" x="244.8828125" y="0" width="69.1171875" height="19" />
+          </frame>
+        </frame>
+        <text id="10:3957" name="div" x="24" y="244.5" width="350" height="18" />
+        <frame id="10:3958" name="div" x="24" y="272" width="342" height="86">
+          <frame id="10:3959" name="div" x="18" y="19" width="48" height="48">
+            <text id="10:3960" name="🥬" x="13" y="9" width="22" height="28" />
+          </frame>
+          <frame id="10:3961" name="div" x="80" y="16" width="214" height="54">
+            <text id="10:3962" name="div" x="0" y="0" width="222" height="19" />
+            <text id="10:3963" name="div" x="0" y="21" width="222" height="15" />
+            <text id="10:3964" name="div" x="0" y="39" width="222" height="15" />
+          </frame>
+          <frame id="10:3965" name="svg" x="308" y="35" width="16" height="16" />
+        </frame>
+        <text id="10:3967" name="div" x="24" y="374" width="350" height="18" />
+        <frame id="10:3968" name="div" x="24" y="401.5" width="342" height="137.5" />
+        <frame id="10:3978" name="div" x="24" y="549" width="342" height="129">
+          <frame id="10:3979" name="div" x="0" y="0" width="342" height="65">
+            <frame id="10:3980" name="div" x="18" y="14" width="36" height="36">
+              <text id="10:3981" name="💵" x="9" y="6" width="18" height="23" />
+            </frame>
+            <text id="10:3982" name="div" x="66" y="23.25" width="234" height="18" />
+            <frame id="10:3983" name="div" x="304" y="22" width="20" height="20" />
+          </frame>
+          <frame id="10:3984" name="div" x="0" y="65" width="342" height="64">
+            <frame id="10:3985" name="div" x="18" y="14" width="36" height="36">
+              <text id="10:3986" name="📱" x="9" y="6" width="18" height="23" />
+            </frame>
+            <text id="10:3987" name="div" x="66" y="23.25" width="234" height="18" />
+            <frame id="10:3988" name="div" x="304" y="22" width="20" height="20" />
+          </frame>
+        </frame>
+        <frame id="10:3989" name="div" x="24" y="694" width="342" height="46">
+          <frame id="10:3990" name="svg" x="18" y="14" width="18" height="18" />
+          <text id="10:3994" name="span" x="48" y="14.25" width="256" height="18" />
+          <frame id="10:3995" name="svg" x="308" y="15" width="16" height="16" />
+        </frame>
+      </frame>
+      <frame id="10:3997" name="div" x="0" y="693" width="390" height="151">
+        <frame id="10:3998" name="div" x="24" y="17" width="342" height="28">
+          <text id="10:3999" name="span" x="0" y="5.25" width="97.109375" height="18" />
+          <text id="10:4000" name="span" x="252.3671875" y="0" width="97.6328125" height="28" />
+        </frame>
+        <frame id="10:4001" name="div" x="24" y="59" width="342" height="56">
+          <frame id="10:4002" name="svg" x="100.671875" y="18" width="20" height="20" />
+          <text id="10:4006" name="span" x="130.671875" y="18" width="118.6484375" height="20" />
+        </frame>
+      </frame>
+    </frame>
+  </frame>
+  <frame id="10:4007" name="Body+BackgroundColor" x="1179" y="3358" width="390" height="844">
+    <frame id="10:4008" name="div" x="0" y="0" width="390" height="844">
+      <frame id="10:4009" name="div" x="135" y="90" width="120" height="120">
+        <frame id="10:4010" name="svg" x="30" y="30" width="60" height="60" />
+      </frame>
+      <frame id="10:4012" name="div" x="-5" y="-80" width="400" height="400" />
+      <frame id="10:4013" name="div" x="55" y="60" width="280" height="280" />
+      <frame id="10:4014" name="div" x="0" y="234" width="390" height="129.5">
+        <text id="10:4015" name="div" x="32" y="0" width="335.79998779296875" height="35" />
+        <text id="10:4016" name="div" x="32" y="48" width="334" height="50" />
+      </frame>
+      <frame id="10:4017" name="div" x="20" y="363.5" width="350" height="257.5">
+        <frame id="10:4018" name="div" x="20" y="20" width="310" height="23">
+          <text id="10:4019" name="div" x="0" y="3.25" width="115.0234375" height="17" />
+          <frame id="10:4020" name="div" x="234.53125" y="0" width="75.46875" height="23">
+            <text id="10:4021" name="De ridicat" x="10" y="4" width="56" height="15" />
+          </frame>
+        </frame>
+        <frame id="10:4022" name="div" x="20" y="59" width="310" height="102.5">
+          <frame id="10:4023" name="div" x="0" y="0" width="310" height="27.5">
+            <text id="10:4024" name="span" x="0" y="0" width="28" height="25" />
+            <text id="10:4025" name="div" x="30" y="5" width="227.2578125" height="18" />
+            <text id="10:4026" name="span" x="259.2578125" y="5" width="58.7421875" height="18" />
+          </frame>
+          <frame id="10:4027" name="div" x="0" y="37.5" width="310" height="27.5">
+            <text id="10:4028" name="span" x="0" y="0" width="28" height="25" />
+            <text id="10:4029" name="div" x="30" y="5" width="227.9375" height="18" />
+            <text id="10:4030" name="span" x="259.9375" y="5" width="58.0625" height="18" />
+          </frame>
+          <frame id="10:4031" name="div" x="0" y="75" width="310" height="27.5">
+            <text id="10:4032" name="span" x="0" y="0" width="28" height="25" />
+            <text id="10:4033" name="div" x="30" y="5" width="230.9765625" height="18" />
+            <text id="10:4034" name="span" x="262.9765625" y="5" width="55.0234375" height="18" />
+          </frame>
+        </frame>
+        <frame id="10:4035" name="div" x="20" y="177.5" width="310" height="1" />
+        <frame id="10:4036" name="div" x="20" y="192.5" width="310" height="16.5">
+          <frame id="10:4037" name="svg" x="0" y="0.25" width="16" height="16" />
+          <text id="10:4039" name="span" x="26" y="0" width="164.7265625" height="17" />
+        </frame>
+        <frame id="10:4040" name="div" x="20" y="221" width="310" height="16.5">
+          <frame id="10:4041" name="svg" x="0" y="0.25" width="16" height="16" />
+          <text id="10:4044" name="span" x="26" y="0" width="153.921875" height="17" />
+        </frame>
+      </frame>
+      <frame id="10:4045" name="div" x="20" y="637" width="350" height="98" />
+      <frame id="10:4059" name="div" x="0" y="735" width="390" height="178">
+        <frame id="10:4060" name="div" x="20" y="20" width="350" height="56">
+          <text id="10:4061" name="span" x="74.546875" y="18" width="208.8984375" height="20" />
+        </frame>
+        <frame id="10:4062" name="div" x="20" y="88" width="350" height="50">
+          <text id="10:4063" name="span" x="101.3828125" y="16.25" width="155.234375" height="18" />
+        </frame>
+      </frame>
+    </frame>
+  </frame>
+  <frame id="10:4166" name="Body+BackgroundColor" x="633" y="3358" width="390" height="844">
+    <frame id="10:4167" name="div" x="0" y="0" width="390" height="844">
+      <frame id="10:4168" name="div" x="0" y="0" width="390" height="56">
+        <frame id="10:4169" name="div" x="271.625" y="20" width="94.375" height="36">
+          <text id="10:4170" name="span" x="16" y="11" width="70.375" height="17" />
+        </frame>
+      </frame>
+      <frame id="10:4171" name="div" x="0" y="56" width="390" height="459.359375">
+        <frame id="10:4172" name="svg" x="65" y="99.6796875" width="260" height="260">
+          <vector id="10:4173" name="Vector" x="30" y="50" width="200" height="160" />
+          <vector id="10:4174" name="Vector" x="30" y="100" width="200" height="0" />
+          <vector id="10:4175" name="Vector" x="30" y="150" width="200" height="0" />
+          <vector id="10:4176" name="Vector" x="80" y="50" width="0" height="160" />
+          <vector id="10:4177" name="Vector" x="130" y="50" width="0" height="160" />
+          <vector id="10:4178" name="Vector" x="180" y="50" width="0" height="160" />
+          <vector id="10:4179" name="Vector" x="30" y="125" width="200" height="0" />
+          <vector id="10:4180" name="Vector" x="105" y="50" width="0" height="160" />
+          <vector id="10:4181" name="Vector" x="62" y="72" width="36" height="36" />
+          <vector id="10:4182" name="Vector" x="67" y="77" width="26" height="26" />
+          <text id="10:4183" name="🥐" x="74" y="83" width="12" height="12" />
+          <vector id="10:4184" name="Vector" x="142" y="142" width="36" height="36" />
+          <vector id="10:4185" name="Vector" x="147" y="147" width="26" height="26" />
+          <text id="10:4186" name="🥬" x="154" y="153" width="12" height="12" />
+          <vector id="10:4187" name="Vector" x="141" y="66" width="28" height="28" />
+          <vector id="10:4188" name="Vector" x="145" y="70" width="20" height="20" />
+          <text id="10:4189" name="🍱" x="150" y="74" width="10" height="10" />
+          <vector id="10:4190" name="Vector" x="83" y="103" width="44" height="44" />
+          <vector id="10:4191" name="Vector" x="89" y="109" width="32" height="32" />
+          <vector id="10:4192" name="Vector" x="99" y="119" width="12" height="12" />
+          <vector id="10:4193" name="Vector" x="75" y="95" width="60" height="60" />
+          <vector id="10:4194" name="Vector" x="65" y="85" width="80" height="80" />
+          <vector id="10:4195" name="Vector" x="40" y="60" width="52" height="20" />
+          <text id="10:4196" name="0,3 km" x="49" y="64" width="34" height="13" />
+          <vector id="10:4197" name="Vector" x="165" y="168" width="52" height="20" />
+          <text id="10:4198" name="0,8 km" x="174" y="172" width="34" height="13" />
+        </frame>
+        <frame id="10:4199" name="div" x="45" y="79.6796875" width="300" height="300" />
+        <frame id="10:4200" name="div" x="85" y="119.6796875" width="220" height="220" />
+      </frame>
+      <frame id="10:4201" name="div" x="167" y="515.359375" width="56" height="8">
+        <frame id="10:4202" name="div" x="0" y="0" width="8" height="8" />
+        <frame id="10:4203" name="div" x="16" y="0" width="24" height="8" />
+        <frame id="10:4204" name="div" x="48" y="0" width="8" height="8" />
+      </frame>
+      <frame id="10:4205" name="div" x="0" y="559.359375" width="390" height="284.640625">
+        <text id="10:4206" name="div" x="32" y="0" width="335.1000061035156" height="63" />
+        <text id="10:4207" name="div" x="32" y="76.390625" width="334" height="75" />
+        <frame id="10:4208" name="div" x="32" y="186.640625" width="326" height="58">
+          <text id="10:4209" name="span" x="121.4609375" y="19" width="61.0703125" height="20" />
+          <frame id="10:4210" name="svg" x="184.53125" y="19" width="20" height="20" />
+        </frame>
+      </frame>
+    </frame>
+  </frame>
+  <frame id="10:4212" name="Body+BackgroundColor" x="-1" y="3358" width="390" height="844">
+    <frame id="10:4213" name="div" x="0" y="0" width="390" height="844">
+      <frame id="10:4214" name="div" x="0" y="56" width="390" height="427.859375">
+        <frame id="10:4215" name="svg" x="65" y="83.9296875" width="260" height="260">
+          <vector id="10:4216" name="Vector" x="45" y="45" width="170" height="170" />
+          <vector id="10:4217" name="Vector" x="60" y="60" width="140" height="140" />
+          <vector id="10:4218" name="Vector" x="79.80674743652344" y="91.73302459716797" width="41.097557067871094" height="24.78069305419922" />
+          <vector id="10:4219" name="Vector" x="135.46917724609375" y="106.41679382324219" width="29.834819793701172" height="27.833206176757812" />
+          <vector id="10:4220" name="Vector" x="91.39019012451172" y="140.97364807128906" width="30.78122329711914" height="23.18842124938965" />
+          <vector id="10:4221" name="Vector" x="60" y="60" width="140" height="140" />
+          <vector id="10:4222" name="Vector" x="35" y="100" width="190" height="60" />
+          <vector id="10:4223" name="Vector" x="32" y="97" width="36" height="36" />
+          <vector id="10:4224" name="Vector" x="44" y="103" width="12" height="12" />
+          <vector id="10:4225" name="Vector" x="38" y="122.75" width="24" height="5.25" />
+          <vector id="10:4226" name="Vector" x="192" y="97" width="36" height="36" />
+          <vector id="10:4227" name="Vector" x="204" y="103" width="12" height="12" />
+          <vector id="10:4228" name="Vector" x="198" y="122.75" width="24" height="5.25" />
+          <vector id="10:4229" name="Vector" x="112" y="32" width="36" height="36" />
+          <vector id="10:4230" name="Vector" x="124" y="38" width="12" height="12" />
+          <vector id="10:4231" name="Vector" x="118" y="57.75" width="24" height="5.25" />
+          <vector id="10:4232" name="Vector" x="85" y="188" width="90" height="36" />
+          <text id="10:4233" name="CO₂ salvat" x="104" y="193" width="52" height="13" />
+          <text id="10:4234" name="2,1 tone" x="105.5" y="205" width="49" height="16" />
+          <vector id="10:4235" name="Vector" x="54.644432067871094" y="60.64427185058594" width="7.71113920211792" height="10.711456298828125" />
+          <vector id="10:4236" name="Vector" x="194.64442443847656" y="170.64427185058594" width="7.71113920211792" height="10.711456298828125" />
+          <vector id="10:4237" name="Vector" x="174.64442443847656" y="50.64427185058594" width="7.71113920211792" height="10.711456298828125" />
+        </frame>
+        <frame id="10:4238" name="div" x="35" y="53.9296875" width="320" height="320" />
+        <frame id="10:4239" name="div" x="80" y="98.9296875" width="230" height="230" />
+      </frame>
+      <frame id="10:4240" name="div" x="167" y="483.859375" width="56" height="8">
+        <frame id="10:4241" name="div" x="0" y="0" width="8" height="8" />
+        <frame id="10:4242" name="div" x="16" y="0" width="8" height="8" />
+        <frame id="10:4243" name="div" x="32" y="0" width="24" height="8" />
+      </frame>
+      <frame id="10:4244" name="div" x="0" y="527.859375" width="390" height="316.140625">
+        <text id="10:4245" name="div" x="32" y="0" width="335.1000061035156" height="63" />
+        <text id="10:4246" name="div" x="32" y="76.390625" width="334" height="75" />
+        <frame id="10:4247" name="div" x="32" y="186.640625" width="326" height="58">
+          <text id="10:4248" name="span" x="112.9375" y="19" width="108.125" height="20" />
+        </frame>
+        <text id="10:4249" name="div" x="32" y="258.640625" width="334" height="18" />
+      </frame>
+    </frame>
+  </frame>
+</canvas>
