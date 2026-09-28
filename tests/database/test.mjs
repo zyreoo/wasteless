@@ -18,7 +18,7 @@ for (const table of schema) for (const fk of table.foreign_key_constraints ?? []
  await db.exec(`alter table ${fk.source_table.split('.').map(quote).join('.')} add constraint ${quote(fk.name)} foreign key(${fk.source_columns.map(quote)}) references ${fk.target_table.split('.').map(quote).join('.')}(${fk.target_columns.map(quote)});`);
 }
 await db.exec("insert into public.product(id,name,price,stock) values(101,'Legacy',10,null); insert into public.favorite(items_id) values(null);");
-await db.exec(readFileSync(new URL('../../supabase/migrations/20260928115505_wasteless_commerce.sql',import.meta.url),'utf8'));
+await db.exec(readFileSync(new URL('../../supabase/migrations/20260928173209_wasteless_commerce.sql',import.meta.url),'utf8'));
 const A='11111111-1111-4111-8111-111111111111', B='22222222-2222-4222-8222-222222222222';
 await db.query('insert into auth.users values($1),($2)',[A,B]);
 await db.exec("insert into public.product(name,price,stock) values('A',3.40,10),('B',2.80,20),('C',1.20,0)");
@@ -81,7 +81,7 @@ await db.transaction(async tx=>{
  await assert.rejects(tx.query('select * from cart'));checks++;
 });
 await db.exec('create schema tebelenoi; create table tebelenoi.cart(id bigint); grant select on tebelenoi.cart to anon,authenticated;');
-await db.exec(readFileSync(new URL('../../supabase/migrations/20260928120848_wasteless_legacy_access.sql',import.meta.url),'utf8'));
+await db.exec(readFileSync(new URL('../../supabase/migrations/20260928173220_wasteless_legacy_access.sql',import.meta.url),'utf8'));
 check((await db.query("select relrowsecurity from pg_class where oid='tebelenoi.cart'::regclass")).rows[0].relrowsecurity,true);
 check((await db.query("select has_table_privilege('anon','tebelenoi.cart','select') as permitted")).rows[0].permitted,false);
 console.log(`${checks} database checks passed: real SQL migration, RLS, ownership, stock, price snapshots, rollback and idempotency.`);

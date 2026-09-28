@@ -21,11 +21,10 @@ Flutter, FastAPI and Supabase. Development branch: `codex/wasteless-mvp`.
 
 ## Deployment status — important
 
-The remote project is reachable, and its existing schema has been inspected.
-**The migrations are not applied:** automatic approval review blocked live schema
-and permission changes pending explicit approval. Until they are applied, the new
-commerce endpoints cannot run against that project. No production rows were
-changed during implementation.
+Both migrations were applied to `ueurvamkhwkgoydplnfe` on 2026-09-28 after
+explicit user approval. Live checks confirmed six owner/catalog SELECT policies,
+RLS on commerce and legacy cart tables, denied anonymous access, and unchanged
+business-row counts. Local migration versions match the remote migration history.
 
 Existing products 1 and 2 have unknown (`NULL`) stock. They remain unchanged and
 are hidden from the orderable catalogue until real stock is entered. The existing
@@ -41,8 +40,8 @@ products, never production rows.
 
 See [migration notes](docs/database-handoff.md). The migrations adapt the existing
 schema captured in `docs/schema-before-mvp.json`; they do not create duplicate
-commerce tables. Apply in filename order through the Supabase migration workflow
-only after review/approval. Take a schema backup first; do not blindly rerun applied
+commerce tables. For new environments, apply in filename order through the Supabase migration
+workflow after review/approval. These migrations are already applied to WasteLess. Take a schema backup first; do not blindly rerun applied
 migrations or use these against an unrelated schema.
 
 ## Backend
