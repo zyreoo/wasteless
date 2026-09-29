@@ -1,4 +1,11 @@
-FROM ghcr.io/cirruslabs/flutter:3.47.2 AS build
+FROM debian:bookworm-slim AS build
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      ca-certificates curl git unzip xz-utils \
+    && rm -rf /var/lib/apt/lists/* \
+    && git clone --depth 1 --branch 3.47.2 \
+      https://github.com/flutter/flutter.git /opt/flutter
+ENV PATH="/opt/flutter/bin:/opt/flutter/bin/cache/dart-sdk/bin:${PATH}"
+RUN flutter config --enable-web && flutter precache --web
 ARG SUPABASE_URL
 ARG SUPABASE_PUBLISHABLE_KEY
 ARG API_BASE_URL
