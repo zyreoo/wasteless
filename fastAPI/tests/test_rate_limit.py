@@ -20,6 +20,20 @@ class LimiterTests(unittest.TestCase):
         self.assertGreater(retry, 0)
         self.assertEqual(value.allow('a', 2, now=71), (True, 0))
 
+    def test_expired_buckets_are_removed_when_a_new_client_arrives(self):
+        value = SlidingWindowLimiter()
+        value.allow('expired-ip', 2, window=60, now=1)
+        value.allow('expired-user', 2, window=60, now=2)
+        self.assertEqual(value.bucket_count(), 2)
+        value.allow('current-ip', 2, window=60, now=63)
+        self.assertEqual(value.bucket_count(), 1)
+
+    def test_bucket_storage_is_bounded(self):
+        value = SlidingWindowLimiter(max_buckets=3)
+        for index in range(10):
+            value.allow(f'ip:{index}', 2, window=60, now=index)
+        self.assertEqual(value.bucket_count(), 3)
+
     def test_checkout_is_limited_and_returns_429(self):
         limiter.reset()
         repo = Mock()

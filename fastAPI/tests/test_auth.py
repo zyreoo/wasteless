@@ -67,9 +67,32 @@ class AuthTests(unittest.TestCase):
     def test_admin_user_listing_is_not_exposed(self):
         self.assertEqual(self.client.get('/api/users/').status_code, 404)
 
-    def test_health_does_not_require_secrets(self):
-        self.assertEqual(self.client.get('/health').json(), {'status': 'ok'})
-        self.mock.get.assert_not_called()
+    @patch('main.httpx.Client')
+    def test_health_checks_supabase_readiness(self, client):
+        client.return_value.__enter__.return_value.get.return_value = httpx.Response(200)
+        response = self.client.get('/health')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), {'status': 'ok'})
+
+    def test_health_rejects_missing_or_invalid_configuration(self):
+        for environment in [
+            {'SUPABASE_URL': ''},
+            {'SUPABASE_URL': 'http://example.supabase.co'},
+            {'SUPABASE_PUBLISHABLE_KEY': ''},
+            {'SUPABASE_PUBLISHABLE_KEY': 'not-a-publishable-key'},
+        ]:
+            with self.subTest(environment=environment), patch.dict(os.environ, environment):
+                response = self.client.get('/health')
+                self.assertEqual(response.status_code, 503)
+                self.assertEqual(response.json(), {'status': 'degraded'})
+
+    @patch('main.httpx.Client')
+    def test_health_reports_supabase_failure_without_details(self, client):
+        client.return_value.__enter__.return_value.get.side_effect = httpx.ConnectError('private error')
+        response = self.client.get('/health')
+        self.assertEqual(response.status_code, 503)
+        self.assertEqual(response.json(), {'status': 'degraded'})
+        self.assertNotIn('private error', response.text)
 
 
 if __name__ == '__main__':

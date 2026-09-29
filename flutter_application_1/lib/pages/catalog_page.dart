@@ -23,8 +23,16 @@ class _CatalogPageState extends State<CatalogPage> {
   String query = '';
   final busy = <int>{};
   Future<(List<Product>, Set<int>)> load() async {
-    final saved = await widget.service.products(saved: true);
-    final products = widget.savedOnly ? saved : await widget.service.products();
+    if (widget.savedOnly) {
+      final saved = await widget.service.products(saved: true);
+      return (saved, saved.map((p) => p.id).toSet());
+    }
+    final results = await Future.wait([
+      widget.service.products(saved: true),
+      widget.service.products(),
+    ]);
+    final saved = results[0];
+    final products = results[1];
     return (products, saved.map((p) => p.id).toSet());
   }
 

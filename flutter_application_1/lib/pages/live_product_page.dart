@@ -19,9 +19,13 @@ class _LiveProductPageState extends State<LiveProductPage> {
   bool busy = false;
   bool? saved;
   Future<Product> load() async {
-    final favorites = await widget.service.products(saved: true);
+    final results = await Future.wait([
+      widget.service.products(saved: true),
+      widget.service.product(widget.id),
+    ]);
+    final favorites = results[0] as List<Product>;
     saved = favorites.any((p) => p.id == widget.id);
-    return widget.service.product(widget.id);
+    return results[1] as Product;
   }
 
   Future<void> toggleFavorite() async {

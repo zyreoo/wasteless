@@ -3,8 +3,9 @@ import logging
 import time
 from typing import Annotated
 
+import httpx
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 from rate_limit import RateLimitMiddleware
@@ -41,7 +42,21 @@ app.add_middleware(
 
 
 @app.get('/health')
-def health():
+def health(response: Response):
+    url = os.getenv('SUPABASE_URL', '').rstrip('/')
+    key = os.getenv('SUPABASE_PUBLISHABLE_KEY', '')
+    if not url.startswith('https://') or not key.startswith('sb_publishable_'):
+        response.status_code = 503
+        return {'status': 'degraded'}
+    try:
+        with httpx.Client(timeout=3) as client:
+            dependency = client.get(f'{url}/auth/v1/health', headers={'apikey': key})
+        if dependency.status_code != 200:
+            response.status_code = 503
+            return {'status': 'degraded'}
+    except httpx.RequestError:
+        response.status_code = 503
+        return {'status': 'degraded'}
     return {'status': 'ok'}
 
 

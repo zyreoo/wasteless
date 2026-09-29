@@ -2,7 +2,7 @@
 import os
 import threading
 import time
-from collections import defaultdict, deque
+from collections import OrderedDict, deque
 from typing import Annotated
 
 from fastapi import Depends, HTTPException, Request
@@ -13,8 +13,9 @@ from auth import Identity, current_user
 
 
 class SlidingWindowLimiter:
-    def __init__(self):
-        self._events = defaultdict(deque)
+    def __init__(self, max_buckets=10_000):
+        self._events = OrderedDict()
+        self._max_buckets = max_buckets
         self._lock = threading.Lock()
 
     def reset(self):
@@ -25,13 +26,35 @@ class SlidingWindowLimiter:
         now = time.monotonic() if now is None else now
         cutoff = now - window
         with self._lock:
-            events = self._events[key]
+            events = self._events.get(key)
+            if events is None:
+                self._remove_expired(cutoff)
+                while len(self._events) >= self._max_buckets:
+                    self._events.popitem(last=False)
+                events = deque()
+                self._events[key] = events
+            else:
+                self._events.move_to_end(key)
             while events and events[0] <= cutoff:
                 events.popleft()
             if len(events) >= limit:
                 return False, max(1, int(window - (now - events[0])) + 1)
             events.append(now)
             return True, 0
+
+    def _remove_expired(self, cutoff):
+        empty = []
+        for key, events in self._events.items():
+            while events and events[0] <= cutoff:
+                events.popleft()
+            if not events:
+                empty.append(key)
+        for key in empty:
+            del self._events[key]
+
+    def bucket_count(self):
+        with self._lock:
+            return len(self._events)
 
 
 limiter = SlidingWindowLimiter()
