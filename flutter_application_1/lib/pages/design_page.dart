@@ -552,9 +552,33 @@ class _DesignPageState extends State<DesignPage> {
     Widget input(String id, String label, {bool password = false}) => Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: TextField(
+        key: ValueKey('field-$id'),
         controller: controllers.putIfAbsent(id, () => TextEditingController()),
-        obscureText: password,
-        decoration: InputDecoration(labelText: label),
+        obscureText: password && obscure,
+        enabled: !submitting,
+        textInputAction: password ? TextInputAction.done : TextInputAction.next,
+        onSubmitted: password ? (_) => authenticate(register) : null,
+        decoration: InputDecoration(
+          labelText: label,
+          prefixIcon: Icon(
+            password
+                ? Icons.lock_outline
+                : label == 'Email'
+                ? Icons.mail_outline
+                : Icons.person_outline,
+          ),
+          suffixIcon: password
+              ? IconButton(
+                  tooltip: obscure ? 'Arată parola' : 'Ascunde parola',
+                  onPressed: () => setState(() => obscure = !obscure),
+                  icon: Icon(
+                    obscure
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                  ),
+                )
+              : null,
+        ),
         keyboardType: password
             ? TextInputType.visiblePassword
             : label == 'Email'
@@ -563,49 +587,76 @@ class _DesignPageState extends State<DesignPage> {
       ),
     );
     return Scaffold(
-      appBar: AppBar(title: const Text('Wasteless')),
       body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(24),
-          children: [
-            Text(
-              register ? 'Creează un cont' : 'Autentificare',
-              style: Theme.of(context).textTheme.headlineMedium,
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 480),
+            child: ListView(
+              shrinkWrap: true,
+              padding: const EdgeInsets.all(24),
+              children: [
+                const Row(
+                  children: [
+                    Icon(Icons.eco, size: 32),
+                    SizedBox(width: 10),
+                    Text(
+                      'Wasteless',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                const Text('Produse bune, salvate înainte să fie risipite.'),
+                const SizedBox(height: 28),
+                Text(
+                  register ? 'Creează un cont' : 'Autentificare',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                const SizedBox(height: 24),
+                if (register) input('5:253', 'Nume'),
+                input(register ? '5:259' : '5:148', 'Email'),
+                input(register ? '5:270' : '5:156', 'Parolă', password: true),
+                if (register)
+                  CheckboxListTile(
+                    value: accepted,
+                    onChanged: submitting
+                        ? null
+                        : (v) => setState(() => accepted = v ?? false),
+                    title: const Text(
+                      'Sunt de acord cu termenii de utilizare.',
+                    ),
+                  ),
+                FilledButton(
+                  onPressed: submitting ? null : () => authenticate(register),
+                  child: Text(
+                    submitting
+                        ? 'Se conectează…'
+                        : register
+                        ? 'Creează contul'
+                        : 'Autentifică-te',
+                  ),
+                ),
+                if (!register)
+                  TextButton(
+                    onPressed: submitting ? null : () => go('/forgot-password'),
+                    child: const Text('Ai uitat parola?'),
+                  ),
+                TextButton(
+                  onPressed: submitting
+                      ? null
+                      : () => go(register ? '/login' : '/register'),
+                  child: Text(
+                    register
+                        ? 'Ai deja cont? Autentifică-te'
+                        : 'Nu ai cont? Înregistrează-te',
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 24),
-            if (register) input('5:253', 'Nume'),
-            input(register ? '5:259' : '5:148', 'Email'),
-            input(register ? '5:270' : '5:156', 'Parolă', password: true),
-            if (register)
-              CheckboxListTile(
-                value: accepted,
-                onChanged: submitting
-                    ? null
-                    : (v) => setState(() => accepted = v ?? false),
-                title: const Text('Sunt de acord cu termenii de utilizare.'),
-              ),
-            FilledButton(
-              onPressed: submitting ? null : () => authenticate(register),
-              child: Text(
-                submitting
-                    ? 'Se conectează…'
-                    : register
-                    ? 'Creează contul'
-                    : 'Autentifică-te',
-              ),
-            ),
-            if (!register)
-              TextButton(
-                onPressed: submitting ? null : () => go('/forgot-password'),
-                child: const Text('Ai uitat parola?'),
-              ),
-            TextButton(
-              onPressed: submitting
-                  ? null
-                  : () => go(register ? '/login' : '/register'),
-              child: Text(register ? 'Am deja cont' : 'Creează un cont'),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -613,8 +664,7 @@ class _DesignPageState extends State<DesignPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.auth != null &&
-        MediaQuery.textScalerOf(context).scale(16) > 21) {
+    if (widget.auth != null) {
       return accessibleAuth();
     }
     final root = FigmaDesign.screen(widget.nodeId);

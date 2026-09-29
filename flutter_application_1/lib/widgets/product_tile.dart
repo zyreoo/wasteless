@@ -8,9 +8,12 @@ class ProductImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final uri = Uri.tryParse(product.image ?? '');
-    final demoImage = product.name.toLowerCase().contains('par')
+    final name = product.name.toLowerCase();
+    final demoImage = ['para', 'pară', 'pere'].contains(name)
         ? 'assets/demo/pears.png'
-        : 'assets/demo/apples.png';
+        : ['mar', 'măr', 'mere'].contains(name)
+        ? 'assets/demo/apples.png'
+        : null;
     final fallback = ColoredBox(
       color: const Color(0xffe8ede5),
       child: Center(
@@ -30,6 +33,8 @@ class ProductImage extends StatelessWidget {
               errorBuilder: (_, error, stack) => fallback,
               excludeFromSemantics: true,
             )
+          : demoImage == null
+          ? fallback
           : Image.asset(
               demoImage,
               fit: BoxFit.cover,
@@ -64,7 +69,10 @@ class ProductTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ProductImage(product),
+              Hero(
+                tag: 'product-image-${product.id}',
+                child: ProductImage(product),
+              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
                 child: Text(
@@ -92,14 +100,25 @@ class ProductTile extends StatelessWidget {
               Expanded(
                 child: Text(
                   product.stock > 0
-                      ? '${product.stock} disponibile'
+                      ? product.stock <= 3
+                            ? 'Ultimele ${product.stock} disponibile'
+                            : '${product.stock} disponibile'
                       : 'Stoc epuizat',
                 ),
               ),
               IconButton(
                 tooltip: saved ? 'Elimină din favorite' : 'Salvează produsul',
                 onPressed: onFavorite,
-                icon: Icon(saved ? Icons.favorite : Icons.favorite_border),
+                icon: AnimatedSwitcher(
+                  duration: MediaQuery.disableAnimationsOf(context)
+                      ? Duration.zero
+                      : const Duration(milliseconds: 200),
+                  child: Icon(
+                    saved ? Icons.favorite : Icons.favorite_border,
+                    key: ValueKey(saved),
+                    color: saved ? Theme.of(context).colorScheme.primary : null,
+                  ),
+                ),
               ),
             ],
           ),

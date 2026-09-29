@@ -21,6 +21,14 @@ class CatalogPage extends StatefulWidget {
 
 class _CatalogPageState extends State<CatalogPage> {
   String query = '';
+  String? selectedCategory;
+  final searchController = TextEditingController();
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
   final busy = <int>{};
   Future<(List<Product>, Set<int>)> load() async {
     if (widget.savedOnly) {
@@ -72,7 +80,11 @@ class _CatalogPageState extends State<CatalogPage> {
       load: load,
       builder: (data, reload) {
         final products = data.$1
-            .where((p) => p.name.toLowerCase().contains(query.toLowerCase()))
+            .where(
+              (p) =>
+                  p.name.toLowerCase().contains(query.toLowerCase()) &&
+                  (selectedCategory == null || p.category == selectedCategory),
+            )
             .toList();
         return Column(
           children: [
@@ -86,6 +98,7 @@ class _CatalogPageState extends State<CatalogPage> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
                   child: TextField(
+                    controller: searchController,
                     decoration: InputDecoration(
                       hintText: 'Caută un produs',
                       prefixIcon: const Icon(Icons.search),
@@ -93,7 +106,10 @@ class _CatalogPageState extends State<CatalogPage> {
                           ? null
                           : IconButton(
                               tooltip: 'Șterge căutarea',
-                              onPressed: () => setState(() => query = ''),
+                              onPressed: () {
+                                searchController.clear();
+                                setState(() => query = '');
+                              },
                               icon: const Icon(Icons.close),
                             ),
                     ),
@@ -102,6 +118,32 @@ class _CatalogPageState extends State<CatalogPage> {
                 ),
               ),
             ),
+            if (data.$1.any((p) => p.category?.isNotEmpty == true))
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    for (final category in <String?>[
+                      null,
+                      ...data.$1
+                          .map((p) => p.category)
+                          .whereType<String>()
+                          .where((c) => c.isNotEmpty)
+                          .toSet(),
+                    ])
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: ChoiceChip(
+                          label: Text(category ?? 'Toate'),
+                          selected: selectedCategory == category,
+                          onSelected: (_) =>
+                              setState(() => selectedCategory = category),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
             Expanded(
               child: data.$1.isEmpty
                   ? EmptyPanel(
@@ -110,7 +152,25 @@ class _CatalogPageState extends State<CatalogPage> {
                           : 'Nu sunt oferte disponibile momentan.',
                     )
                   : products.isEmpty
-                  ? const Center(child: Text('Nu am găsit produse.'))
+                  ? Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.search_off, size: 48),
+                          const Text('Nu am găsit produse.'),
+                          TextButton(
+                            onPressed: () {
+                              searchController.clear();
+                              setState(() {
+                                query = '';
+                                selectedCategory = null;
+                              });
+                            },
+                            child: const Text('Șterge filtrele'),
+                          ),
+                        ],
+                      ),
+                    )
                   : LayoutBuilder(
                       builder: (context, constraints) {
                         final viewportWidth = MediaQuery.sizeOf(context).width;
@@ -123,7 +183,11 @@ class _CatalogPageState extends State<CatalogPage> {
                           final p = products[index];
                           return TweenAnimationBuilder<double>(
                             tween: Tween(begin: 0, end: 1),
-                            duration: Duration(milliseconds: 280 + index * 70),
+                            duration: MediaQuery.disableAnimationsOf(context)
+                                ? Duration.zero
+                                : Duration(
+                                    milliseconds: 280 + (index % 6) * 50,
+                                  ),
                             curve: Curves.easeOutCubic,
                             builder: (_, value, child) => Opacity(
                               opacity: value,
@@ -229,6 +293,7 @@ class _CatalogHero extends StatelessWidget {
         ),
       ),
       child: Align(
+        heightFactor: 1,
         alignment: Alignment.centerLeft,
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 430),

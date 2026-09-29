@@ -101,6 +101,25 @@ class AppTheme {
         color: AppColors.textSecondary,
       ),
     ),
+    filledButtonTheme: FilledButtonThemeData(
+      style: FilledButton.styleFrom(
+        minimumSize: const Size(48, 52),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        textStyle: const TextStyle(
+          fontFamily: 'PlusJakartaSans',
+          fontWeight: FontWeight.w700,
+          fontSize: 16,
+        ),
+      ),
+    ),
+    snackBarTheme: SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    ),
+    navigationBarTheme: const NavigationBarThemeData(
+      indicatorColor: AppColors.limeYellow,
+      backgroundColor: AppColors.cardBg,
+    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.limeYellow,

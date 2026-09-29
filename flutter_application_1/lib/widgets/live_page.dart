@@ -89,7 +89,9 @@ class LiveScaffold extends StatelessWidget {
     builder: (context, constraints) {
       final wide = constraints.maxWidth >= 900 && index != null;
       final content = AnimatedSwitcher(
-        duration: const Duration(milliseconds: 280),
+        duration: MediaQuery.disableAnimationsOf(context)
+            ? Duration.zero
+            : const Duration(milliseconds: 280),
         switchInCurve: Curves.easeOut,
         child: SafeArea(key: ValueKey(title), child: body),
       );
@@ -109,6 +111,11 @@ class LiveScaffold extends StatelessWidget {
             ? Row(
                 children: [
                   NavigationRail(
+                    leading: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 24),
+                      child: Icon(Icons.eco, size: 32),
+                    ),
+                    backgroundColor: const Color(0xfff0f3e9),
                     selectedIndex: index!,
                     onDestinationSelected: (i) => select(context, i),
                     labelType: NavigationRailLabelType.all,
@@ -147,6 +154,8 @@ class EmptyPanel extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          const Icon(Icons.shopping_basket_outlined, size: 64),
+          const SizedBox(height: 16),
           Text(message, textAlign: TextAlign.center),
           const SizedBox(height: 20),
           TextButton(

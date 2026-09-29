@@ -74,17 +74,18 @@ class _LiveProductPageState extends State<LiveProductPage> {
     title: 'Detalii produs',
     body: LoadPanel<Product>(
       load: load,
-      builder: (p, reload) => Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1040),
-          child: ListView(
-            padding: const EdgeInsets.all(20),
+      builder: (p, reload) => LayoutBuilder(
+        builder: (context, constraints) {
+          final picture = Hero(
+            tag: 'product-image-${p.id}',
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(24),
+              child: ProductImage(p),
+            ),
+          );
+          final details = Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(18),
-                child: ProductImage(p),
-              ),
-              const SizedBox(height: 20),
               Text(p.name, style: Theme.of(context).textTheme.headlineMedium),
               const SizedBox(height: 12),
               Text(
@@ -132,8 +133,33 @@ class _LiveProductPageState extends State<LiveProductPage> {
                 label: Text(busy ? 'Se adaugă…' : 'Adaugă în coș'),
               ),
             ],
-          ),
-        ),
+          );
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1100),
+                child: constraints.maxWidth >= 800
+                    ? Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(child: picture),
+                          const SizedBox(width: 40),
+                          Expanded(child: details),
+                        ],
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          picture,
+                          const SizedBox(height: 24),
+                          details,
+                        ],
+                      ),
+              ),
+            ),
+          );
+        },
       ),
     ),
   );

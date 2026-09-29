@@ -63,7 +63,8 @@ class WastelessApp extends StatelessWidget {
         transitionDuration: const Duration(milliseconds: 360),
         reverseTransitionDuration: const Duration(milliseconds: 260),
         pageBuilder: (_, animation, secondaryAnimation) => child,
-        transitionsBuilder: (_, animation, secondaryAnimation, child) {
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          if (MediaQuery.disableAnimationsOf(context)) return child;
           final curved = CurvedAnimation(
             parent: animation,
             curve: Curves.easeOutCubic,
