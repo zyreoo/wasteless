@@ -57,6 +57,31 @@ class WastelessApp extends StatelessWidget {
   final AuthController auth;
   final ApiService api;
 
+  PageRoute<void> _route(RouteSettings settings, Widget child) =>
+      PageRouteBuilder<void>(
+        settings: settings,
+        transitionDuration: const Duration(milliseconds: 360),
+        reverseTransitionDuration: const Duration(milliseconds: 260),
+        pageBuilder: (_, animation, secondaryAnimation) => child,
+        transitionsBuilder: (_, animation, secondaryAnimation, child) {
+          final curved = CurvedAnimation(
+            parent: animation,
+            curve: Curves.easeOutCubic,
+            reverseCurve: Curves.easeInCubic,
+          );
+          return FadeTransition(
+            opacity: curved,
+            child: SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(.035, .025),
+                end: Offset.zero,
+              ).animate(curved),
+              child: child,
+            ),
+          );
+        },
+      );
+
   Widget authenticatedRoute(RouteSettings settings) {
     final service = CommerceService(api);
     final id = settings.arguments;
@@ -100,18 +125,16 @@ class WastelessApp extends StatelessWidget {
             route == '/register' ||
             route == '/login' ||
             route == '/forgot-password';
-        return MaterialPageRoute<void>(
-          settings: settings,
-          builder: (_) => route == '/forgot-password' && !auth.signedIn
-              ? ForgotPasswordPage(auth: auth)
-              : auth.recovering
-              ? ResetPasswordPage(auth: auth)
-              : public && !auth.signedIn
-              ? DesignPage(nodeId: designRoutes[route]!, auth: auth)
-              : auth.signedIn
-              ? authenticatedRoute(settings)
-              : DesignPage(nodeId: designRoutes['/login']!, auth: auth),
-        );
+        final child = route == '/forgot-password' && !auth.signedIn
+            ? ForgotPasswordPage(auth: auth)
+            : auth.recovering
+            ? ResetPasswordPage(auth: auth)
+            : public && !auth.signedIn
+            ? DesignPage(nodeId: designRoutes[route]!, auth: auth)
+            : auth.signedIn
+            ? authenticatedRoute(settings)
+            : DesignPage(nodeId: designRoutes['/login']!, auth: auth);
+        return _route(settings, child);
       },
     ),
   );

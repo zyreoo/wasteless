@@ -63,51 +63,77 @@ class LiveScaffold extends StatelessWidget {
   final String title;
   final Widget body;
   final int? index;
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: Text(title),
-      actions: [
-        IconButton(
-          tooltip: 'Contul meu',
-          onPressed: () => Navigator.pushNamed(context, '/profile'),
-          icon: const Icon(Icons.person_outline),
-        ),
-      ],
+  static const routes = ['/home', '/search', '/saved', '/cart', '/history'];
+  static const destinations = [
+    NavigationDestination(icon: Icon(Icons.home_outlined), label: 'Acasă'),
+    NavigationDestination(icon: Icon(Icons.search), label: 'Caută'),
+    NavigationDestination(icon: Icon(Icons.favorite_border), label: 'Salvate'),
+    NavigationDestination(
+      icon: Icon(Icons.shopping_bag_outlined),
+      label: 'Coș',
     ),
-    body: SafeArea(child: body),
-    bottomNavigationBar: index == null
-        ? null
-        : NavigationBar(
-            selectedIndex: index!,
-            onDestinationSelected: (i) {
-              if (i != index) {
-                Navigator.pushReplacementNamed(
-                  context,
-                  ['/home', '/search', '/saved', '/cart', '/history'][i],
-                );
-              }
-            },
-            destinations: const [
-              NavigationDestination(
-                icon: Icon(Icons.home_outlined),
-                label: 'Acasă',
+    NavigationDestination(
+      icon: Icon(Icons.receipt_long_outlined),
+      label: 'Comenzi',
+    ),
+  ];
+
+  void select(BuildContext context, int destination) {
+    if (destination != index) {
+      Navigator.pushReplacementNamed(context, routes[destination]);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) {
+      final wide = constraints.maxWidth >= 900 && index != null;
+      final content = AnimatedSwitcher(
+        duration: const Duration(milliseconds: 280),
+        switchInCurve: Curves.easeOut,
+        child: SafeArea(key: ValueKey(title), child: body),
+      );
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(title),
+          actions: [
+            IconButton(
+              tooltip: 'Contul meu',
+              onPressed: () => Navigator.pushNamed(context, '/profile'),
+              icon: const Icon(Icons.person_outline),
+            ),
+            const SizedBox(width: 8),
+          ],
+        ),
+        body: wide
+            ? Row(
+                children: [
+                  NavigationRail(
+                    selectedIndex: index!,
+                    onDestinationSelected: (i) => select(context, i),
+                    labelType: NavigationRailLabelType.all,
+                    destinations: [
+                      for (final item in destinations)
+                        NavigationRailDestination(
+                          icon: item.icon,
+                          label: Text(item.label),
+                        ),
+                    ],
+                  ),
+                  const VerticalDivider(width: 1),
+                  Expanded(child: content),
+                ],
+              )
+            : content,
+        bottomNavigationBar: index == null || wide
+            ? null
+            : NavigationBar(
+                selectedIndex: index!,
+                onDestinationSelected: (i) => select(context, i),
+                destinations: destinations,
               ),
-              NavigationDestination(icon: Icon(Icons.search), label: 'Caută'),
-              NavigationDestination(
-                icon: Icon(Icons.favorite_border),
-                label: 'Salvate',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.shopping_bag_outlined),
-                label: 'Coș',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.receipt_long_outlined),
-                label: 'Comenzi',
-              ),
-            ],
-          ),
+      );
+    },
   );
 }
 

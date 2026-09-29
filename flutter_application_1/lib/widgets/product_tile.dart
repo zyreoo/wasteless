@@ -8,6 +8,9 @@ class ProductImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final uri = Uri.tryParse(product.image ?? '');
+    final demoImage = product.name.toLowerCase().contains('par')
+        ? 'assets/demo/pears.png'
+        : 'assets/demo/apples.png';
     final fallback = ColoredBox(
       color: const Color(0xffe8ede5),
       child: Center(
@@ -27,7 +30,12 @@ class ProductImage extends StatelessWidget {
               errorBuilder: (_, error, stack) => fallback,
               excludeFromSemantics: true,
             )
-          : fallback,
+          : Image.asset(
+              demoImage,
+              fit: BoxFit.cover,
+              errorBuilder: (_, error, stack) => fallback,
+              excludeFromSemantics: true,
+            ),
     );
   }
 }
@@ -47,6 +55,7 @@ class ProductTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
     clipBehavior: Clip.antiAlias,
+    margin: EdgeInsets.zero,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

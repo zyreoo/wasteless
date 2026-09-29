@@ -76,14 +76,30 @@ class _CatalogPageState extends State<CatalogPage> {
             .toList();
         return Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: TextField(
-                decoration: const InputDecoration(
-                  hintText: 'Caută un produs',
-                  prefixIcon: Icon(Icons.search),
+            if (!widget.savedOnly &&
+                !widget.search &&
+                MediaQuery.textScalerOf(context).scale(1) <= 1.3)
+              const _CatalogHero(),
+            Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1180),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Caută un produs',
+                      prefixIcon: const Icon(Icons.search),
+                      suffixIcon: query.isEmpty
+                          ? null
+                          : IconButton(
+                              tooltip: 'Șterge căutarea',
+                              onPressed: () => setState(() => query = ''),
+                              icon: const Icon(Icons.close),
+                            ),
+                    ),
+                    onChanged: (v) => setState(() => query = v),
+                  ),
                 ),
-                onChanged: (v) => setState(() => query = v),
               ),
             ),
             Expanded(
@@ -95,13 +111,28 @@ class _CatalogPageState extends State<CatalogPage> {
                     )
                   : products.isEmpty
                   ? const Center(child: Text('Nu am găsit produse.'))
-                  : RefreshIndicator(
-                      onRefresh: reload,
-                      child: ListView(
-                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-                        children: [
-                          for (final p in products)
-                            ProductTile(
+                  : LayoutBuilder(
+                      builder: (context, constraints) {
+                        final viewportWidth = MediaQuery.sizeOf(context).width;
+                        final columns = viewportWidth >= 1180
+                            ? 3
+                            : viewportWidth >= 700
+                            ? 2
+                            : 1;
+                        Widget card(int index) {
+                          final p = products[index];
+                          return TweenAnimationBuilder<double>(
+                            tween: Tween(begin: 0, end: 1),
+                            duration: Duration(milliseconds: 280 + index * 70),
+                            curve: Curves.easeOutCubic,
+                            builder: (_, value, child) => Opacity(
+                              opacity: value,
+                              child: Transform.translate(
+                                offset: Offset(0, 16 * (1 - value)),
+                                child: child,
+                              ),
+                            ),
+                            child: ProductTile(
                               key: ValueKey('product-${p.id}'),
                               product: p,
                               saved: data.$2.contains(p.id),
@@ -121,13 +152,102 @@ class _CatalogPageState extends State<CatalogPage> {
                                 if (mounted) await reload();
                               },
                             ),
-                        ],
-                      ),
+                          );
+                        }
+
+                        return RefreshIndicator(
+                          onRefresh: reload,
+                          child: columns == 1
+                              ? ListView.separated(
+                                  padding: const EdgeInsets.fromLTRB(
+                                    16,
+                                    4,
+                                    16,
+                                    32,
+                                  ),
+                                  itemCount: products.length,
+                                  separatorBuilder: (_, _) =>
+                                      const SizedBox(height: 16),
+                                  itemBuilder: (_, index) => card(index),
+                                )
+                              : GridView.builder(
+                                  padding: EdgeInsets.fromLTRB(
+                                    constraints.maxWidth >= 1240
+                                        ? (constraints.maxWidth - 1180) / 2
+                                        : 16,
+                                    4,
+                                    constraints.maxWidth >= 1240
+                                        ? (constraints.maxWidth - 1180) / 2
+                                        : 16,
+                                    32,
+                                  ),
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: columns,
+                                        crossAxisSpacing: 18,
+                                        mainAxisSpacing: 18,
+                                        mainAxisExtent:
+                                            MediaQuery.textScalerOf(context)
+                                                    .scale(1) >
+                                                1.3
+                                            ? 500
+                                            : 390,
+                                      ),
+                                  itemCount: products.length,
+                                  itemBuilder: (_, index) => card(index),
+                                ),
+                        );
+                      },
                     ),
             ),
           ],
         );
       },
+    ),
+  );
+}
+
+class _CatalogHero extends StatelessWidget {
+  const _CatalogHero();
+  @override
+  Widget build(BuildContext context) => Container(
+    width: double.infinity,
+    constraints: const BoxConstraints(minHeight: 180),
+    decoration: const BoxDecoration(
+      image: DecorationImage(
+        image: AssetImage('assets/demo/rescue-bag.png'),
+        fit: BoxFit.cover,
+        alignment: Alignment.centerRight,
+      ),
+    ),
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xF2FAF9F6), Color(0xBFFAF9F6), Color(0x00FAF9F6)],
+          stops: [0, .48, .82],
+        ),
+      ),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 430),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Salvează mâncarea.\nBucură-te de preț.',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'Descoperă produse bune, disponibile azi, înainte să fie risipite.',
+              ),
+            ],
+          ),
+        ),
+      ),
     ),
   );
 }

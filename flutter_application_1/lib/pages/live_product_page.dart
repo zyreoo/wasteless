@@ -74,55 +74,66 @@ class _LiveProductPageState extends State<LiveProductPage> {
     title: 'Detalii produs',
     body: LoadPanel<Product>(
       load: load,
-      builder: (p, reload) => ListView(
-        padding: const EdgeInsets.all(20),
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(18),
-            child: ProductImage(p),
-          ),
-          const SizedBox(height: 20),
-          Text(p.name, style: Theme.of(context).textTheme.headlineMedium),
-          const SizedBox(height: 12),
-          Text(money(p.price), style: Theme.of(context).textTheme.titleLarge),
-          if (p.description?.isNotEmpty == true)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: Text(p.description!),
-            ),
-          TextButton.icon(
-            onPressed: busy ? null : toggleFavorite,
-            icon: Icon(saved == true ? Icons.favorite : Icons.favorite_border),
-            label: Text(
-              saved == true ? 'Elimină din favorite' : 'Salvează produsul',
-            ),
-          ),
-          Text(p.stock > 0 ? '${p.stock} disponibile' : 'Stoc epuizat'),
-          const SizedBox(height: 20),
-          Row(
+      builder: (p, reload) => Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1040),
+          child: ListView(
+            padding: const EdgeInsets.all(20),
             children: [
-              IconButton(
-                tooltip: 'Scade cantitatea',
-                onPressed: busy || quantity <= 1
-                    ? null
-                    : () => setState(() => quantity--),
-                icon: const Icon(Icons.remove),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(18),
+                child: ProductImage(p),
               ),
-              Text('$quantity'),
-              IconButton(
-                tooltip: 'Crește cantitatea',
-                onPressed: busy || quantity >= p.stock || quantity >= 99
-                    ? null
-                    : () => setState(() => quantity++),
-                icon: const Icon(Icons.add),
+              const SizedBox(height: 20),
+              Text(p.name, style: Theme.of(context).textTheme.headlineMedium),
+              const SizedBox(height: 12),
+              Text(
+                money(p.price),
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              if (p.description?.isNotEmpty == true)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Text(p.description!),
+                ),
+              TextButton.icon(
+                onPressed: busy ? null : toggleFavorite,
+                icon: Icon(
+                  saved == true ? Icons.favorite : Icons.favorite_border,
+                ),
+                label: Text(
+                  saved == true ? 'Elimină din favorite' : 'Salvează produsul',
+                ),
+              ),
+              Text(p.stock > 0 ? '${p.stock} disponibile' : 'Stoc epuizat'),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  IconButton(
+                    tooltip: 'Scade cantitatea',
+                    onPressed: busy || quantity <= 1
+                        ? null
+                        : () => setState(() => quantity--),
+                    icon: const Icon(Icons.remove),
+                  ),
+                  Text('$quantity'),
+                  IconButton(
+                    tooltip: 'Crește cantitatea',
+                    onPressed: busy || quantity >= p.stock || quantity >= 99
+                        ? null
+                        : () => setState(() => quantity++),
+                    icon: const Icon(Icons.add),
+                  ),
+                ],
+              ),
+              FilledButton.icon(
+                onPressed: busy || p.stock < quantity ? null : add,
+                icon: const Icon(Icons.shopping_bag_outlined),
+                label: Text(busy ? 'Se adaugă…' : 'Adaugă în coș'),
               ),
             ],
           ),
-          FilledButton(
-            onPressed: busy || p.stock < quantity ? null : add,
-            child: Text(busy ? 'Se adaugă…' : 'Adaugă în coș'),
-          ),
-        ],
+        ),
       ),
     ),
   );
