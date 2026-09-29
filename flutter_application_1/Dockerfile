@@ -19,7 +19,7 @@ RUN flutter pub get
 COPY --chown=flutter:flutter . .
 RUN test -n "$SUPABASE_URL" && test -n "$SUPABASE_PUBLISHABLE_KEY" \
     && test -n "$API_BASE_URL" && test -n "$AUTH_REDIRECT_URL"
-RUN flutter build web --release \
+RUN flutter build web --release --no-web-resources-cdn \
     --dart-define=SUPABASE_URL="$SUPABASE_URL" \
     --dart-define=SUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY" \
     --dart-define=API_BASE_URL="$API_BASE_URL" \
