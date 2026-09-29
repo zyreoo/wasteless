@@ -3,8 +3,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       ca-certificates curl git unzip xz-utils \
     && rm -rf /var/lib/apt/lists/* \
     && git clone --depth 1 --branch 3.47.2 \
-      https://github.com/flutter/flutter.git /opt/flutter
+      https://github.com/flutter/flutter.git /opt/flutter \
+    && useradd --create-home --shell /bin/bash flutter \
+    && chown -R flutter:flutter /opt/flutter
 ENV PATH="/opt/flutter/bin:/opt/flutter/bin/cache/dart-sdk/bin:${PATH}"
+USER flutter
 RUN flutter config --enable-web && flutter precache --web
 ARG SUPABASE_URL
 ARG SUPABASE_PUBLISHABLE_KEY
