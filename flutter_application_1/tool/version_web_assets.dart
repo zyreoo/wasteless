@@ -21,8 +21,13 @@ void main() {
     copy.parent.createSync(recursive: true);
     entity.copySync(copy.path);
   }
+  File('${web.path}/main.dart.js').copySync('$target/main.dart.js');
+  final versionedSource = source.replaceAll(
+    '"mainJsPath":"main.dart.js"',
+    '"mainJsPath":"releases/$version/main.dart.js"',
+  );
   bootstrap.writeAsStringSync(
-    source.replaceFirst(
+    versionedSource.replaceFirst(
       loader,
       "$loader\n  config: {assetBase: new URL('releases/$version/', document.baseURI).href},",
     ),
