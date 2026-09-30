@@ -32,5 +32,13 @@ void main() {
       "$loader\n  config: {assetBase: new URL('releases/$version/', document.baseURI).href},",
     ),
   );
+  bootstrap.copySync('$target/flutter_bootstrap.js');
+  final index = File('${web.path}/index.html');
+  index.writeAsStringSync(
+    index.readAsStringSync().replaceFirst(
+      'src="flutter_bootstrap.js"',
+      'src="releases/$version/flutter_bootstrap.js"',
+    ),
+  );
   stdout.writeln('Versioned web assets: $version');
 }
