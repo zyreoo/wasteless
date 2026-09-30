@@ -78,9 +78,17 @@ class _LiveCheckoutPageState extends State<LiveCheckoutPage> {
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 16),
-            const Text(
-              'Plata se face la ridicare. Confirmarea comenzii nu retrage bani.',
+            Text(
+              (cart['items'] as List).every(
+                    (i) => i['product']?['is_demo'] == true,
+                  )
+                  ? 'COMANDĂ DE TEST · Produse fictive, fără plată sau ridicare reală.'
+                  : 'Plata se face la ridicare. Confirmarea comenzii nu retrage bani.',
             ),
+            if (cart['single_merchant'] == false)
+              const Text(
+                'O comandă trebuie să conțină produse de la un singur comerciant. Revino în coș pentru a elimina produsele celorlalți comercianți.',
+              ),
             const SizedBox(height: 24),
             FilledButton(
               onPressed: busy || cart['can_checkout'] != true ? null : confirm,

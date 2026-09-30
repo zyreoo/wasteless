@@ -1,3 +1,5 @@
+import '../merchant/order_actions.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -6,7 +8,9 @@ import '../services/commerce_service.dart';
 import '../widgets/live_page.dart';
 
 String orderStatus(String value) => switch (value) {
-  'confirmed' => 'Confirmată',
+  'confirmed' => 'Trimisă comerciantului',
+  'accepted' => 'Acceptată',
+  'ready' => 'Gata de ridicare',
   'collected' => 'Ridicată',
   'cancelled' => 'Anulată',
   _ => value,
@@ -41,11 +45,14 @@ class LiveOrdersPage extends StatelessWidget {
                       '${orderDate(order['created_at'])}\n${orderStatus(order['status'])} · ${(order['order_items'] as List).fold<int>(0, (n, i) => n + (i['quantity'] as int))} produse',
                     ),
                     trailing: Text(money(order['total_price'])),
-                    onTap: () => Navigator.pushNamed(
-                      context,
-                      '/order-detail',
-                      arguments: order['id'],
-                    ),
+                    onTap: () async {
+                      await Navigator.pushNamed(
+                        context,
+                        '/order-detail',
+                        arguments: order['id'],
+                      );
+                      await reload();
+                    },
                   ),
                 ),
             ],
@@ -82,6 +89,22 @@ class LiveOrderDetailPage extends StatelessWidget {
           Text(
             '${orderDate(order['created_at'])} · ${orderStatus(order['status'])}',
           ),
+          TextButton.icon(
+            onPressed: reload,
+            icon: const Icon(Icons.refresh),
+            label: const Text('Actualizează statusul'),
+          ),
+          if (order['merchant_name'] != null)
+            Text(
+              '${order['merchant_name']}\n${order['pickup_address']}\nRidicare: ${order['pickup_window']}',
+            ),
+          if (order['pickup_code'] != null && order['status'] != 'cancelled')
+            SelectableText(
+              'Cod ridicare: ${order['pickup_code']}',
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+          if (order['cancellation_reason'] != null)
+            Text('Motiv anulare: ${order['cancellation_reason']}'),
           const SizedBox(height: 16),
           for (final item in order['order_items'])
             ListTile(
@@ -97,9 +120,13 @@ class LiveOrderDetailPage extends StatelessWidget {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 16),
-          const Text(
-            'Plata la ridicare. Nicio plată online nu a fost efectuată.',
+          Text(
+            order['is_demo'] == true
+                ? 'COMANDĂ DE TEST · Produse fictive. Fără plată sau ridicare reală.'
+                : 'Plata la ridicare. Nicio plată online nu a fost efectuată.',
           ),
+          const SizedBox(height: 16),
+          OrderActions(order: order, service: service, reload: reload),
           const SizedBox(height: 24),
           FilledButton(
             onPressed: () => Navigator.pushNamedAndRemoveUntil(

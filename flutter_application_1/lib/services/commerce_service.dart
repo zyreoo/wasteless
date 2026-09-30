@@ -73,4 +73,48 @@ class CommerceService {
 
   Future<Map<String, dynamic>> order(int id) async =>
       Map<String, dynamic>.from(await api.request('GET', '/api/orders/$id'));
+
+  Future<Map<String, dynamic>> dashboard() async => Map<String, dynamic>.from(
+    await api.request('GET', '/api/merchant/dashboard'),
+  );
+  Future<List<Map<String, dynamic>>> merchants() async =>
+      ((await api.request('GET', '/api/merchants'))['items'] as List)
+          .map((m) => Map<String, dynamic>.from(m))
+          .toList();
+  Future<void> saveMerchant(Map<String, dynamic> data) async {
+    await api.request('PUT', '/api/merchant/profile', body: data);
+  }
+
+  Future<void> seedProducts() async {
+    await api.request('POST', '/api/merchant/seed');
+  }
+
+  Future<void> saveProduct(Map<String, dynamic> data, {int? id}) async {
+    await api.request(
+      id == null ? 'POST' : 'PUT',
+      id == null ? '/api/merchant/products' : '/api/merchant/products/$id',
+      body: data,
+    );
+  }
+
+  Future<void> availability(int id, bool active) async {
+    await api.request(
+      'PATCH',
+      '/api/merchant/products/$id',
+      body: {'active': active},
+    );
+  }
+
+  Future<void> transition(
+    int id,
+    String status, {
+    String code = '',
+    String reason = '',
+  }) async {
+    await api.request(
+      'POST',
+      '/api/orders/$id/status',
+      body: {'status': status, 'code': code, 'reason': reason},
+    );
+  }
 }

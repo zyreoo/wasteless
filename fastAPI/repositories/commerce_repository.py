@@ -6,7 +6,8 @@ import httpx
 from fastapi import HTTPException
 
 logger = logging.getLogger(__name__)
-PRODUCT_COLUMNS = 'id,name,description,image_path,price,stock,category,location_id'
+ORDER_COLUMNS = 'id,created_at,updated_at,total_price,subtotal,status,merchant_id,merchant_name,pickup_address,pickup_window,pickup_code,is_demo,cancellation_reason,order_items(id,product_id,product_name,quantity,unit_price)'
+PRODUCT_COLUMNS = 'id,name,description,image_path,price,stock,category,location_id,active,merchant_id,original_price,allergens,is_demo,merchants(id,name,address,pickup_window,latitude,longitude)'
 
 
 class CommerceRepository:
@@ -33,7 +34,21 @@ class CommerceRepository:
             # Never return SQL errors, query details or row data to clients/logs.
             status = response.status_code if response.status_code in (401,403,404,409,422) else 503
             logger.warning('Database operation failed with status %s', response.status_code)
-            raise HTTPException(status, 'Operația nu a reușit. Reîncarcă datele și încearcă din nou.')
+            safe_messages = {
+                'One merchant per order': 'Alege produse de la un singur comerciant pentru fiecare comandă.',
+                'Insufficient stock': 'Stoc insuficient. Actualizează cantitatea.',
+                'Product unavailable': 'Un produs nu mai este disponibil. Actualizează coșul.',
+                'Invalid pickup code': 'Codul de ridicare nu este corect.',
+                'Invalid transition': 'Starea comenzii s-a schimbat. Reîncarcă datele.',
+                'Order cannot be cancelled': 'Comanda nu mai poate fi anulată.',
+                'Cancellation reason required': 'Completează motivul anulării.',
+                'Invalid product': 'Verifică prețurile, stocul și alergenii.',
+            }
+            try:
+                detail = safe_messages.get(response.json().get('message'), 'Operația nu a reușit. Reîncarcă datele și încearcă din nou.')
+            except (ValueError, AttributeError):
+                detail = 'Operația nu a reușit. Încearcă din nou.'
+            raise HTTPException(status, detail)
         if not response.content:
             return None
         return response.json()
@@ -57,7 +72,7 @@ class CommerceRepository:
         return self.request('GET', 'favorite', params={'select': f'items_id,product({PRODUCT_COLUMNS})', 'user_id': f'eq.{self.user.id}', 'order': 'id'})
 
     def orders(self, id=None, offset=0, limit=50):
-        params = {'select': 'id,created_at,total_price,subtotal,status,order_items(id,product_id,product_name,quantity,unit_price)',
+        params = {'select': ORDER_COLUMNS,
                   'user_id': f'eq.{self.user.id}', 'order': 'created_at.desc,id.desc', 'limit': limit, 'offset': offset}
         if id is not None:
             params['id'] = f'eq.{id}'
@@ -70,3 +85,16 @@ class CommerceRepository:
 
     def rpc(self, name, params):
         return self.request('POST', f'rpc/wasteless_{name}', body=params)
+
+    def merchants(self):
+        return self.request('GET', 'merchants', params={'select': 'id,name,address,pickup_window,latitude,longitude,is_demo', 'owner_id':'not.is.null', 'order':'id', 'limit':100})
+
+    def dashboard(self):
+        rows = self.request('GET', 'merchants', params={'select':'id,name,address,pickup_window,latitude,longitude,is_demo,demo_seeded','owner_id':f'eq.{self.user.id}'})
+        if not rows:
+            return {'merchant':None,'products':[],'orders':[]}
+        merchant = rows[0]
+        products = self.request('GET','product',params={'select':PRODUCT_COLUMNS,'merchant_id':f'eq.{merchant["id"]}','order':'id','limit':500})
+        # Pickup code belongs to the customer; the merchant enters it at collection.
+        orders = self.request('GET','order',params={'select':ORDER_COLUMNS.replace('pickup_code,',''),'merchant_id':f'eq.{merchant["id"]}','order':'created_at.desc,id.desc','limit':200})
+        return {'merchant':merchant,'products':products,'orders':orders}

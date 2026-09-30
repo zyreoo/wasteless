@@ -11,7 +11,14 @@ class ProductImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final uri = Uri.tryParse(product.image ?? '');
     final name = product.name.toLowerCase();
-    final demoImage = ['para', 'pară', 'pere'].contains(name)
+    final demoImage =
+        const [
+          'assets/demo/apples.webp',
+          'assets/demo/pears.webp',
+          'assets/demo/rescue-bag.webp',
+        ].contains(product.image)
+        ? product.image
+        : ['para', 'pară', 'pere'].contains(name)
         ? 'assets/demo/pears.webp'
         : ['mar', 'măr', 'mere'].contains(name)
         ? 'assets/demo/apples.webp'
@@ -75,6 +82,14 @@ class ProductTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              if (product.isDemo)
+                const Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Text(
+                    'PRODUS FICTIV · TEST',
+                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700),
+                  ),
+                ),
               Hero(
                 tag: 'product-image-${product.id}',
                 child: ProductImage(product),

@@ -1,7 +1,6 @@
 import '../widgets/image_loading.dart';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/live_page.dart';
 import 'components.dart';
@@ -233,147 +232,34 @@ class AboutPage extends StatelessWidget {
   );
 }
 
-class BusinessPage extends StatefulWidget {
+class BusinessPage extends StatelessWidget {
   const BusinessPage({super.key});
-  @override
-  State<BusinessPage> createState() => _BusinessPageState();
-}
-
-class _BusinessPageState extends State<BusinessPage> {
-  final name = TextEditingController(),
-      city = TextEditingController(),
-      description = TextEditingController();
-  bool busy = false, loaded = false;
-  final form = GlobalKey<FormState>();
-  @override
-  void initState() {
-    super.initState();
-    restore();
-  }
-
-  Future<void> restore() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (!mounted) return;
-    name.text = prefs.getString('partner.name') ?? '';
-    city.text = prefs.getString('partner.city') ?? '';
-    description.text = prefs.getString('partner.description') ?? '';
-    setState(() => loaded = true);
-  }
-
-  @override
-  void dispose() {
-    name.dispose();
-    city.dispose();
-    description.dispose();
-    super.dispose();
-  }
-
-  Future<void> save() async {
-    if (!form.currentState!.validate()) return;
-    setState(() => busy = true);
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('partner.name', name.text.trim());
-      await prefs.setString('partner.city', city.text.trim());
-      await prefs.setString('partner.description', description.text.trim());
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Ciorna a fost salvată pe acest dispozitiv. Nu a fost trimisă.',
-            ),
-          ),
-        );
-      }
-    } finally {
-      if (mounted) setState(() => busy = false);
-    }
-  }
-
   @override
   Widget build(BuildContext context) => LiveScaffold(
     title: 'Pentru comercianți',
     body: Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 920),
+        constraints: const BoxConstraints(maxWidth: 760),
         child: ListView(
           padding: const EdgeInsets.all(24),
           children: [
             const PageIntro(
-              'Bun pentru business. Bun pentru planetă.',
-              'Dă valoare\nla ce rămâne.',
-              'Pregătește profilul afacerii tale și transformă surplusul într-o oportunitate.',
-            ),
-            const SizedBox(height: 28),
-            Wrap(
-              spacing: 12,
-              runSpacing: 12,
-              children: [
-                for (final item in const [
-                  (Icons.storefront_outlined, 'Clienți noi'),
-                  (Icons.eco_outlined, 'Mai puțină risipă'),
-                  (Icons.shopping_bag_outlined, 'Produse valorificate'),
-                ])
-                  Chip(avatar: Icon(item.$1, size: 18), label: Text(item.$2)),
-              ],
+              'Wasteless pentru afacerea ta',
+              'Dă valoare la ce rămâne.',
+              'Publică oferte, gestionează stocul și procesează comenzile clienților din spațiul comerciantului.',
             ),
             const SizedBox(height: 24),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Form(
-                  key: form,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        'Profil de comerciant · ciornă',
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      const SizedBox(height: 8),
-                      const Text(
-                        'Înscrierile comercianților nu sunt încă deschise. Poți pregăti o ciornă locală; aceasta nu publică oferte și nu trimite date.',
-                      ),
-                      const SizedBox(height: 24),
-                      TextFormField(
-                        enabled: loaded && !busy,
-                        controller: name,
-                        decoration: const InputDecoration(
-                          labelText: 'Numele afacerii',
-                        ),
-                        validator: (v) => v == null || v.trim().isEmpty
-                            ? 'Completează numele afacerii.'
-                            : null,
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        enabled: loaded && !busy,
-                        controller: city,
-                        decoration: const InputDecoration(labelText: 'Oraș'),
-                        validator: (v) => v == null || v.trim().isEmpty
-                            ? 'Completează orașul.'
-                            : null,
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        enabled: loaded && !busy,
-                        controller: description,
-                        maxLines: 3,
-                        decoration: const InputDecoration(
-                          labelText: 'Ce produse ai vrea să salvezi?',
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      FilledButton(
-                        onPressed: loaded && !busy ? save : null,
-                        child: Text(
-                          busy ? 'Se salvează…' : 'Salvează ciorna local',
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+            const Text(
+              'Poți testa întregul flux cu produse fictive, salvate în backend. După autentificare, creează profilul comerciantului și folosește „Adaugă cele 4 produse fictive”.',
+            ),
+            const SizedBox(height: 24),
+            FilledButton(
+              onPressed: () => Navigator.pushNamed(context, '/login'),
+              child: const Text('Autentifică-te pentru a începe'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pushNamed(context, '/register'),
+              child: const Text('Creează un cont'),
             ),
           ],
         ),

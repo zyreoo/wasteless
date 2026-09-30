@@ -118,6 +118,13 @@ class _LiveCartPageState extends State<LiveCartPage> {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 16),
+              if (cart['single_merchant'] == false)
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 12),
+                  child: Text(
+                    'Alege produse de la un singur comerciant per comandă. Elimină produsele celorlalți comercianți pentru a continua.',
+                  ),
+                ),
               FilledButton(
                 onPressed: busy || cart['can_checkout'] != true
                     ? null

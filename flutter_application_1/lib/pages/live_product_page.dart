@@ -87,6 +87,15 @@ class _LiveProductPageState extends State<LiveProductPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(p.name, style: Theme.of(context).textTheme.headlineMedium),
+              if (p.isDemo)
+                const Text(
+                  'Produs fictiv. Comanda testează fluxul; nu presupune livrare sau plată reală.',
+                ),
+              if (p.merchant != null)
+                Text(
+                  '${p.merchant!['name']}\n${p.merchant!['address']}\nRidicare: ${p.merchant!['pickup_window']}',
+                ),
+              if (p.allergens != null) Text('Alergeni: ${p.allergens}'),
               const SizedBox(height: 12),
               Text(
                 money(p.price),

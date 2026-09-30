@@ -1,3 +1,6 @@
+import 'merchant/merchant_dashboard.dart';
+import 'merchant/merchant_directory.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -98,13 +101,13 @@ class WastelessApp extends StatelessWidget {
     final service = CommerceService(api);
     final id = settings.arguments;
     return switch (settings.name) {
-      '/search' => const DiscoveryPage(),
-      '/map' => const DiscoveryPage(mapFirst: true),
-      '/explore' => const DiscoveryPage(),
+      '/search' => MerchantDirectory(service: service),
+      '/map' => MerchantDirectory(service: service, mapFirst: true),
+      '/explore' => MerchantDirectory(service: service),
       '/settings' => const SettingsPage(),
       '/help' => const HelpPage(),
       '/about' => const AboutPage(),
-      '/business' => const BusinessPage(),
+      '/business' => MerchantDashboard(service: service),
       '/merchant' when id is String && demoMerchants.any((m) => m.id == id) =>
         MerchantPage(merchant: demoMerchants.firstWhere((m) => m.id == id)),
       '/saved' => CatalogPage(service: service, savedOnly: true),
@@ -155,12 +158,27 @@ class WastelessApp extends StatelessWidget {
             route == '/forgot-password';
         final informational = switch (route) {
           '/settings' => const SettingsPage(),
-          '/search' => const DiscoveryPage(),
+          '/search' =>
+            auth.signedIn
+                ? MerchantDirectory(service: CommerceService(api))
+                : const DiscoveryPage(),
           '/help' => const HelpPage(),
           '/about' => const AboutPage(),
-          '/business' => const BusinessPage(),
-          '/explore' => const DiscoveryPage(),
-          '/map' => const DiscoveryPage(mapFirst: true),
+          '/business' =>
+            auth.signedIn
+                ? MerchantDashboard(service: CommerceService(api))
+                : const BusinessPage(),
+          '/explore' =>
+            auth.signedIn
+                ? MerchantDirectory(service: CommerceService(api))
+                : const DiscoveryPage(),
+          '/map' =>
+            auth.signedIn
+                ? MerchantDirectory(
+                    service: CommerceService(api),
+                    mapFirst: true,
+                  )
+                : const DiscoveryPage(mapFirst: true),
           '/merchant'
               when settings.arguments is String &&
                   demoMerchants.any((m) => m.id == settings.arguments) =>

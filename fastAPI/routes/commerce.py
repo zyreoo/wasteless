@@ -105,3 +105,86 @@ def order(order_id: int, repo: Repo):
 def checkout(repo: Repo, idempotency_key: Annotated[UUID, Header()]):
     oid = repo.rpc('checkout', {'p_key': str(idempotency_key)})
     return repo.orders(id=oid)
+
+# Merchant ownership is enforced again inside the database functions.
+from decimal import Decimal
+from typing import Literal
+
+
+class MerchantProfileInput(BaseModel):
+    model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
+    name: str = Field(min_length=2, max_length=100)
+    address: str = Field(min_length=5, max_length=300)
+    pickup_window: str = Field(min_length=3, max_length=100)
+    latitude: float = Field(ge=-90, le=90, allow_inf_nan=False)
+    longitude: float = Field(ge=-180, le=180, allow_inf_nan=False)
+
+
+class MerchantProductInput(BaseModel):
+    model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
+    name: str = Field(min_length=2, max_length=150)
+    description: str = Field(max_length=2000)
+    price: Decimal = Field(gt=0, le=10000, decimal_places=2)
+    original_price: Decimal = Field(gt=0, le=10000, decimal_places=2)
+    stock: int = Field(ge=0, le=10000, strict=True)
+    category: str = Field(min_length=2, max_length=80)
+    allergens: str = Field(min_length=2, max_length=500)
+    image_path: Literal['assets/demo/apples.webp', 'assets/demo/pears.webp', 'assets/demo/rescue-bag.webp']
+
+
+class AvailabilityInput(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    active: bool = Field(strict=True)
+
+
+class TransitionInput(BaseModel):
+    model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
+    status: Literal['accepted', 'ready', 'collected', 'cancelled']
+    code: str = Field(default='', max_length=20)
+    reason: str = Field(default='', max_length=500)
+
+
+@router.get('/merchants')
+def merchant_directory(repo: Repo):
+    return {'items': repo.merchants()}
+
+
+@router.get('/merchant/dashboard')
+def merchant_dashboard(repo: Repo):
+    return repo.dashboard()
+
+
+@router.put('/merchant/profile')
+def merchant_profile(data: MerchantProfileInput, repo: Repo):
+    repo.rpc('merchant', {'p_action': 'profile', 'p_data': data.model_dump(mode='json')})
+    return repo.dashboard()
+
+
+@router.post('/merchant/seed')
+def merchant_seed(repo: Repo):
+    repo.rpc('merchant', {'p_action': 'seed', 'p_data': {}})
+    return repo.dashboard()
+
+
+@router.post('/merchant/products', status_code=201)
+def merchant_create_product(data: MerchantProductInput, repo: Repo):
+    pid = repo.rpc('merchant', {'p_action': 'product', 'p_data': data.model_dump(mode='json')})
+    return {'id': pid}
+
+
+@router.put('/merchant/products/{product_id}')
+def merchant_update_product(product_id: int, data: MerchantProductInput, repo: Repo):
+    repo.rpc('merchant', {'p_action': 'product', 'p_data': {**data.model_dump(mode='json'), 'id': product_id}})
+    return {'id': product_id}
+
+
+@router.patch('/merchant/products/{product_id}')
+def merchant_availability(product_id: int, data: AvailabilityInput, repo: Repo):
+    repo.rpc('merchant', {'p_action': 'availability', 'p_data': {'id': product_id, 'active': data.active}})
+    return {'id': product_id}
+
+
+@router.post('/orders/{order_id}/status', status_code=204)
+def transition_order(order_id: int, data: TransitionInput, repo: Repo):
+    repo.rpc('order_transition', {'p_order_id': order_id, 'p_status': data.status, 'p_code': data.code, 'p_reason': data.reason})
+    return Response(status_code=204)
