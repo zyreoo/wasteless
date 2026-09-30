@@ -112,7 +112,7 @@ class FigmaLayout extends StatelessWidget {
     final fs = FigmaDesign.number(n, 'fontSize', parent.fontSize ?? 14);
     final weight = (n['weight'] as int?);
     return parent.copyWith(
-      fontFamily: n['fontFamily'] as String?,
+      fontFamily: 'PlusJakartaSans',
       fontSize: fs,
       fontFamilyFallback: const ['Apple Color Emoji', 'Noto Color Emoji'],
       color: n['color'] == null ? null : Color(n['color'] as int),

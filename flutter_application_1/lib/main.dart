@@ -12,6 +12,7 @@ import 'pages/design_page.dart';
 import 'services/api_service.dart';
 import 'theme/app_theme.dart';
 import 'widgets/figma_layout.dart';
+import 'widgets/live_page.dart';
 import 'services/commerce_service.dart';
 import 'pages/catalog_page.dart';
 import 'pages/live_product_page.dart';
@@ -65,11 +66,16 @@ class WastelessApp extends StatelessWidget {
   PageRoute<void> _route(RouteSettings settings, Widget child) =>
       PageRouteBuilder<void>(
         settings: settings,
-        transitionDuration: const Duration(milliseconds: 360),
-        reverseTransitionDuration: const Duration(milliseconds: 260),
+        transitionDuration: const Duration(milliseconds: 180),
+        reverseTransitionDuration: const Duration(milliseconds: 160),
         pageBuilder: (_, animation, secondaryAnimation) => child,
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          if (MediaQuery.disableAnimationsOf(context)) return child;
+          if (MediaQuery.disableAnimationsOf(context) ||
+              LiveScaffold.routes.contains(settings.name) ||
+              settings.name == '/explore' ||
+              settings.name == '/map') {
+            return child;
+          }
           final curved = CurvedAnimation(
             parent: animation,
             curve: Curves.easeOutCubic,
@@ -79,7 +85,7 @@ class WastelessApp extends StatelessWidget {
             opacity: curved,
             child: SlideTransition(
               position: Tween<Offset>(
-                begin: const Offset(.035, .025),
+                begin: const Offset(0, .012),
                 end: Offset.zero,
               ).animate(curved),
               child: child,

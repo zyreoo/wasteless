@@ -1,3 +1,5 @@
+import '../widgets/image_loading.dart';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -178,7 +180,14 @@ class AboutPage extends StatelessWidget {
                 const SizedBox(height: 28),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(28),
-                  child: Image.asset('assets/demo/rescue-bag.png'),
+                  child: AspectRatio(
+                    aspectRatio: 1.8,
+                    child: Image.asset(
+                      'assets/demo/rescue-bag.webp',
+                      fit: BoxFit.cover,
+                      frameBuilder: softImageFrame,
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 28),
                 for (final step in const [

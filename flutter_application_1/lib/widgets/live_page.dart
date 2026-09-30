@@ -27,7 +27,8 @@ class _LoadPanelState<T> extends State<LoadPanel<T>> {
   Widget build(BuildContext context) => FutureBuilder<T>(
     future: future,
     builder: (context, snapshot) {
-      if (snapshot.connectionState != ConnectionState.done) {
+      if (snapshot.connectionState != ConnectionState.done &&
+          !snapshot.hasData) {
         return const Center(child: CircularProgressIndicator());
       }
       if (snapshot.hasError) {
@@ -92,12 +93,14 @@ class LiveScaffold extends StatelessWidget {
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, constraints) {
       final wide = constraints.maxWidth >= 900 && index != null;
-      final content = AnimatedSwitcher(
-        duration: MediaQuery.disableAnimationsOf(context)
-            ? Duration.zero
-            : const Duration(milliseconds: 280),
-        switchInCurve: Curves.easeOut,
-        child: SafeArea(key: ValueKey(title), child: body),
+      final animation = ModalRoute.of(context)?.animation;
+      final content = SafeArea(
+        child:
+            index != null &&
+                animation != null &&
+                !MediaQuery.disableAnimationsOf(context)
+            ? FadeTransition(opacity: animation, child: body)
+            : body,
       );
       return Scaffold(
         appBar: AppBar(

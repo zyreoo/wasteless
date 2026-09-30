@@ -280,7 +280,7 @@ class _CatalogHero extends StatelessWidget {
     constraints: const BoxConstraints(minHeight: 180),
     decoration: const BoxDecoration(
       image: DecorationImage(
-        image: AssetImage('assets/demo/rescue-bag.png'),
+        image: AssetImage('assets/demo/rescue-bag.webp'),
         fit: BoxFit.cover,
         alignment: Alignment.centerRight,
       ),

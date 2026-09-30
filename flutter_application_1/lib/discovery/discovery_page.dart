@@ -1,3 +1,5 @@
+import '../widgets/image_loading.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -16,6 +18,7 @@ class DiscoveryPage extends StatefulWidget {
 
 class _DiscoveryPageState extends State<DiscoveryPage> {
   late bool mapMode = widget.mapFirst;
+  late bool mapVisited = widget.mapFirst;
   String query = '', category = 'Toate';
   bool savedOnly = false;
   DemoMerchant? selected;
@@ -76,7 +79,7 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                         onChanged: (city) async {
                           if (city == null) return;
                           await prefs.update(city: city);
-                          if (mounted && (wide || mapMode)) {
+                          if (mounted && (wide || mapVisited)) {
                             controller.move(
                               demoMerchants.first.location(city),
                               13,
@@ -335,8 +338,10 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                         ),
                       ],
                       selected: {mapMode},
-                      onSelectionChanged: (v) =>
-                          setState(() => mapMode = v.first),
+                      onSelectionChanged: (v) => setState(() {
+                        mapMode = v.first;
+                        mapVisited = mapVisited || mapMode;
+                      }),
                     ),
                   ),
                 Expanded(
@@ -348,9 +353,13 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                             Expanded(child: map),
                           ],
                         )
-                      : mapMode
-                      ? map
-                      : list,
+                      : IndexedStack(
+                          index: mapMode ? 1 : 0,
+                          children: [
+                            list,
+                            if (mapVisited) map else const SizedBox.expand(),
+                          ],
+                        ),
                 ),
               ],
             );
@@ -378,6 +387,8 @@ class MerchantPage extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(28),
                 child: Image.asset(
+                  frameBuilder: softImageFrame,
+                  gaplessPlayback: true,
                   merchant.image,
                   height: 280,
                   width: double.infinity,

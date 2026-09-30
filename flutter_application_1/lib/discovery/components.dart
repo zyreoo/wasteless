@@ -1,3 +1,5 @@
+import '../widgets/image_loading.dart';
+
 import 'package:flutter/material.dart';
 
 import 'merchant.dart';
@@ -28,10 +30,10 @@ class PageIntro extends StatelessWidget {
       Text(
         title,
         style: TextStyle(
-          fontSize: MediaQuery.sizeOf(context).width < 600 ? 30 : 42,
-          height: 1.12,
-          letterSpacing: -1.3,
-          fontWeight: FontWeight.w800,
+          fontSize: MediaQuery.sizeOf(context).width < 600 ? 26 : 36,
+          height: 1.2,
+          letterSpacing: -0.6,
+          fontWeight: FontWeight.w700,
           color: ink,
         ),
       ),
@@ -113,6 +115,8 @@ class _MerchantCardState extends State<MerchantCard> {
               Stack(
                 children: [
                   Image.asset(
+                    frameBuilder: softImageFrame,
+                    gaplessPlayback: true,
                     m.image,
                     height: widget.compact ? 115 : 160,
                     width: double.infinity,

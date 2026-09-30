@@ -1,3 +1,5 @@
+import '../widgets/image_loading.dart';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -734,7 +736,9 @@ class _DesignPageState extends State<DesignPage> {
                               ),
                               Expanded(
                                 child: Image.asset(
-                                  'assets/demo/rescue-bag.png',
+                                  frameBuilder: softImageFrame,
+                                  gaplessPlayback: true,
+                                  'assets/demo/rescue-bag.webp',
                                   fit: BoxFit.cover,
                                 ),
                               ),

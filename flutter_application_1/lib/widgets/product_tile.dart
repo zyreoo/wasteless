@@ -1,3 +1,5 @@
+import 'image_loading.dart';
+
 import 'package:flutter/material.dart';
 
 import '../models/product.dart';
@@ -10,9 +12,9 @@ class ProductImage extends StatelessWidget {
     final uri = Uri.tryParse(product.image ?? '');
     final name = product.name.toLowerCase();
     final demoImage = ['para', 'pară', 'pere'].contains(name)
-        ? 'assets/demo/pears.png'
+        ? 'assets/demo/pears.webp'
         : ['mar', 'măr', 'mere'].contains(name)
-        ? 'assets/demo/apples.png'
+        ? 'assets/demo/apples.webp'
         : null;
     final fallback = ColoredBox(
       color: const Color(0xffe8ede5),
@@ -28,6 +30,8 @@ class ProductImage extends StatelessWidget {
       aspectRatio: 1.6,
       child: uri?.scheme == 'https'
           ? Image.network(
+              frameBuilder: softImageFrame,
+              gaplessPlayback: true,
               uri.toString(),
               fit: BoxFit.cover,
               errorBuilder: (_, error, stack) => fallback,
@@ -36,6 +40,8 @@ class ProductImage extends StatelessWidget {
           : demoImage == null
           ? fallback
           : Image.asset(
+              frameBuilder: softImageFrame,
+              gaplessPlayback: true,
               demoImage,
               fit: BoxFit.cover,
               errorBuilder: (_, error, stack) => fallback,
