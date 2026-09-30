@@ -4,8 +4,8 @@ class AppColors {
   // Primary greens
   static const Color darkGreen = Color(0xFF31572C);
   static const Color mediumGreen = Color(0xFF31572C);
-  static const Color primaryGreen = Color(0xFF40916C);
-  static const Color lightGreen = Color(0xFF40916C);
+  static const Color primaryGreen = Color(0xFF315C37);
+  static const Color lightGreen = Color(0xFF315C37);
   static const Color accentGreen = Color(0xFF90A955);
 
   // Surface & Background
@@ -15,17 +15,17 @@ class AppColors {
   static const Color headerBg = Color(0xFF31572C);
 
   // Accent / Highlights
-  static const Color limeYellow = Color(0xFFECF39E);
+  static const Color limeYellow = Color(0xFFD9EFB4);
   static const Color warning = Color(0xFFF5A623);
   static const Color danger = Color(0xFFE74C3C);
   static const Color success = Color(0xFF4CAF50);
 
   // Neutral
-  static const Color textPrimary = Color(0xFF31572C);
+  static const Color textPrimary = Color(0xFF20291F);
   static const Color textSecondary = Color(0xFF6B6A63);
   static const Color textLight = Color(0xFFFFFFFF);
   static const Color divider = Color(0xFFE0DFD9);
-  static const Color inputBg = Color(0xFFE8EDE5);
+  static const Color inputBg = Color(0xFFF4F5F0);
 
   // Category tag colors
   static const Color tagGreen = Color(0xFFD1FAE5);
@@ -48,15 +48,16 @@ class AppTheme {
     ),
     scaffoldBackgroundColor: AppColors.scaffoldBg,
     appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.headerBg,
-      foregroundColor: AppColors.textLight,
+      backgroundColor: AppColors.scaffoldBg,
+      surfaceTintColor: Colors.transparent,
+      foregroundColor: AppColors.textPrimary,
       elevation: 0,
       centerTitle: false,
       titleTextStyle: TextStyle(
         fontFamily: 'PlusJakartaSans',
         fontSize: 20,
         fontWeight: FontWeight.w600,
-        color: AppColors.textLight,
+        color: AppColors.textPrimary,
       ),
     ),
     textTheme: const TextTheme(
@@ -138,7 +139,11 @@ class AppTheme {
       fillColor: AppColors.inputBg,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
+        borderSide: const BorderSide(color: AppColors.divider),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: AppColors.primaryGreen, width: 2),
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       hintStyle: const TextStyle(color: AppColors.textSecondary, fontSize: 14),
@@ -146,7 +151,10 @@ class AppTheme {
     cardTheme: CardThemeData(
       color: AppColors.cardBg,
       elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        side: const BorderSide(color: AppColors.divider),
+      ),
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: AppColors.cardBg,

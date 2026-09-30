@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'discovery/discovery_page.dart';
+import 'discovery/information_pages.dart';
+import 'discovery/merchant.dart';
+import 'discovery/preferences.dart';
 import 'auth/auth_controller.dart';
 import 'config/app_config.dart';
 import 'pages/design_page.dart';
@@ -18,6 +22,7 @@ import 'pages/password_recovery_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await AppPreferences.instance.load();
   final config = AppConfig.environment();
   if (!config.isValid) {
     runApp(
@@ -87,7 +92,15 @@ class WastelessApp extends StatelessWidget {
     final service = CommerceService(api);
     final id = settings.arguments;
     return switch (settings.name) {
-      '/search' => CatalogPage(service: service, search: true),
+      '/search' => const DiscoveryPage(),
+      '/map' => const DiscoveryPage(mapFirst: true),
+      '/explore' => const DiscoveryPage(),
+      '/settings' => const SettingsPage(),
+      '/help' => const HelpPage(),
+      '/about' => const AboutPage(),
+      '/business' => const BusinessPage(),
+      '/merchant' when id is String && demoMerchants.any((m) => m.id == id) =>
+        MerchantPage(merchant: demoMerchants.firstWhere((m) => m.id == id)),
       '/saved' => CatalogPage(service: service, savedOnly: true),
       '/cart' => LiveCartPage(service: service),
       '/checkout' => LiveCheckoutPage(service: service),
@@ -109,12 +122,20 @@ class WastelessApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListenableBuilder(
-    listenable: auth,
+    listenable: Listenable.merge([auth, AppPreferences.instance]),
     builder: (context, _) => MaterialApp(
       key: ValueKey(auth.user?.id),
       title: 'Wasteless',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme,
+      builder: (context, child) => MediaQuery(
+        data: MediaQuery.of(context).copyWith(
+          disableAnimations:
+              MediaQuery.disableAnimationsOf(context) ||
+              AppPreferences.instance.reduceMotion,
+        ),
+        child: child!,
+      ),
       home: auth.recovering
           ? ResetPasswordPage(auth: auth)
           : auth.signedIn
@@ -126,6 +147,27 @@ class WastelessApp extends StatelessWidget {
             route == '/register' ||
             route == '/login' ||
             route == '/forgot-password';
+        final informational = switch (route) {
+          '/settings' => const SettingsPage(),
+          '/search' => const DiscoveryPage(),
+          '/help' => const HelpPage(),
+          '/about' => const AboutPage(),
+          '/business' => const BusinessPage(),
+          '/explore' => const DiscoveryPage(),
+          '/map' => const DiscoveryPage(mapFirst: true),
+          '/merchant'
+              when settings.arguments is String &&
+                  demoMerchants.any((m) => m.id == settings.arguments) =>
+            MerchantPage(
+              merchant: demoMerchants.firstWhere(
+                (m) => m.id == settings.arguments,
+              ),
+            ),
+          _ => null,
+        };
+        if (informational != null && !auth.recovering) {
+          return _route(settings, informational);
+        }
         final child = route == '/forgot-password' && !auth.signedIn
             ? ForgotPasswordPage(auth: auth)
             : auth.recovering
@@ -204,6 +246,20 @@ class _AccountPageState extends State<AccountPage> {
             onPressed: () => Navigator.pushNamed(context, '/history'),
             child: const Text('Comenzile mele'),
           ),
+          const Divider(height: 32),
+          for (final item in <(IconData, String, String)>[
+            (Icons.tune, 'Setări & preferințe', '/settings'),
+            (Icons.map_outlined, 'Descoperă pe hartă', '/map'),
+            (Icons.storefront_outlined, 'Pentru comercianți', '/business'),
+            (Icons.help_outline, 'Ajutor', '/help'),
+            (Icons.eco_outlined, 'Despre noi', '/about'),
+          ])
+            ListTile(
+              leading: Icon(item.$1),
+              title: Text(item.$2),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => Navigator.pushNamed(context, item.$3),
+            ),
           const SizedBox(height: 24),
           OutlinedButton(
             onPressed: signingOut ? null : logout,

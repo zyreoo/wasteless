@@ -66,7 +66,11 @@ class LiveScaffold extends StatelessWidget {
   static const routes = ['/home', '/search', '/saved', '/cart', '/history'];
   static const destinations = [
     NavigationDestination(icon: Icon(Icons.home_outlined), label: 'Acasă'),
-    NavigationDestination(icon: Icon(Icons.search), label: 'Caută'),
+    NavigationDestination(
+      icon: Icon(Icons.map_outlined),
+      selectedIcon: Icon(Icons.map),
+      label: 'Explorează',
+    ),
     NavigationDestination(icon: Icon(Icons.favorite_border), label: 'Salvate'),
     NavigationDestination(
       icon: Icon(Icons.shopping_bag_outlined),
@@ -98,7 +102,16 @@ class LiveScaffold extends StatelessWidget {
       return Scaffold(
         appBar: AppBar(
           title: Text(title),
+          bottom: const PreferredSize(
+            preferredSize: Size.fromHeight(1),
+            child: Divider(height: 1),
+          ),
           actions: [
+            IconButton(
+              tooltip: 'Setări',
+              onPressed: () => Navigator.pushNamed(context, '/settings'),
+              icon: const Icon(Icons.tune),
+            ),
             IconButton(
               tooltip: 'Contul meu',
               onPressed: () => Navigator.pushNamed(context, '/profile'),

@@ -90,7 +90,8 @@ class _CatalogPageState extends State<CatalogPage> {
           children: [
             if (!widget.savedOnly &&
                 !widget.search &&
-                MediaQuery.textScalerOf(context).scale(1) <= 1.3)
+                MediaQuery.textScalerOf(context).scale(1) <= 1.3 &&
+                MediaQuery.sizeOf(context).height >= 700)
               const _CatalogHero(),
             Center(
               child: ConstrainedBox(
@@ -308,6 +309,12 @@ class _CatalogHero extends StatelessWidget {
               const SizedBox(height: 8),
               const Text(
                 'Descoperă produse bune, disponibile azi, înainte să fie risipite.',
+              ),
+              const SizedBox(height: 14),
+              FilledButton.icon(
+                onPressed: () => Navigator.pushNamed(context, '/map'),
+                icon: const Icon(Icons.map_outlined, size: 18),
+                label: const Text('Explorează harta'),
               ),
             ],
           ),

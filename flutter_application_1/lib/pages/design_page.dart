@@ -586,77 +586,166 @@ class _DesignPageState extends State<DesignPage> {
             : TextInputType.name,
       ),
     );
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 480),
-            child: ListView(
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(24),
+    final form = Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 480),
+        child: ListView(
+          shrinkWrap: true,
+          padding: const EdgeInsets.all(24),
+          children: [
+            const Row(
               children: [
-                const Row(
-                  children: [
-                    Icon(Icons.eco, size: 32),
-                    SizedBox(width: 10),
-                    Text(
-                      'Wasteless',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                const Text('Produse bune, salvate înainte să fie risipite.'),
-                const SizedBox(height: 28),
+                Icon(Icons.eco, size: 32),
+                SizedBox(width: 10),
                 Text(
-                  register ? 'Creează un cont' : 'Autentificare',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-                const SizedBox(height: 24),
-                if (register) input('5:253', 'Nume'),
-                input(register ? '5:259' : '5:148', 'Email'),
-                input(register ? '5:270' : '5:156', 'Parolă', password: true),
-                if (register)
-                  CheckboxListTile(
-                    value: accepted,
-                    onChanged: submitting
-                        ? null
-                        : (v) => setState(() => accepted = v ?? false),
-                    title: const Text(
-                      'Sunt de acord cu termenii de utilizare.',
-                    ),
-                  ),
-                FilledButton(
-                  onPressed: submitting ? null : () => authenticate(register),
-                  child: Text(
-                    submitting
-                        ? 'Se conectează…'
-                        : register
-                        ? 'Creează contul'
-                        : 'Autentifică-te',
-                  ),
-                ),
-                if (!register)
-                  TextButton(
-                    onPressed: submitting ? null : () => go('/forgot-password'),
-                    child: const Text('Ai uitat parola?'),
-                  ),
-                TextButton(
-                  onPressed: submitting
-                      ? null
-                      : () => go(register ? '/login' : '/register'),
-                  child: Text(
-                    register
-                        ? 'Ai deja cont? Autentifică-te'
-                        : 'Nu ai cont? Înregistrează-te',
-                  ),
+                  'Wasteless',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
                 ),
               ],
             ),
-          ),
+            const SizedBox(height: 12),
+            const Text('Mai puțină risipă. Mai mult de savurat.'),
+            const SizedBox(height: 28),
+            Text(
+              register ? 'Începe cu un gest bun.' : 'Bine ai revenit.',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              register
+                  ? 'Creează contul tău Wasteless.'
+                  : 'Intră în cont și descoperă ce merită salvat azi.',
+            ),
+            const SizedBox(height: 24),
+            if (register) input('5:253', 'Nume'),
+            input(register ? '5:259' : '5:148', 'Email'),
+            input(register ? '5:270' : '5:156', 'Parolă', password: true),
+            if (register)
+              CheckboxListTile(
+                value: accepted,
+                onChanged: submitting
+                    ? null
+                    : (v) => setState(() => accepted = v ?? false),
+                title: const Text('Sunt de acord cu termenii de utilizare.'),
+              ),
+            FilledButton(
+              onPressed: submitting ? null : () => authenticate(register),
+              child: Text(
+                submitting
+                    ? 'Se conectează…'
+                    : register
+                    ? 'Creează contul'
+                    : 'Autentifică-te',
+              ),
+            ),
+            if (!register)
+              TextButton(
+                onPressed: submitting ? null : () => go('/forgot-password'),
+                child: const Text('Ai uitat parola?'),
+              ),
+            TextButton(
+              onPressed: submitting
+                  ? null
+                  : () => go(register ? '/login' : '/register'),
+              child: Text(
+                register
+                    ? 'Ai deja cont? Autentifică-te'
+                    : 'Nu ai cont? Înregistrează-te',
+              ),
+            ),
+            const Divider(height: 32),
+            OutlinedButton.icon(
+              onPressed: () => go('/explore'),
+              icon: const Icon(Icons.map_outlined),
+              label: const Text('Explorează demonstrația'),
+            ),
+            const SizedBox(height: 12),
+            Wrap(
+              alignment: WrapAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () => go('/business'),
+                  child: const Text('Pentru comercianți'),
+                ),
+                TextButton(
+                  onPressed: () => go('/help'),
+                  child: const Text('Ajutor'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+    return Scaffold(
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) =>
+              constraints.maxWidth < 900 || constraints.maxHeight < 650
+              ? form
+              : Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: Container(
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                            color: const Color(0xffd9efb4),
+                            borderRadius: BorderRadius.circular(32),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.all(36),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'MÂNCARE BUNĂ. O IDEE ȘI MAI BUNĂ.',
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        letterSpacing: 2,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    SizedBox(height: 24),
+                                    Text(
+                                      'Bun de mâncat.\nPăcat de risipit.',
+                                      style: TextStyle(
+                                        fontSize: 46,
+                                        height: 1.1,
+                                        letterSpacing: -2,
+                                        fontWeight: FontWeight.w800,
+                                        color: Color(0xff20291f),
+                                      ),
+                                    ),
+                                    SizedBox(height: 20),
+                                    Text(
+                                      'Descoperă locurile din orașul tău care dau mâncării o a doua șansă.',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        height: 1.6,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Image.asset(
+                                  'assets/demo/rescue-bag.png',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(child: form),
+                  ],
+                ),
         ),
       ),
     );
