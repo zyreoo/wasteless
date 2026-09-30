@@ -3,4 +3,5 @@
 build
 config.local.json
 test
-tool
+tool/*
+!tool/version_web_assets.dart

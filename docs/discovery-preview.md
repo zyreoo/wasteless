@@ -21,3 +21,5 @@ Uses the standard HTTPS OpenStreetMap tile endpoint with visible clickable attri
 ## Verification
 
 Run `flutter analyze` and `flutter test` in the frontend directory. Tests cover discovery filters, absence of demo checkout, persistent preferences and information layouts at 320, 768 and 1440 pixels. Manual browser checks cover desktop split map/list, mobile map/list switching and marker-to-detail navigation.
+
+The Docker build runs `dart run tool/version_web_assets.dart` after compilation. This versions the Flutter asset base so previously cached, tree-shaken icon fonts cannot hide new icons. For a matching local production preview, run the same script after a fresh web build.

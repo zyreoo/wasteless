@@ -25,6 +25,8 @@ RUN flutter build web --release --no-web-resources-cdn \
     --dart-define=API_BASE_URL="$API_BASE_URL" \
     --dart-define=AUTH_REDIRECT_URL="$AUTH_REDIRECT_URL"
 
+RUN dart run tool/version_web_assets.dart
+
 FROM nginx:1.27-alpine
 ENV NGINX_ENVSUBST_FILTER=API_ORIGIN|SUPABASE_ORIGIN
 COPY deploy/nginx.conf.template /etc/nginx/templates/default.conf.template
