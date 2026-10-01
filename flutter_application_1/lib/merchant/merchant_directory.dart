@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../services/commerce_service.dart';
 import '../models/product.dart';
 import '../widgets/live_page.dart';
+import '../widgets/product_tile.dart';
 import '../discovery/components.dart';
 
 class MerchantDirectory extends StatefulWidget {
@@ -78,9 +79,63 @@ class _MerchantDirectoryState extends State<MerchantDirectory> {
       ),
     ),
   );
+  void preview(Map<String, dynamic> merchant, List<Product> products) {
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      constraints: const BoxConstraints(maxWidth: 560),
+      builder: (sheetContext) => SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (products.isNotEmpty)
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: SizedBox(
+                      height: 150,
+                      child: ProductImage(products.first),
+                    ),
+                  ),
+                const SizedBox(height: 16),
+                Text(
+                  merchant['name'] as String,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                const SizedBox(height: 8),
+                Text(merchant['address'] as String),
+                const SizedBox(height: 8),
+                Text(
+                  '${products.where((p) => p.stock > 0).length} oferte disponibile · Ridicare ${merchant['pickup_window']}',
+                ),
+                if (merchant['is_demo'] == true)
+                  const Padding(
+                    padding: EdgeInsets.only(top: 8),
+                    child: Text('Comerciant fictiv · comenzi de test'),
+                  ),
+                const SizedBox(height: 20),
+                FilledButton(
+                  onPressed: () {
+                    Navigator.pop(sheetContext);
+                    open(merchant, products);
+                  },
+                  child: const Text('Vezi ofertele'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) => LiveScaffold(
-    title: 'Comercianți & hartă',
+    title: 'Explorează',
     index: 1,
     body: LoadPanel<(List<Map<String, dynamic>>, List<Product>)>(
       load: load,
@@ -100,7 +155,7 @@ class _MerchantDirectoryState extends State<MerchantDirectory> {
               const PageIntro(
                 'În apropiere',
                 'Găsește oferte\nlângă tine',
-                'Comercianți și stocuri sincronizate cu backendul. Ofertele marcate DEMO sunt fictive.',
+                'Descoperă ofertele și alege intervalul de ridicare potrivit. Produsele DEMO sunt fictive.',
               ),
               const SizedBox(height: 16),
               TextField(
@@ -176,7 +231,7 @@ class _MerchantDirectoryState extends State<MerchantDirectory> {
                           height: 64,
                           child: IconButton.filled(
                             tooltip: m['name'] as String,
-                            onPressed: () => open(
+                            onPressed: () => preview(
                               m,
                               data.$2
                                   .where((p) => p.merchantId == m['id'])

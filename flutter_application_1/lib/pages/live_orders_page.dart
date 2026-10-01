@@ -89,6 +89,9 @@ class LiveOrderDetailPage extends StatelessWidget {
           Text(
             '${orderDate(order['created_at'])} · ${orderStatus(order['status'])}',
           ),
+          const SizedBox(height: 20),
+          OrderProgress(status: order['status'] as String),
+          const SizedBox(height: 12),
           TextButton.icon(
             onPressed: reload,
             icon: const Icon(Icons.refresh),
@@ -99,9 +102,36 @@ class LiveOrderDetailPage extends StatelessWidget {
               '${order['merchant_name']}\n${order['pickup_address']}\nRidicare: ${order['pickup_window']}',
             ),
           if (order['pickup_code'] != null && order['status'] != 'cancelled')
-            SelectableText(
-              'Cod ridicare: ${order['pickup_code']}',
-              style: Theme.of(context).textTheme.headlineSmall,
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 20),
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: order['status'] == 'ready'
+                    ? Theme.of(context).colorScheme.primaryContainer
+                    : Theme.of(context).colorScheme.surfaceContainerLow,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    order['status'] == 'ready'
+                        ? 'Pachetul tău este gata!'
+                        : 'Codul tău de ridicare',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 8),
+                  SelectableText(
+                    '${order['pickup_code']}',
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      letterSpacing: 3,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text('Arată codul comerciantului la ridicare.'),
+                ],
+              ),
             ),
           if (order['cancellation_reason'] != null)
             Text('Motiv anulare: ${order['cancellation_reason']}'),
@@ -145,4 +175,89 @@ class LiveOrderDetailPage extends StatelessWidget {
       ),
     ),
   );
+}
+
+class OrderProgress extends StatelessWidget {
+  const OrderProgress({super.key, required this.status});
+  final String status;
+  @override
+  Widget build(BuildContext context) {
+    if (status == 'cancelled') {
+      return const ListTile(
+        contentPadding: EdgeInsets.zero,
+        leading: Icon(Icons.cancel_outlined),
+        title: Text('Comandă anulată'),
+        subtitle: Text('Produsele au revenit în stoc.'),
+      );
+    }
+    final current = [
+      'confirmed',
+      'accepted',
+      'ready',
+      'collected',
+    ].indexOf(status);
+    const labels = ['Trimisă', 'Acceptată', 'Pregătită', 'Ridicată'];
+    return Semantics(
+      label: 'Status comandă: ${orderStatus(status)}',
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: List.generate(
+          4,
+          (i) => Expanded(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        color: i == 0
+                            ? Colors.transparent
+                            : Theme.of(context).colorScheme.outlineVariant,
+                      ),
+                    ),
+                    CircleAvatar(
+                      radius: 16,
+                      backgroundColor: i <= current
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context)
+                                .colorScheme
+                                .surfaceContainerHighest,
+                      child: Icon(
+                        i < current
+                            ? Icons.check
+                            : i == current
+                            ? Icons.radio_button_checked
+                            : Icons.circle_outlined,
+                        size: 17,
+                        color: i <= current
+                            ? Theme.of(context).colorScheme.onPrimary
+                            : Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                    Expanded(
+                      child: Divider(
+                        color: i == 3
+                            ? Colors.transparent
+                            : Theme.of(context).colorScheme.outlineVariant,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  labels[i],
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                    fontWeight: i == current
+                        ? FontWeight.w800
+                        : FontWeight.w400,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }

@@ -143,7 +143,7 @@ class WastelessApp extends StatelessWidget {
               MediaQuery.disableAnimationsOf(context) ||
               AppPreferences.instance.reduceMotion,
         ),
-        child: child!,
+        child: BrowseSession(key: ValueKey(auth.user?.id), child: child!),
       ),
       home: auth.recovering
           ? ResetPasswordPage(auth: auth)

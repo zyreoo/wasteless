@@ -104,7 +104,13 @@ class LiveScaffold extends StatelessWidget {
       );
       return Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          automaticallyImplyLeading: index == null,
+          title: Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
           bottom: const PreferredSize(
             preferredSize: Size.fromHeight(1),
             child: Divider(height: 1),
@@ -182,4 +188,35 @@ class EmptyPanel extends StatelessWidget {
       ),
     ),
   );
+}
+
+/// Session-only browsing preferences; the scope is recreated on account changes.
+class BrowseSession extends StatefulWidget {
+  const BrowseSession({super.key, required this.child});
+  final Widget child;
+  @override
+  State<BrowseSession> createState() => _BrowseSessionState();
+}
+
+class _BrowseSessionState extends State<BrowseSession> {
+  final values = <String, Object?>{};
+  final bucket = PageStorageBucket();
+  @override
+  Widget build(BuildContext context) =>
+      BrowseMemory(values: values, bucket: bucket, child: widget.child);
+}
+
+class BrowseMemory extends InheritedWidget {
+  const BrowseMemory({
+    super.key,
+    required this.values,
+    required this.bucket,
+    required super.child,
+  });
+  final Map<String, Object?> values;
+  final PageStorageBucket bucket;
+  static BrowseMemory? of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<BrowseMemory>();
+  @override
+  bool updateShouldNotify(BrowseMemory oldWidget) => false;
 }

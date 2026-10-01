@@ -17,7 +17,8 @@ class MerchantDashboard extends StatefulWidget {
 
 class _MerchantDashboardState extends State<MerchantDashboard> {
   late Future<Map<String, dynamic>> future = widget.service.dashboard();
-  int tab = 0;
+  int tab = 1;
+  bool selectedInitialTab = false;
   bool busy = false;
   Future<void> reload() async {
     final next = widget.service.dashboard();
@@ -57,7 +58,7 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
 
   @override
   Widget build(BuildContext context) => LiveScaffold(
-    title: 'Spațiul comerciantului',
+    title: 'Comerciant',
     body: FutureBuilder<Map<String, dynamic>>(
       future: future,
       builder: (context, snapshot) {
@@ -76,6 +77,10 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
         }
         final data = snapshot.data!;
         final merchant = data['merchant'] as Map<String, dynamic>?;
+        if (!selectedInitialTab && merchant != null) {
+          selectedInitialTab = true;
+          tab = merchant['demo_seeded'] == true ? 1 : 0;
+        }
         final products = data['products'] as List;
         final orders = data['orders'] as List;
         final active = orders
@@ -94,11 +99,22 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
           child: ListView(
             padding: const EdgeInsets.all(20),
             children: [
-              PageIntro(
-                'Comerciant · mediu de test',
-                merchant?['name'] as String? ?? 'Afacerea ta începe aici.',
-                'Date sincronizate între conturi. Ofertele sunt fictive, iar comenzile nu implică plăți sau ridicări reale.',
-              ),
+              if (merchant == null)
+                PageIntro(
+                  'Comerciant · mediu de test',
+                  merchant?['name'] as String? ?? 'Afacerea ta începe aici.',
+                  'Date sincronizate între conturi. Ofertele sunt fictive, iar comenzile nu implică plăți sau ridicări reale.',
+                ),
+              if (merchant != null) ...[
+                Text(
+                  merchant['name'] as String,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'Comenzile și ofertele tale, într-un singur loc. · MOD DEMO',
+                ),
+              ],
               const SizedBox(height: 16),
               Wrap(
                 spacing: 10,

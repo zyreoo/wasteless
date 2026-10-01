@@ -21,14 +21,32 @@ class CatalogPage extends StatefulWidget {
 
 class _CatalogPageState extends State<CatalogPage> {
   String query = '';
+  BrowseMemory? memory;
+  bool restored = false;
+  String get memoryKey => widget.savedOnly ? 'saved' : 'catalog';
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    memory = BrowseMemory.of(context);
+    if (!restored) {
+      restored = true;
+      query = memory?.values['$memoryKey.query'] as String? ?? '';
+      selectedCategory = memory?.values['$memoryKey.category'] as String?;
+      searchController.text = query;
+    }
+  }
+
   String? selectedCategory;
   final searchController = TextEditingController();
   @override
   void dispose() {
+    memory?.values['$memoryKey.query'] = query;
+    memory?.values['$memoryKey.category'] = selectedCategory;
     searchController.dispose();
     super.dispose();
   }
 
+  final fallbackBucket = PageStorageBucket();
   final busy = <int>{};
   Future<(List<Product>, Set<int>)> load() async {
     if (widget.savedOnly) {
@@ -222,45 +240,57 @@ class _CatalogPageState extends State<CatalogPage> {
 
                         return RefreshIndicator(
                           onRefresh: reload,
-                          child: columns == 1
-                              ? ListView.separated(
-                                  padding: const EdgeInsets.fromLTRB(
-                                    16,
-                                    4,
-                                    16,
-                                    32,
+                          child: PageStorage(
+                            bucket: memory?.bucket ?? fallbackBucket,
+                            child: columns == 1
+                                ? ListView.separated(
+                                    key: PageStorageKey('$memoryKey.list'),
+                                    padding: const EdgeInsets.fromLTRB(
+                                      16,
+                                      4,
+                                      16,
+                                      32,
+                                    ),
+                                    itemCount: products.length,
+                                    separatorBuilder: (_, _) =>
+                                        const SizedBox(height: 16),
+                                    itemBuilder: (_, index) => card(index),
+                                  )
+                                : GridView.builder(
+                                    key: PageStorageKey('$memoryKey.grid'),
+                                    padding: EdgeInsets.fromLTRB(
+                                      constraints.maxWidth >= 1240
+                                          ? (constraints.maxWidth - 1180) / 2
+                                          : 16,
+                                      4,
+                                      constraints.maxWidth >= 1240
+                                          ? (constraints.maxWidth - 1180) / 2
+                                          : 16,
+                                      32,
+                                    ),
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: columns,
+                                          crossAxisSpacing: 18,
+                                          mainAxisSpacing: 18,
+                                          mainAxisExtent:
+                                              ((constraints.maxWidth.clamp(
+                                                            0,
+                                                            1180,
+                                                          ) -
+                                                          32 -
+                                                          18 * (columns - 1)) /
+                                                      columns) /
+                                                  1.6 +
+                                              300 *
+                                                  MediaQuery.textScalerOf(
+                                                    context,
+                                                  ).scale(1),
+                                        ),
+                                    itemCount: products.length,
+                                    itemBuilder: (_, index) => card(index),
                                   ),
-                                  itemCount: products.length,
-                                  separatorBuilder: (_, _) =>
-                                      const SizedBox(height: 16),
-                                  itemBuilder: (_, index) => card(index),
-                                )
-                              : GridView.builder(
-                                  padding: EdgeInsets.fromLTRB(
-                                    constraints.maxWidth >= 1240
-                                        ? (constraints.maxWidth - 1180) / 2
-                                        : 16,
-                                    4,
-                                    constraints.maxWidth >= 1240
-                                        ? (constraints.maxWidth - 1180) / 2
-                                        : 16,
-                                    32,
-                                  ),
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: columns,
-                                        crossAxisSpacing: 18,
-                                        mainAxisSpacing: 18,
-                                        mainAxisExtent:
-                                            MediaQuery.textScalerOf(context)
-                                                    .scale(1) >
-                                                1.3
-                                            ? 500
-                                            : 390,
-                                      ),
-                                  itemCount: products.length,
-                                  itemBuilder: (_, index) => card(index),
-                                ),
+                          ),
                         );
                       },
                     ),
