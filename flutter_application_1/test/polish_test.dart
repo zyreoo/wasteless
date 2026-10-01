@@ -42,6 +42,11 @@ void main() {
     );
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), 'brutarie');
+    expect(
+      BrowseMemory.of(tester.element(find.byType(CatalogPage)))!
+          .values['catalog.query'],
+      'brutarie',
+    );
     await tester.tap(find.text('Salvate').last);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Acasă').last);

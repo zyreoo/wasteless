@@ -40,10 +40,13 @@ class _CatalogPageState extends State<CatalogPage> {
   final searchController = TextEditingController();
   @override
   void dispose() {
-    memory?.values['$memoryKey.query'] = query;
-    memory?.values['$memoryKey.category'] = selectedCategory;
     searchController.dispose();
     super.dispose();
+  }
+
+  void remember() {
+    memory?.values['$memoryKey.query'] = query;
+    memory?.values['$memoryKey.category'] = selectedCategory;
   }
 
   final fallbackBucket = PageStorageBucket();
@@ -128,11 +131,15 @@ class _CatalogPageState extends State<CatalogPage> {
                               onPressed: () {
                                 searchController.clear();
                                 setState(() => query = '');
+                                remember();
                               },
                               icon: const Icon(Icons.close),
                             ),
                     ),
-                    onChanged: (v) => setState(() => query = v),
+                    onChanged: (v) {
+                      setState(() => query = v);
+                      remember();
+                    },
                   ),
                 ),
               ),
@@ -156,8 +163,10 @@ class _CatalogPageState extends State<CatalogPage> {
                         child: ChoiceChip(
                           label: Text(category ?? 'Toate'),
                           selected: selectedCategory == category,
-                          onSelected: (_) =>
-                              setState(() => selectedCategory = category),
+                          onSelected: (_) {
+                            setState(() => selectedCategory = category);
+                            remember();
+                          },
                         ),
                       ),
                   ],
@@ -184,6 +193,7 @@ class _CatalogPageState extends State<CatalogPage> {
                                 query = '';
                                 selectedCategory = null;
                               });
+                              remember();
                             },
                             child: const Text('Șterge filtrele'),
                           ),
