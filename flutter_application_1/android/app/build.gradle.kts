@@ -1,8 +1,25 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
+
+// Release identity and signing come from android/key.properties (git-ignored)
+// or CI environment variables, never from the repository. See key.properties.example.
+val releaseProperties = Properties().apply {
+    val file = rootProject.file("key.properties")
+    if (file.exists()) file.inputStream().use { load(it) }
+}
+fun releaseSetting(key: String, env: String): String? =
+    (releaseProperties.getProperty(key) ?: System.getenv(env))?.takeIf { it.isNotBlank() }
+
+val releaseApplicationId = releaseSetting("applicationId", "WASTELESS_APPLICATION_ID")
+val releaseStoreFile = releaseSetting("storeFile", "WASTELESS_ANDROID_KEYSTORE")
+val releaseStorePassword = releaseSetting("storePassword", "WASTELESS_ANDROID_STORE_PASSWORD")
+val releaseKeyAlias = releaseSetting("keyAlias", "WASTELESS_ANDROID_KEY_ALIAS")
+val releaseKeyPassword = releaseSetting("keyPassword", "WASTELESS_ANDROID_KEY_PASSWORD")
 
 android {
     namespace = "com.example.flutter_application_1"
@@ -15,8 +32,9 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.flutter_application_1"
+        // The placeholder ID is for local debug builds only; release builds
+        // refuse to run without WASTELESS_APPLICATION_ID (checked below).
+        applicationId = releaseApplicationId ?: "com.example.flutter_application_1"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
@@ -29,11 +47,21 @@ android {
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        if (releaseStoreFile != null) {
+            create("release") {
+                storeFile = file(releaseStoreFile)
+                storePassword = releaseStorePassword
+                keyAlias = releaseKeyAlias
+                keyPassword = releaseKeyPassword
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            // Never the debug key: without release credentials the build stops.
+            signingConfig = signingConfigs.findByName("release")
         }
     }
 }
@@ -46,4 +74,24 @@ kotlin {
 
 flutter {
     source = "../.."
+}
+
+gradle.taskGraph.whenReady {
+    val releasing = allTasks.any { it.project == project && it.name.contains("Release") }
+    if (!releasing) return@whenReady
+    val missing = listOfNotNull(
+        "applicationId (WASTELESS_APPLICATION_ID)".takeIf {
+            releaseApplicationId?.startsWith("com.example.") != false
+        },
+        "storeFile (WASTELESS_ANDROID_KEYSTORE)".takeIf { releaseStoreFile == null },
+        "storePassword (WASTELESS_ANDROID_STORE_PASSWORD)".takeIf { releaseStorePassword == null },
+        "keyAlias (WASTELESS_ANDROID_KEY_ALIAS)".takeIf { releaseKeyAlias == null },
+        "keyPassword (WASTELESS_ANDROID_KEY_PASSWORD)".takeIf { releaseKeyPassword == null },
+    )
+    if (missing.isNotEmpty()) {
+        throw GradleException(
+            "Wasteless release build is missing: ${missing.joinToString()}. " +
+                "Set them in android/key.properties or the environment; see key.properties.example."
+        )
+    }
 }

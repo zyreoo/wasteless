@@ -1,0 +1,14 @@
+# Copy to android/key.properties (git-ignored) or set the matching environment
+# variables in CI. Never commit the real file or the keystore.
+#
+# Permanent store identifier; choose once, it cannot change after the first
+# Play upload. Env: WASTELESS_APPLICATION_ID
+applicationId=
+# Path to the upload keystore, relative to android/app/. Env: WASTELESS_ANDROID_KEYSTORE
+storeFile=
+# Env: WASTELESS_ANDROID_STORE_PASSWORD
+storePassword=
+# Env: WASTELESS_ANDROID_KEY_ALIAS
+keyAlias=
+# Env: WASTELESS_ANDROID_KEY_PASSWORD
+keyPassword=

@@ -123,6 +123,8 @@ class _DesignPageState extends State<DesignPage> {
   void initState() {
     super.initState();
     state.addListener(refresh);
+    // Routes cache their page, so listen directly for sign-in notices.
+    widget.auth?.addListener(refresh);
     if (widget.auth != null) accepted = false;
   }
 
@@ -133,6 +135,7 @@ class _DesignPageState extends State<DesignPage> {
   @override
   void dispose() {
     state.removeListener(refresh);
+    widget.auth?.removeListener(refresh);
     for (final c in controllers.values) {
       c.dispose();
     }
@@ -618,6 +621,22 @@ class _DesignPageState extends State<DesignPage> {
                   ? 'Creează contul tău Wasteless.'
                   : 'Intră în cont și descoperă ce merită salvat azi.',
             ),
+            if (widget.auth?.notice case final notice?) ...[
+              const SizedBox(height: 16),
+              Semantics(
+                liveRegion: true,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.secondaryContainer,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Text(notice, key: const ValueKey('auth-notice')),
+                  ),
+                ),
+              ),
+            ],
             const SizedBox(height: 24),
             if (register) input('5:253', 'Nume'),
             input(register ? '5:259' : '5:148', 'Email'),

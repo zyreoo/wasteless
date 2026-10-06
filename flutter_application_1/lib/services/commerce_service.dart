@@ -1,9 +1,89 @@
 import '../models/product.dart';
 import 'api_service.dart';
 
+/// One page of an offset-paginated API list.
+typedef ApiPage<T> = ({List<T> items, int? next});
+
+/// Accumulates offset pages on demand. State changes only after a request
+/// succeeds, so a failed page never corrupts what is already shown.
+class Pager<T> {
+  Pager(this.fetch, this.idOf);
+  final Future<ApiPage<T>> Function(int offset) fetch;
+  final Object Function(T item) idOf;
+  final _items = <Object, T>{};
+  int? _next = 0;
+  bool _loading = false;
+  List<T> get items => List.unmodifiable(_items.values);
+  bool get hasMore => _next != null;
+  bool get loading => _loading;
+
+  /// Refetches from the start, keeping as many items as were already loaded
+  /// so a refresh does not throw away pages the user asked for.
+  Future<List<T>> refresh() async {
+    final target = _items.isEmpty ? 1 : _items.length;
+    final fresh = <Object, T>{};
+    int? next = 0;
+    do {
+      final page = await fetch(next!);
+      for (final item in page.items) {
+        fresh.putIfAbsent(idOf(item), () => item);
+      }
+      next = page.items.isEmpty ? null : page.next;
+    } while (next != null && fresh.length < target);
+    _items
+      ..clear()
+      ..addAll(fresh);
+    _next = next;
+    return items;
+  }
+
+  /// Loads the next page; returns false when there is nothing to load or a
+  /// load is already running.
+  Future<bool> more() async {
+    final offset = _next;
+    if (_loading || offset == null) return false;
+    _loading = true;
+    try {
+      final page = await fetch(offset);
+      for (final item in page.items) {
+        _items.putIfAbsent(idOf(item), () => item);
+      }
+      _next = page.items.isEmpty ? null : page.next;
+      return true;
+    } finally {
+      _loading = false;
+    }
+  }
+}
+
 class CommerceService {
   const CommerceService(this.api);
   final ApiService api;
+
+  Future<ApiPage<Product>> productPage(int offset) async {
+    final data = await api.request('GET', '/api/products?offset=$offset');
+    return (
+      items: (data['items'] as List).map((j) => Product.fromJson(j)).toList(),
+      next: data['next_offset'] as int?,
+    );
+  }
+
+  Pager<Product> productPager() => Pager(productPage, (p) => p.id);
+
+  Future<ApiPage<Map<String, dynamic>>> orderPage(int offset) async {
+    final data = await api.request('GET', '/api/orders?offset=$offset');
+    return (
+      items: (data['items'] as List)
+          .map((j) => Map<String, dynamic>.from(j))
+          .toList(),
+      next: data['next_offset'] as int?,
+    );
+  }
+
+  Pager<Map<String, dynamic>> orderPager() =>
+      Pager(orderPage, (o) => o['id'] as Object);
+
+  /// Full catalogue, for the merchant map which groups offers per shop.
   Future<List<Product>> products({bool saved = false}) async {
     final items = <Product>[];
     int? offset = 0;
@@ -58,19 +138,6 @@ class CommerceService {
       Map<String, dynamic>.from(
         await api.request('POST', '/api/orders', idempotencyKey: key),
       );
-  Future<List<Map<String, dynamic>>> orders() async {
-    final items = <Map<String, dynamic>>[];
-    int? offset = 0;
-    do {
-      final data = await api.request('GET', '/api/orders?offset=$offset');
-      items.addAll(
-        (data['items'] as List).map((j) => Map<String, dynamic>.from(j)),
-      );
-      offset = data['next_offset'] as int?;
-    } while (offset != null);
-    return items;
-  }
-
   Future<Map<String, dynamic>> order(int id) async =>
       Map<String, dynamic>.from(await api.request('GET', '/api/orders/$id'));
 

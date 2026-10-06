@@ -3,6 +3,7 @@ import '../merchant/order_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../auth/auth_controller.dart';
 import '../models/product.dart';
 import '../services/commerce_service.dart';
 import '../widgets/live_page.dart';
@@ -18,16 +19,40 @@ String orderStatus(String value) => switch (value) {
 String orderDate(String value) =>
     DateFormat('dd.MM.yyyy HH:mm').format(DateTime.parse(value).toLocal());
 
-class LiveOrdersPage extends StatelessWidget {
+class LiveOrdersPage extends StatefulWidget {
   const LiveOrdersPage({super.key, required this.service});
   final CommerceService service;
+  @override
+  State<LiveOrdersPage> createState() => _LiveOrdersPageState();
+}
+
+class _LiveOrdersPageState extends State<LiveOrdersPage> {
+  /// History starts with the newest page; older orders load on request.
+  late final pager = widget.service.orderPager();
+
+  Future<void> loadOlder() async {
+    if (pager.loading) return;
+    setState(() {});
+    try {
+      await pager.more();
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(AuthController.message(e))));
+      }
+    } finally {
+      if (mounted) setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) => LiveScaffold(
     title: 'Comenzile mele',
     index: 4,
     body: LoadPanel<List<Map<String, dynamic>>>(
-      load: service.orders,
-      builder: (orders, reload) {
+      load: pager.refresh,
+      builder: (_, reload) {
+        final orders = pager.items;
         if (orders.isEmpty) {
           return const EmptyPanel('Comenzile tale vor apărea aici.');
         }
@@ -53,6 +78,22 @@ class LiveOrdersPage extends StatelessWidget {
                       );
                       await reload();
                     },
+                  ),
+                ),
+              if (pager.hasMore)
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: pager.loading
+                        ? const SizedBox.square(
+                            dimension: 32,
+                            child: CircularProgressIndicator(),
+                          )
+                        : OutlinedButton(
+                            key: const ValueKey('load-older-orders'),
+                            onPressed: loadOlder,
+                            child: const Text('Vezi comenzi mai vechi'),
+                          ),
                   ),
                 ),
             ],

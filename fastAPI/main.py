@@ -38,6 +38,8 @@ app.add_middleware(
     allow_origins=origins,
     allow_methods=['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allow_headers=['Authorization', 'Content-Type', 'Idempotency-Key'],
+    # Browsers hide non-safelisted headers cross-origin; the client reads Retry-After on 429.
+    expose_headers=['Retry-After'],
 )
 
 

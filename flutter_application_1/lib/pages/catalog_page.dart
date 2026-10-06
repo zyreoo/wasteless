@@ -51,30 +51,65 @@ class _CatalogPageState extends State<CatalogPage> {
 
   final fallbackBucket = PageStorageBucket();
   final busy = <int>{};
-  Future<(List<Product>, Set<int>)> load() async {
+  late final pager = widget.service.productPager();
+  Set<int> saved = {};
+
+  /// Favorites are one small list; the catalogue starts with its first page.
+  Future<List<Product>> load() async {
     if (widget.savedOnly) {
-      final saved = await widget.service.products(saved: true);
-      return (saved, saved.map((p) => p.id).toSet());
+      final items = await widget.service.products(saved: true);
+      saved = items.map((p) => p.id).toSet();
+      return items;
     }
     final results = await Future.wait([
       widget.service.products(saved: true),
-      widget.service.products(),
+      pager.refresh(),
     ]);
-    final saved = results[0];
-    final products = results[1];
-    return (products, saved.map((p) => p.id).toSet());
+    saved = results[0].map((p) => p.id).toSet();
+    return results[1];
+  }
+
+  /// Scrolling loads automatically until a page fails; after that only the
+  /// button retries, so errors and 429s never turn into a request loop.
+  bool autoLoad = true;
+  Future<void> loadMore({bool manual = false}) async {
+    if (widget.savedOnly || !pager.hasMore || pager.loading) return;
+    if (!manual && !autoLoad) return;
+    setState(() => autoLoad = true);
+    try {
+      await pager.more();
+    } catch (e) {
+      autoLoad = false;
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(AuthController.message(e))));
+      }
+    } finally {
+      if (mounted) setState(() {});
+    }
   }
 
   Future<void> toggle(
     Product p,
-    bool saved,
+    bool wasSaved,
     Future<void> Function() reload,
   ) async {
     if (busy.contains(p.id)) return;
     setState(() => busy.add(p.id));
     try {
-      await widget.service.favorite(p.id, !saved);
-      await reload();
+      await widget.service.favorite(p.id, !wasSaved);
+      if (widget.savedOnly) {
+        await reload();
+      } else if (mounted) {
+        // Only the heart changed; refetching every loaded page is wasteful.
+        setState(() {
+          if (wasSaved) {
+            saved.remove(p.id);
+          } else {
+            saved.add(p.id);
+          }
+        });
+      }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context)
@@ -100,7 +135,10 @@ class _CatalogPageState extends State<CatalogPage> {
     body: LoadPanel(
       load: load,
       builder: (data, reload) {
-        final products = data.$1
+        // Load-more appends to the pager after this snapshot was taken.
+        final all = widget.savedOnly ? data : pager.items;
+        final canLoadMore = !widget.savedOnly && pager.hasMore;
+        final products = all
             .where(
               (p) =>
                   p.name.toLowerCase().contains(query.toLowerCase()) &&
@@ -144,7 +182,7 @@ class _CatalogPageState extends State<CatalogPage> {
                 ),
               ),
             ),
-            if (data.$1.any((p) => p.category?.isNotEmpty == true))
+            if (all.any((p) => p.category?.isNotEmpty == true))
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -152,7 +190,7 @@ class _CatalogPageState extends State<CatalogPage> {
                   children: [
                     for (final category in <String?>[
                       null,
-                      ...data.$1
+                      ...all
                           .map((p) => p.category)
                           .whereType<String>()
                           .where((c) => c.isNotEmpty)
@@ -173,7 +211,7 @@ class _CatalogPageState extends State<CatalogPage> {
                 ),
               ),
             Expanded(
-              child: data.$1.isEmpty
+              child: all.isEmpty
                   ? EmptyPanel(
                       widget.savedOnly
                           ? 'Produsele salvate vor apărea aici.'
@@ -197,6 +235,12 @@ class _CatalogPageState extends State<CatalogPage> {
                             },
                             child: const Text('Șterge filtrele'),
                           ),
+                          if (canLoadMore)
+                            _LoadMore(
+                              loading: pager.loading,
+                              label: 'Caută în mai multe produse',
+                              onPressed: () => loadMore(manual: true),
+                            ),
                         ],
                       ),
                     )
@@ -228,14 +272,11 @@ class _CatalogPageState extends State<CatalogPage> {
                             child: ProductTile(
                               key: ValueKey('product-${p.id}'),
                               product: p,
-                              saved: data.$2.contains(p.id),
+                              saved: saved.contains(p.id),
                               onFavorite: busy.contains(p.id)
                                   ? null
-                                  : () => toggle(
-                                      p,
-                                      data.$2.contains(p.id),
-                                      reload,
-                                    ),
+                                  : () =>
+                                        toggle(p, saved.contains(p.id), reload),
                               onOpen: () async {
                                 await Navigator.pushNamed(
                                   context,
@@ -248,58 +289,89 @@ class _CatalogPageState extends State<CatalogPage> {
                           );
                         }
 
+                        final side = columns > 1 && constraints.maxWidth >= 1240
+                            ? (constraints.maxWidth - 1180) / 2
+                            : 16.0;
                         return RefreshIndicator(
                           onRefresh: reload,
-                          child: PageStorage(
-                            bucket: memory?.bucket ?? fallbackBucket,
-                            child: columns == 1
-                                ? ListView.separated(
-                                    key: PageStorageKey('$memoryKey.list'),
-                                    padding: const EdgeInsets.fromLTRB(
-                                      16,
-                                      4,
-                                      16,
-                                      32,
-                                    ),
-                                    itemCount: products.length,
-                                    separatorBuilder: (_, _) =>
-                                        const SizedBox(height: 16),
-                                    itemBuilder: (_, index) => card(index),
-                                  )
-                                : GridView.builder(
-                                    key: PageStorageKey('$memoryKey.grid'),
+                          child: NotificationListener<ScrollNotification>(
+                            onNotification: (n) {
+                              if (canLoadMore &&
+                                  n.depth == 0 &&
+                                  autoLoad &&
+                                  !pager.loading &&
+                                  n.metrics.extentAfter < 600) {
+                                Future.microtask(loadMore);
+                              }
+                              return false;
+                            },
+                            child: PageStorage(
+                              bucket: memory?.bucket ?? fallbackBucket,
+                              child: CustomScrollView(
+                                key: PageStorageKey(
+                                  '$memoryKey.${columns == 1 ? 'list' : 'grid'}',
+                                ),
+                                slivers: [
+                                  SliverPadding(
                                     padding: EdgeInsets.fromLTRB(
-                                      constraints.maxWidth >= 1240
-                                          ? (constraints.maxWidth - 1180) / 2
-                                          : 16,
+                                      side,
                                       4,
-                                      constraints.maxWidth >= 1240
-                                          ? (constraints.maxWidth - 1180) / 2
-                                          : 16,
-                                      32,
+                                      side,
+                                      canLoadMore ? 8 : 32,
                                     ),
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: columns,
-                                          crossAxisSpacing: 18,
-                                          mainAxisSpacing: 18,
-                                          mainAxisExtent:
-                                              ((constraints.maxWidth.clamp(
-                                                            0,
-                                                            1180,
-                                                          ) -
-                                                          32 -
-                                                          18 * (columns - 1)) /
-                                                      columns) /
-                                                  1.6 +
-                                              300 *
-                                                  MediaQuery.textScalerOf(
-                                                    context,
-                                                  ).scale(1),
-                                        ),
-                                    itemCount: products.length,
-                                    itemBuilder: (_, index) => card(index),
+                                    sliver: columns == 1
+                                        ? SliverList.separated(
+                                            itemCount: products.length,
+                                            separatorBuilder: (_, _) =>
+                                                const SizedBox(height: 16),
+                                            itemBuilder: (_, index) =>
+                                                card(index),
+                                          )
+                                        : SliverGrid.builder(
+                                            gridDelegate:
+                                                SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: columns,
+                                                  crossAxisSpacing: 18,
+                                                  mainAxisSpacing: 18,
+                                                  mainAxisExtent:
+                                                      ((constraints.maxWidth
+                                                                      .clamp(
+                                                                        0,
+                                                                        1180,
+                                                                      ) -
+                                                                  32 -
+                                                                  18 *
+                                                                      (columns -
+                                                                          1)) /
+                                                              columns) /
+                                                          1.6 +
+                                                      300 *
+                                                          MediaQuery.textScalerOf(
+                                                            context,
+                                                          ).scale(1),
+                                                ),
+                                            itemCount: products.length,
+                                            itemBuilder: (_, index) =>
+                                                card(index),
+                                          ),
                                   ),
+                                  if (canLoadMore)
+                                    SliverToBoxAdapter(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          bottom: 32,
+                                        ),
+                                        child: _LoadMore(
+                                          loading: pager.loading,
+                                          label: 'Încarcă mai multe oferte',
+                                          onPressed: () =>
+                                              loadMore(manual: true),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
                           ),
                         );
                       },
@@ -308,6 +380,33 @@ class _CatalogPageState extends State<CatalogPage> {
           ],
         );
       },
+    ),
+  );
+}
+
+class _LoadMore extends StatelessWidget {
+  const _LoadMore({
+    required this.loading,
+    required this.label,
+    required this.onPressed,
+  });
+  final bool loading;
+  final String label;
+  final VoidCallback onPressed;
+  @override
+  Widget build(BuildContext context) => Center(
+    child: Padding(
+      padding: const EdgeInsets.all(12),
+      child: loading
+          ? const SizedBox.square(
+              dimension: 32,
+              child: CircularProgressIndicator(),
+            )
+          : OutlinedButton(
+              key: const ValueKey('load-more'),
+              onPressed: onPressed,
+              child: Text(label),
+            ),
     ),
   );
 }

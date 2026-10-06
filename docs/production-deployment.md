@@ -98,3 +98,43 @@ evaluation required by the renderer. Verify the CSP after changing providers.
 - Re-run the Supabase security/performance advisors after database changes.
 - Core Web Vitals remain unmeasured until browser performance instrumentation is
   available; do not infer them from build-directory size.
+
+## Password recovery
+
+Recovery mode is entered only when the Supabase SDK emits `passwordRecovery`,
+which happens after it exchanges the PKCE code from a reset email. Opening
+`/#/reset-password` without that exchange shows sign-in (or the catalogue when
+already signed in), never the new-password form. PKCE ties the link to the
+browser that requested it: a link opened in another browser or reused after a
+successful reset is rejected, and the sign-in screen explains that a new link is
+needed.
+
+## Mobile release (Android / iOS)
+
+Mobile store builds are **not ready** until the permanent app identifier is chosen.
+It cannot change after the first store upload, so pick a reverse-domain ID the
+project controls.
+
+Android release builds read their identity and signing from
+`flutter_application_1/android/key.properties` (git-ignored; template in
+`key.properties.example`) or from CI environment variables:
+
+| Setting | Environment variable |
+| --- | --- |
+| `applicationId` | `WASTELESS_APPLICATION_ID` |
+| `storeFile` (relative to `android/app/`) | `WASTELESS_ANDROID_KEYSTORE` |
+| `storePassword` | `WASTELESS_ANDROID_STORE_PASSWORD` |
+| `keyAlias` | `WASTELESS_ANDROID_KEY_ALIAS` |
+| `keyPassword` | `WASTELESS_ANDROID_KEY_PASSWORD` |
+
+A release build stops with an explicit error if any value is missing or the ID is
+still `com.example.*`; it never falls back to the debug key. Debug builds keep the
+placeholder ID. Never commit the keystore or `key.properties`.
+
+The iOS project is committed (`flutter_application_1/ios/`), with display name
+Wasteless, but `PRODUCT_BUNDLE_IDENTIFIER` is still `com.example.flutterApplication1`
+and no signing team is configured. Set both in Xcode once the identifier is chosen.
+
+Neither platform registers a custom URL scheme, so password-reset links open the
+web app (`AUTH_REDIRECT_URL`); on mobile the user resets the password in the
+browser and then signs in from the app.

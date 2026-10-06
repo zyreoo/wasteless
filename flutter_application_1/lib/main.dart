@@ -2,7 +2,6 @@ import 'merchant/merchant_dashboard.dart';
 import 'merchant/merchant_directory.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'discovery/discovery_page.dart';
@@ -55,9 +54,12 @@ Future<void> main() async {
   final auth = AuthController(
     Supabase.instance.client,
     recoveryRedirectUrl: config.authRedirectUrl,
-    startInRecovery: kIsWeb && Uri.base.toString().contains('reset-password'),
   );
-  final api = ApiService(baseUrl: config.apiUrl, accessToken: auth.accessToken);
+  final api = ApiService(
+    baseUrl: config.apiUrl,
+    accessToken: auth.accessToken,
+    onSessionRejected: auth.sessionRejected,
+  );
   runApp(WastelessApp(auth: auth, api: api));
 }
 
@@ -108,8 +110,6 @@ class WastelessApp extends StatelessWidget {
       '/help' => const HelpPage(),
       '/about' => const AboutPage(),
       '/business' => MerchantDashboard(service: service),
-      '/merchant' when id is String && demoMerchants.any((m) => m.id == id) =>
-        MerchantPage(merchant: demoMerchants.firstWhere((m) => m.id == id)),
       '/saved' => CatalogPage(service: service, savedOnly: true),
       '/cart' => LiveCartPage(service: service),
       '/checkout' => LiveCheckoutPage(service: service),
@@ -133,7 +133,8 @@ class WastelessApp extends StatelessWidget {
   Widget build(BuildContext context) => ListenableBuilder(
     listenable: Listenable.merge([auth, AppPreferences.instance]),
     builder: (context, _) => MaterialApp(
-      key: ValueKey(auth.user?.id),
+      // Recovery mode swaps the whole stack, like an account change does.
+      key: ValueKey((auth.user?.id, auth.recovering)),
       title: 'Wasteless',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme,
@@ -179,8 +180,10 @@ class WastelessApp extends StatelessWidget {
                     mapFirst: true,
                   )
                 : const DiscoveryPage(mapFirst: true),
+          // Illustrative merchants belong to the signed-out preview only.
           '/merchant'
-              when settings.arguments is String &&
+              when !auth.signedIn &&
+                  settings.arguments is String &&
                   demoMerchants.any((m) => m.id == settings.arguments) =>
             MerchantPage(
               merchant: demoMerchants.firstWhere(
