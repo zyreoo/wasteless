@@ -55,44 +55,150 @@ class _LiveCheckoutPageState extends State<LiveCheckoutPage> {
     body: LoadPanel<Map<String, dynamic>>(
       load: widget.service.cart,
       builder: (cart, reload) {
-        if ((cart['items'] as List).isEmpty) {
-          return const EmptyPanel('Coșul tău este gol');
+        final items = cart['items'] as List;
+        if (items.isEmpty) {
+          return const EmptyPanel(
+            'Coșul tău este gol',
+            icon: Icons.shopping_bag_outlined,
+          );
         }
+        final theme = Theme.of(context);
+        final merchant = (items.first['product']?['merchants'] as Map?)
+            ?.cast<String, dynamic>();
+        final allDemo = items.every((i) => i['product']?['is_demo'] == true);
+        Widget section(String title, List<Widget> children) => Card(
+          margin: EdgeInsets.zero,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  title,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                ...children,
+              ],
+            ),
+          ),
+        );
         return ListView(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.fromLTRB(16, 20, 16, 32),
           children: [
-            for (final item in cart['items'])
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Text(
-                  item['product']?['name'] as String? ?? 'Produs indisponibil',
-                ),
-                subtitle: Text('Cantitate: ${item['quantity']}'),
-                trailing: Text(
-                  item['line_total'] == null ? '—' : money(item['line_total']),
-                ),
+            PageWidth(
+              maxWidth: 640,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (merchant != null) ...[
+                    section('Ridicare', [
+                      InfoRow(
+                        icon: Icons.storefront_outlined,
+                        text: '${merchant['name']}',
+                        emphasis: true,
+                      ),
+                      if (merchant['address'] != null)
+                        InfoRow(
+                          icon: Icons.place_outlined,
+                          text: '${merchant['address']}',
+                        ),
+                      if (merchant['pickup_window'] != null)
+                        InfoRow(
+                          icon: Icons.schedule_outlined,
+                          text:
+                              'Interval de ridicare: ${merchant['pickup_window']}',
+                        ),
+                    ]),
+                    const SizedBox(height: 12),
+                  ],
+                  section('Produsele tale', [
+                    for (final item in items)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                '${item['quantity']} × ${item['product']?['name'] ?? 'Produs indisponibil'}',
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Text(
+                              item['line_total'] == null
+                                  ? '—'
+                                  : money(item['line_total']),
+                              style: theme.textTheme.titleSmall,
+                            ),
+                          ],
+                        ),
+                      ),
+                    const Divider(height: 24),
+                    Wrap(
+                      alignment: WrapAlignment.spaceBetween,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 12,
+                      children: [
+                        Text('Total', style: theme.textTheme.titleLarge),
+                        Text(
+                          money(cart['total']),
+                          style: theme.textTheme.headlineSmall?.copyWith(
+                            fontWeight: FontWeight.w800,
+                            color: theme.colorScheme.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ]),
+                  const SizedBox(height: 16),
+                  InfoRow(
+                    icon: allDemo
+                        ? Icons.science_outlined
+                        : Icons.payments_outlined,
+                    text: allDemo
+                        ? 'COMANDĂ DE TEST · Produse fictive, fără plată sau ridicare reală.'
+                        : 'Plata se face la ridicare. Confirmarea comenzii nu retrage bani.',
+                  ),
+                  const InfoRow(
+                    icon: Icons.qr_code_2_outlined,
+                    text: 'După confirmare primești un cod de ridicare pe care îl arăți comerciantului.',
+                  ),
+                  if (cart['single_merchant'] == false)
+                    const InfoRow(
+                      icon: Icons.storefront_outlined,
+                      text: 'O comandă trebuie să conțină produse de la un singur comerciant. Revino în coș pentru a elimina produsele celorlalți comercianți.',
+                    ),
+                  const SizedBox(height: 20),
+                  FilledButton(
+                    onPressed: busy || cart['can_checkout'] != true
+                        ? null
+                        : confirm,
+                    child: busy
+                        ? const Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox.square(
+                                dimension: 18,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              ),
+                              SizedBox(width: 12),
+                              Flexible(
+                                child: Text(
+                                  'Se trimite comanda…',
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          )
+                        : const Text('Confirmă comanda'),
+                  ),
+                ],
               ),
-            const Divider(),
-            Text(
-              'Total: ${money(cart['total'])}',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              (cart['items'] as List).every(
-                    (i) => i['product']?['is_demo'] == true,
-                  )
-                  ? 'COMANDĂ DE TEST · Produse fictive, fără plată sau ridicare reală.'
-                  : 'Plata se face la ridicare. Confirmarea comenzii nu retrage bani.',
-            ),
-            if (cart['single_merchant'] == false)
-              const Text(
-                'O comandă trebuie să conțină produse de la un singur comerciant. Revino în coș pentru a elimina produsele celorlalți comercianți.',
-              ),
-            const SizedBox(height: 24),
-            FilledButton(
-              onPressed: busy || cart['can_checkout'] != true ? null : confirm,
-              child: Text(busy ? 'Se trimite comanda…' : 'Confirmă comanda'),
             ),
           ],
         );

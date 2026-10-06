@@ -92,8 +92,17 @@ class _DesignPageState extends State<DesignPage> {
     if (submitting) return;
     final email = controllers[register ? '5:259' : '5:148']?.text.trim() ?? '';
     final password = controllers[register ? '5:270' : '5:156']?.text ?? '';
-    if (!email.contains('@') || password.isEmpty || (register && !accepted)) {
-      notice('Completează emailul, parola și acordul necesar.');
+    final problem = !RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(email)
+        ? 'Introdu o adresă de email validă.'
+        : password.isEmpty
+        ? 'Introdu parola.'
+        : register && password.length < 8
+        ? 'Parola trebuie să aibă cel puțin 8 caractere.'
+        : register && !accepted
+        ? 'Bifează acordul cu termenii de utilizare pentru a continua.'
+        : null;
+    if (problem != null) {
+      notice(problem);
       return;
     }
     setState(() => submitting = true);
@@ -554,7 +563,12 @@ class _DesignPageState extends State<DesignPage> {
 
   Widget accessibleAuth() {
     final register = widget.nodeId == '5:181';
-    Widget input(String id, String label, {bool password = false}) => Padding(
+    Widget input(
+      String id,
+      String label, {
+      bool password = false,
+      String? helper,
+    }) => Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: TextField(
         key: ValueKey('field-$id'),
@@ -563,8 +577,14 @@ class _DesignPageState extends State<DesignPage> {
         enabled: !submitting,
         textInputAction: password ? TextInputAction.done : TextInputAction.next,
         onSubmitted: password ? (_) => authenticate(register) : null,
+        autofillHints: password
+            ? [register ? AutofillHints.newPassword : AutofillHints.password]
+            : label == 'Email'
+            ? const [AutofillHints.email]
+            : const [AutofillHints.name],
         decoration: InputDecoration(
           labelText: label,
+          helperText: helper,
           prefixIcon: Icon(
             password
                 ? Icons.lock_outline
@@ -640,7 +660,12 @@ class _DesignPageState extends State<DesignPage> {
             const SizedBox(height: 24),
             if (register) input('5:253', 'Nume'),
             input(register ? '5:259' : '5:148', 'Email'),
-            input(register ? '5:270' : '5:156', 'Parolă', password: true),
+            input(
+              register ? '5:270' : '5:156',
+              'Parolă',
+              password: true,
+              helper: register ? 'Minimum 8 caractere' : null,
+            ),
             if (register)
               CheckboxListTile(
                 value: accepted,

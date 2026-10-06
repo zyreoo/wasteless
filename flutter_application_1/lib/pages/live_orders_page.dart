@@ -54,30 +54,64 @@ class _LiveOrdersPageState extends State<LiveOrdersPage> {
       builder: (_, reload) {
         final orders = pager.items;
         if (orders.isEmpty) {
-          return const EmptyPanel('Comenzile tale vor apărea aici.');
+          return const EmptyPanel(
+            'Nu ai încă nicio comandă',
+            icon: Icons.receipt_long_outlined,
+            detail:
+                'Rezervările tale apar aici, împreună cu codul de ridicare.',
+          );
         }
         return RefreshIndicator(
           onRefresh: reload,
           child: ListView(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.fromLTRB(16, 20, 16, 32),
             children: [
               for (final order in orders)
-                Card(
-                  child: ListTile(
-                    isThreeLine: true,
-                    title: Text('Comanda #${order['id']}'),
-                    subtitle: Text(
-                      '${orderDate(order['created_at'])}\n${orderStatus(order['status'])} · ${(order['order_items'] as List).fold<int>(0, (n, i) => n + (i['quantity'] as int))} produse',
+                PageWidth(
+                  child: Card(
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 6,
+                      ),
+                      leading: const CircleAvatar(
+                        backgroundColor: Color(0xffe8efdc),
+                        child: Icon(Icons.shopping_bag_outlined),
+                      ),
+                      title: Text(
+                        order['merchant_name'] as String? ??
+                            'Comanda #${order['id']}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: Wrap(
+                          spacing: 8,
+                          runSpacing: 4,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            StatusPill(order['status'] as String),
+                            Text(
+                              '#${order['id']} · ${orderDate(order['created_at'])} · ${(order['order_items'] as List).fold<int>(0, (n, i) => n + (i['quantity'] as int))} produse',
+                            ),
+                          ],
+                        ),
+                      ),
+                      trailing: Text(
+                        money(order['total_price']),
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.w800),
+                      ),
+                      onTap: () async {
+                        await Navigator.pushNamed(
+                          context,
+                          '/order-detail',
+                          arguments: order['id'],
+                        );
+                        await reload();
+                      },
                     ),
-                    trailing: Text(money(order['total_price'])),
-                    onTap: () async {
-                      await Navigator.pushNamed(
-                        context,
-                        '/order-detail',
-                        arguments: order['id'],
-                      );
-                      await reload();
-                    },
                   ),
                 ),
               if (pager.hasMore)
@@ -119,103 +153,262 @@ class LiveOrderDetailPage extends StatelessWidget {
     title: confirmation ? 'Comandă confirmată' : 'Comanda #$id',
     body: LoadPanel<Map<String, dynamic>>(
       load: () => service.order(id),
-      builder: (order, reload) => ListView(
-        padding: const EdgeInsets.all(20),
-        children: [
-          Text(
-            'Comanda #${order['id']}',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-          const SizedBox(height: 12),
-          Text(
-            '${orderDate(order['created_at'])} · ${orderStatus(order['status'])}',
-          ),
-          const SizedBox(height: 20),
-          OrderProgress(status: order['status'] as String),
-          const SizedBox(height: 12),
-          TextButton.icon(
-            onPressed: reload,
-            icon: const Icon(Icons.refresh),
-            label: const Text('Actualizează statusul'),
-          ),
-          if (order['merchant_name'] != null)
-            Text(
-              '${order['merchant_name']}\n${order['pickup_address']}\nRidicare: ${order['pickup_window']}',
+      builder: (order, reload) {
+        final theme = Theme.of(context);
+        final status = order['status'] as String;
+        Widget section(List<Widget> children) => Card(
+          margin: EdgeInsets.zero,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: children,
             ),
-          if (order['pickup_code'] != null && order['status'] != 'cancelled')
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 20),
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: order['status'] == 'ready'
-                    ? Theme.of(context).colorScheme.primaryContainer
-                    : Theme.of(context).colorScheme.surfaceContainerLow,
-                borderRadius: BorderRadius.circular(20),
-              ),
+          ),
+        );
+        return ListView(
+          padding: const EdgeInsets.fromLTRB(16, 20, 16, 32),
+          children: [
+            PageWidth(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    order['status'] == 'ready'
-                        ? 'Pachetul tău este gata!'
-                        : 'Codul tău de ridicare',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 8),
-                  SelectableText(
-                    '${order['pickup_code']}',
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      letterSpacing: 3,
-                      fontWeight: FontWeight.w800,
+                  if (confirmation && status != 'cancelled')
+                    const _ConfirmationHeader()
+                  else
+                    Text(
+                      'Comanda #${order['id']}',
+                      style: theme.textTheme.headlineMedium,
                     ),
+                  const SizedBox(height: 6),
+                  Text(
+                    '${confirmation ? 'Comanda #${order['id']} · ' : ''}${orderDate(order['created_at'])} · ${orderStatus(status)}',
+                    textAlign: confirmation && status != 'cancelled'
+                        ? TextAlign.center
+                        : TextAlign.start,
                   ),
-                  const SizedBox(height: 8),
-                  const Text('Arată codul comerciantului la ridicare.'),
+                  if (order['pickup_code'] != null && status != 'cancelled')
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 20),
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: status == 'ready'
+                            ? theme.colorScheme.primaryContainer
+                            : const Color(0xffe8efdc),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            status == 'ready'
+                                ? 'Pachetul tău este gata!'
+                                : 'Codul tău de ridicare',
+                            style: theme.textTheme.titleMedium,
+                          ),
+                          const SizedBox(height: 8),
+                          SelectableText(
+                            '${order['pickup_code']}',
+                            style: theme.textTheme.headlineLarge?.copyWith(
+                              letterSpacing: 6,
+                              fontWeight: FontWeight.w800,
+                              color: theme.colorScheme.primary,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          const Text(
+                            'Arată codul comerciantului la ridicare.',
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    )
+                  else
+                    const SizedBox(height: 20),
+                  section([
+                    OrderProgress(status: status),
+                    const SizedBox(height: 4),
+                    Align(
+                      child: TextButton.icon(
+                        onPressed: reload,
+                        icon: const Icon(Icons.refresh),
+                        label: const Text('Actualizează statusul'),
+                      ),
+                    ),
+                    if (order['cancellation_reason'] != null)
+                      Text('Motiv anulare: ${order['cancellation_reason']}'),
+                  ]),
+                  if (order['merchant_name'] != null) ...[
+                    const SizedBox(height: 12),
+                    section([
+                      Text(
+                        'Ridicare',
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      InfoRow(
+                        icon: Icons.storefront_outlined,
+                        text: '${order['merchant_name']}',
+                        emphasis: true,
+                      ),
+                      if (order['pickup_address'] != null)
+                        InfoRow(
+                          icon: Icons.place_outlined,
+                          text: '${order['pickup_address']}',
+                        ),
+                      if (order['pickup_window'] != null)
+                        InfoRow(
+                          icon: Icons.schedule_outlined,
+                          text:
+                              'Interval de ridicare: ${order['pickup_window']}',
+                        ),
+                    ]),
+                  ],
+                  const SizedBox(height: 12),
+                  section([
+                    Text(
+                      'Produse',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    for (final item in order['order_items'])
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(child: Text(item['product_name'])),
+                            const SizedBox(width: 12),
+                            Text(
+                              '${item['quantity']} × ${money(item['unit_price'])}',
+                            ),
+                          ],
+                        ),
+                      ),
+                    const Divider(height: 24),
+                    Wrap(
+                      alignment: WrapAlignment.spaceBetween,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 12,
+                      children: [
+                        Text('Total', style: theme.textTheme.titleLarge),
+                        Text(
+                          money(order['total_price']),
+                          style: theme.textTheme.headlineSmall?.copyWith(
+                            fontWeight: FontWeight.w800,
+                            color: theme.colorScheme.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      order['is_demo'] == true
+                          ? 'COMANDĂ DE TEST · Produse fictive. Fără plată sau ridicare reală.'
+                          : 'Plata la ridicare. Nicio plată online nu a fost efectuată.',
+                      style: theme.textTheme.bodySmall,
+                    ),
+                  ]),
+                  const SizedBox(height: 16),
+                  OrderActions(order: order, service: service, reload: reload),
+                  const SizedBox(height: 24),
+                  FilledButton(
+                    onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/home',
+                      (_) => false,
+                    ),
+                    child: const Text('Înapoi la produse'),
+                  ),
+                  TextButton(
+                    onPressed: () =>
+                        Navigator.pushReplacementNamed(context, '/history'),
+                    child: const Text('Vezi comenzile mele'),
+                  ),
                 ],
               ),
             ),
-          if (order['cancellation_reason'] != null)
-            Text('Motiv anulare: ${order['cancellation_reason']}'),
-          const SizedBox(height: 16),
-          for (final item in order['order_items'])
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text(item['product_name']),
-              subtitle: Text(
-                '${item['quantity']} × ${money(item['unit_price'])}',
-              ),
-            ),
-          const Divider(),
-          Text(
-            'Total: ${money(order['total_price'])}',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            order['is_demo'] == true
-                ? 'COMANDĂ DE TEST · Produse fictive. Fără plată sau ridicare reală.'
-                : 'Plata la ridicare. Nicio plată online nu a fost efectuată.',
-          ),
-          const SizedBox(height: 16),
-          OrderActions(order: order, service: service, reload: reload),
-          const SizedBox(height: 24),
-          FilledButton(
-            onPressed: () => Navigator.pushNamedAndRemoveUntil(
-              context,
-              '/home',
-              (_) => false,
-            ),
-            child: const Text('Înapoi la produse'),
-          ),
-          TextButton(
-            onPressed: () =>
-                Navigator.pushReplacementNamed(context, '/history'),
-            child: const Text('Vezi comenzile mele'),
-          ),
-        ],
-      ),
+          ],
+        );
+      },
     ),
   );
+}
+
+/// Short, one-time success moment shown right after checkout.
+class _ConfirmationHeader extends StatelessWidget {
+  const _ConfirmationHeader();
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Column(
+      children: [
+        TweenAnimationBuilder<double>(
+          tween: Tween(begin: 0, end: 1),
+          duration: MediaQuery.disableAnimationsOf(context)
+              ? Duration.zero
+              : const Duration(milliseconds: 450),
+          curve: Curves.easeOutBack,
+          builder: (_, value, child) =>
+              Transform.scale(scale: value, child: child),
+          child: Container(
+            width: 72,
+            height: 72,
+            decoration: BoxDecoration(
+              color: theme.colorScheme.primary,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.check_rounded,
+              size: 44,
+              color: theme.colorScheme.onPrimary,
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        Text(
+          'Comanda a fost trimisă!',
+          textAlign: TextAlign.center,
+          style: theme.textTheme.headlineMedium,
+        ),
+      ],
+    );
+  }
+}
+
+/// Colour-coded order status, readable at a glance in the history list.
+class StatusPill extends StatelessWidget {
+  const StatusPill(this.status, {super.key});
+  final String status;
+  @override
+  Widget build(BuildContext context) {
+    final (background, foreground) = switch (status) {
+      'ready' => (const Color(0xFFD9EFB4), const Color(0xFF31572C)),
+      'collected' => (const Color(0xFFE6E7E2), const Color(0xFF4A4A45)),
+      'cancelled' => (const Color(0xFFFEE2E2), const Color(0xFF991B1B)),
+      _ => (const Color(0xFFFEF3C7), const Color(0xFF92400E)),
+    };
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: background,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+        child: Text(
+          orderStatus(status),
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w700,
+            color: foreground,
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class OrderProgress extends StatelessWidget {

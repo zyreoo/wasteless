@@ -237,63 +237,134 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Wasteless')),
-    body: SafeArea(
-      child: ListView(
-        padding: const EdgeInsets.all(24),
-        children: [
-          FutureBuilder<dynamic>(
-            future: identity,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState != ConnectionState.done) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (snapshot.hasError) {
-                return Column(
-                  children: [
-                    Text(AuthController.message(snapshot.error!)),
-                    TextButton(
-                      onPressed: () => setState(
-                        () => identity = widget.api.request('GET', '/api/me'),
-                      ),
-                      child: const Text('Încearcă din nou'),
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Scaffold(
+      appBar: AppBar(title: const Text('Contul meu')),
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
+          children: [
+            PageWidth(
+              maxWidth: 640,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  FutureBuilder<dynamic>(
+                    future: identity,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState != ConnectionState.done) {
+                        return const Padding(
+                          padding: EdgeInsets.all(24),
+                          child: Center(child: CircularProgressIndicator()),
+                        );
+                      }
+                      if (snapshot.hasError) {
+                        return Column(
+                          children: [
+                            Text(AuthController.message(snapshot.error!)),
+                            TextButton(
+                              onPressed: () => setState(
+                                () => identity = widget.api.request(
+                                  'GET',
+                                  '/api/me',
+                                ),
+                              ),
+                              child: const Text('Încearcă din nou'),
+                            ),
+                          ],
+                        );
+                      }
+                      final email =
+                          snapshot.data['email'] as String? ?? 'Contul tău';
+                      return Card(
+                        margin: EdgeInsets.zero,
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 26,
+                                backgroundColor: const Color(0xFFD9EFB4),
+                                child: Text(
+                                  email.isEmpty ? '?' : email[0].toUpperCase(),
+                                  style: theme.textTheme.titleLarge?.copyWith(
+                                    color: theme.colorScheme.primary,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      email,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: theme.textTheme.titleMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                    ),
+                                    const Text('Cont Wasteless'),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  Card(
+                    margin: EdgeInsets.zero,
+                    clipBehavior: Clip.antiAlias,
+                    child: Column(
+                      children: [
+                        for (final item in <(IconData, String, String)>[
+                          (
+                            Icons.receipt_long_outlined,
+                            'Comenzile mele',
+                            '/history',
+                          ),
+                          (Icons.tune, 'Setări și preferințe', '/settings'),
+                          (Icons.map_outlined, 'Descoperă pe hartă', '/map'),
+                          (
+                            Icons.storefront_outlined,
+                            'Pentru comercianți',
+                            '/business',
+                          ),
+                          (Icons.help_outline, 'Ajutor', '/help'),
+                          (Icons.eco_outlined, 'Despre noi', '/about'),
+                        ])
+                          ListTile(
+                            leading: Icon(
+                              item.$1,
+                              color: theme.colorScheme.primary,
+                            ),
+                            title: Text(item.$2),
+                            trailing: const Icon(Icons.chevron_right),
+                            onTap: () => Navigator.pushNamed(context, item.$3),
+                          ),
+                      ],
                     ),
-                  ],
-                );
-              }
-              return Text(
-                snapshot.data['email'] as String? ?? 'Contul tău',
-                style: Theme.of(context).textTheme.titleLarge,
-              );
-            },
-          ),
-          const SizedBox(height: 24),
-          TextButton(
-            onPressed: () => Navigator.pushNamed(context, '/history'),
-            child: const Text('Comenzile mele'),
-          ),
-          const Divider(height: 32),
-          for (final item in <(IconData, String, String)>[
-            (Icons.tune, 'Setări & preferințe', '/settings'),
-            (Icons.map_outlined, 'Descoperă pe hartă', '/map'),
-            (Icons.storefront_outlined, 'Pentru comercianți', '/business'),
-            (Icons.help_outline, 'Ajutor', '/help'),
-            (Icons.eco_outlined, 'Despre noi', '/about'),
-          ])
-            ListTile(
-              leading: Icon(item.$1),
-              title: Text(item.$2),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => Navigator.pushNamed(context, item.$3),
+                  ),
+                  const SizedBox(height: 24),
+                  OutlinedButton.icon(
+                    onPressed: signingOut ? null : logout,
+                    icon: const Icon(Icons.logout),
+                    label: Text(
+                      signingOut ? 'Se deconectează…' : 'Deconectare',
+                    ),
+                  ),
+                ],
+              ),
             ),
-          const SizedBox(height: 24),
-          OutlinedButton(
-            onPressed: signingOut ? null : logout,
-            child: Text(signingOut ? 'Se deconectează…' : 'Deconectare'),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }

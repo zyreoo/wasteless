@@ -83,64 +83,189 @@ class _LiveProductPageState extends State<LiveProductPage> {
               child: ProductImage(p),
             ),
           );
+          final theme = Theme.of(context);
+          final original = p.originalPrice;
+          final discount = original != null && original > p.price
+              ? ((1 - p.price / original) * 100).round()
+              : null;
+          final merchant = p.merchant;
           final details = Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(p.name, style: Theme.of(context).textTheme.headlineMedium),
-              if (p.isDemo)
-                const Text(
-                  'Produs fictiv. Comanda testează fluxul; nu presupune livrare sau plată reală.',
-                ),
-              if (p.merchant != null)
+              if (merchant?['name'] != null)
                 Text(
-                  '${p.merchant!['name']}\n${p.merchant!['address']}\nRidicare: ${p.merchant!['pickup_window']}',
+                  merchant!['name'] as String,
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    color: theme.colorScheme.primary,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              if (p.allergens != null) Text('Alergeni: ${p.allergens}'),
-              const SizedBox(height: 12),
-              Text(
-                money(p.price),
-                style: Theme.of(context).textTheme.titleLarge,
+              const SizedBox(height: 6),
+              Text(p.name, style: theme.textTheme.headlineMedium),
+              const SizedBox(height: 16),
+              Wrap(
+                spacing: 12,
+                runSpacing: 6,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Text(
+                    money(p.price),
+                    style: theme.textTheme.headlineMedium?.copyWith(
+                      color: theme.colorScheme.primary,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  if (discount != null) ...[
+                    Text(
+                      money(original),
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                        decoration: TextDecoration.lineThrough,
+                      ),
+                    ),
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFD9EFB4),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
+                        child: Text(
+                          'Economisești $discount%',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w800,
+                            color: Color(0xFF31572C),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
               ),
-              if (p.description?.isNotEmpty == true)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Text(p.description!),
+              if (p.isDemo) ...[
+                const SizedBox(height: 16),
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.surfaceContainerLow,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(12),
+                    child: InfoRow(
+                      icon: Icons.info_outline,
+                      text: 'Produs fictiv. Comanda testează fluxul; nu presupune livrare sau plată reală.',
+                    ),
+                  ),
                 ),
-              TextButton.icon(
-                onPressed: busy ? null : toggleFavorite,
-                icon: Icon(
-                  saved == true ? Icons.favorite : Icons.favorite_border,
+              ],
+              const SizedBox(height: 16),
+              if (merchant?['pickup_window'] != null)
+                InfoRow(
+                  icon: Icons.schedule_outlined,
+                  text: 'Ridicare: ${merchant!['pickup_window']}',
                 ),
-                label: Text(
-                  saved == true ? 'Elimină din favorite' : 'Salvează produsul',
+              if (merchant?['address'] != null)
+                InfoRow(
+                  icon: Icons.place_outlined,
+                  text: merchant!['address'] as String,
                 ),
+              if (p.allergens != null)
+                InfoRow(
+                  icon: Icons.health_and_safety_outlined,
+                  text: 'Alergeni: ${p.allergens}',
+                ),
+              InfoRow(
+                icon: p.stock > 0
+                    ? Icons.inventory_2_outlined
+                    : Icons.remove_shopping_cart_outlined,
+                text: p.stock == 0
+                    ? 'Stoc epuizat'
+                    : p.stock <= 3
+                    ? 'Ultimele ${p.stock} disponibile'
+                    : '${p.stock} disponibile',
               ),
-              Text(p.stock > 0 ? '${p.stock} disponibile' : 'Stoc epuizat'),
-              const SizedBox(height: 20),
+              if (p.description?.isNotEmpty == true) ...[
+                const SizedBox(height: 16),
+                Text(
+                  p.description!,
+                  style: theme.textTheme.bodyLarge?.copyWith(height: 1.5),
+                ),
+              ],
+              const SizedBox(height: 24),
               Row(
                 children: [
-                  IconButton(
-                    tooltip: 'Scade cantitatea',
-                    onPressed: busy || quantity <= 1
-                        ? null
-                        : () => setState(() => quantity--),
-                    icon: const Icon(Icons.remove),
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: theme.colorScheme.outlineVariant,
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          tooltip: 'Scade cantitatea',
+                          onPressed: busy || quantity <= 1
+                              ? null
+                              : () => setState(() => quantity--),
+                          icon: const Icon(Icons.remove),
+                        ),
+                        SizedBox(
+                          width: 28,
+                          child: Text(
+                            '$quantity',
+                            textAlign: TextAlign.center,
+                            style: theme.textTheme.titleMedium,
+                          ),
+                        ),
+                        IconButton(
+                          tooltip: 'Crește cantitatea',
+                          onPressed:
+                              busy || quantity >= p.stock || quantity >= 99
+                              ? null
+                              : () => setState(() => quantity++),
+                          icon: const Icon(Icons.add),
+                        ),
+                      ],
+                    ),
                   ),
-                  Text('$quantity'),
-                  IconButton(
-                    tooltip: 'Crește cantitatea',
-                    onPressed: busy || quantity >= p.stock || quantity >= 99
-                        ? null
-                        : () => setState(() => quantity++),
-                    icon: const Icon(Icons.add),
+                  const Spacer(),
+                  IconButton.outlined(
+                    tooltip: saved == true
+                        ? 'Elimină din favorite'
+                        : 'Salvează produsul',
+                    onPressed: busy ? null : toggleFavorite,
+                    icon: Icon(
+                      saved == true ? Icons.favorite : Icons.favorite_border,
+                      color: saved == true ? const Color(0xFFC0392B) : null,
+                    ),
                   ),
                 ],
               ),
+              const SizedBox(height: 16),
               FilledButton.icon(
                 onPressed: busy || p.stock < quantity ? null : add,
                 icon: const Icon(Icons.shopping_bag_outlined),
-                label: Text(busy ? 'Se adaugă…' : 'Adaugă în coș'),
+                label: Text(
+                  busy
+                      ? 'Se adaugă…'
+                      : p.stock == 0
+                      ? 'Stoc epuizat'
+                      : 'Adaugă în coș',
+                ),
               ),
+              if (p.stock > 0 && !p.isDemo) ...[
+                const SizedBox(height: 8),
+                Text(
+                  'Plătești la ridicare, direct la comerciant.',
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodySmall,
+                ),
+              ],
             ],
           );
           return SingleChildScrollView(

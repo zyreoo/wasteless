@@ -3,9 +3,17 @@ import 'package:flutter/material.dart';
 import '../auth/auth_controller.dart';
 
 class LoadPanel<T> extends StatefulWidget {
-  const LoadPanel({super.key, required this.load, required this.builder});
+  const LoadPanel({
+    super.key,
+    required this.load,
+    required this.builder,
+    this.loading,
+  });
   final Future<T> Function() load;
   final Widget Function(T value, Future<void> Function() reload) builder;
+
+  /// Shown on first load instead of a bare spinner, e.g. a skeleton layout.
+  final Widget? loading;
   @override
   State<LoadPanel<T>> createState() => _LoadPanelState<T>();
 }
@@ -29,22 +37,37 @@ class _LoadPanelState<T> extends State<LoadPanel<T>> {
     builder: (context, snapshot) {
       if (snapshot.connectionState != ConnectionState.done &&
           !snapshot.hasData) {
-        return const Center(child: CircularProgressIndicator());
+        return widget.loading ??
+            const Center(child: CircularProgressIndicator());
       }
       if (snapshot.hasError) {
         return Center(
           child: Padding(
             padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(AuthController.message(snapshot.error!)),
-                const SizedBox(height: 16),
-                FilledButton(
-                  onPressed: reload,
-                  child: const Text('Încearcă din nou'),
-                ),
-              ],
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 420),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.cloud_off_outlined,
+                    size: 48,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    AuthController.message(snapshot.error!),
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 20),
+                  FilledButton.icon(
+                    onPressed: reload,
+                    icon: const Icon(Icons.refresh),
+                    label: const Text('Încearcă din nou'),
+                  ),
+                ],
+              ),
             ),
           ),
         );
@@ -167,27 +190,110 @@ class LiveScaffold extends StatelessWidget {
 }
 
 class EmptyPanel extends StatelessWidget {
-  const EmptyPanel(this.message, {super.key});
+  const EmptyPanel(
+    this.message, {
+    super.key,
+    this.detail,
+    this.icon = Icons.shopping_basket_outlined,
+  });
   final String message;
+  final String? detail;
+  final IconData icon;
   @override
-  Widget build(BuildContext context) => Center(
-    child: Padding(
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Center(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 380),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 96,
+                height: 96,
+                decoration: const BoxDecoration(
+                  color: Color(0xffe8efdc),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(icon, size: 44, color: theme.colorScheme.primary),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                message,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.titleLarge,
+              ),
+              if (detail != null) ...[
+                const SizedBox(height: 8),
+                Text(detail!, textAlign: TextAlign.center),
+              ],
+              const SizedBox(height: 24),
+              FilledButton.tonal(
+                onPressed: () =>
+                    Navigator.pushReplacementNamed(context, '/home'),
+                child: const Text('Vezi produsele'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Keeps reading-width content (forms, carts, receipts) centred on wide
+/// screens instead of stretching edge to edge.
+class PageWidth extends StatelessWidget {
+  const PageWidth({super.key, this.maxWidth = 720, required this.child});
+  final double maxWidth;
+  final Widget child;
+  @override
+  Widget build(BuildContext context) => Align(
+    alignment: Alignment.topCenter,
+    child: ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: maxWidth),
+      child: child,
+    ),
+  );
+}
+
+/// Label/value row used in receipts and summaries.
+class InfoRow extends StatelessWidget {
+  const InfoRow({
+    super.key,
+    required this.icon,
+    required this.text,
+    this.emphasis = false,
+  });
+  final IconData icon;
+  final String text;
+  final bool emphasis;
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shopping_basket_outlined, size: 64),
-          const SizedBox(height: 16),
-          Text(message, textAlign: TextAlign.center),
-          const SizedBox(height: 20),
-          TextButton(
-            onPressed: () => Navigator.pushReplacementNamed(context, '/home'),
-            child: const Text('Vezi produsele'),
+          Icon(icon, size: 18, color: theme.colorScheme.primary),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              text,
+              style: emphasis
+                  ? theme.textTheme.titleMedium
+                  : theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurface,
+                    ),
+            ),
           ),
         ],
       ),
-    ),
-  );
+    );
+  }
 }
 
 /// Session-only browsing preferences; the scope is recreated on account changes.

@@ -78,138 +78,192 @@ class ProductTile extends StatelessWidget {
     final discount = original != null && original > product.price
         ? ((1 - product.price / original) * 100).round()
         : null;
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      margin: EdgeInsets.zero,
+    final stockColor = product.stock == 0
+        ? theme.colorScheme.error
+        : product.stock <= 3
+        ? const Color(0xFF92400E)
+        : theme.colorScheme.onSurfaceVariant;
+    Widget details(bool bounded) => Padding(
+      padding: const EdgeInsets.all(16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: bounded ? MainAxisSize.max : MainAxisSize.min,
         children: [
-          Stack(
+          Text(
+            product.merchant?['name'] as String? ??
+                product.category ??
+                'Wasteless',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: theme.textTheme.labelMedium?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            product.name,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w800,
+              height: 1.3,
+            ),
+          ),
+          const SizedBox(height: 8),
+          if (product.merchant?['pickup_window'] != null)
+            Row(
+              children: [
+                Icon(
+                  Icons.schedule_outlined,
+                  size: 15,
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    'Ridicare ${product.merchant!['pickup_window']}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.bodySmall,
+                  ),
+                ),
+              ],
+            ),
+          // In a grid every card has the same height: keep price and stock on
+          // one baseline across the row instead of leaving a blank tail.
+          if (bounded) const Spacer() else const SizedBox(height: 12),
+          Wrap(
+            spacing: 8,
+            runSpacing: 2,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              InkWell(
-                onTap: onOpen,
-                child: Hero(
-                  tag: 'product-image-${product.id}',
-                  child: ProductImage(product),
+              Text(
+                money(product.price),
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: theme.colorScheme.primary,
                 ),
               ),
-              Positioned(
-                top: 12,
-                left: 12,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.surface,
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 6,
-                    ),
-                    child: Text(
-                      product.isDemo
-                          ? 'DEMO · FĂRĂ PLATĂ'
-                          : 'Salvează o porție',
-                      style: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
+              if (discount != null)
+                Text(
+                  money(original),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    decoration: TextDecoration.lineThrough,
                   ),
                 ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Row(
+            children: [
+              Icon(
+                product.stock == 0
+                    ? Icons.remove_shopping_cart_outlined
+                    : Icons.inventory_2_outlined,
+                size: 14,
+                color: stockColor,
               ),
-              Positioned(
-                top: 8,
-                right: 8,
-                child: IconButton.filledTonal(
-                  tooltip: saved ? 'Elimină din favorite' : 'Salvează produsul',
-                  onPressed: onFavorite,
-                  icon: Icon(saved ? Icons.favorite : Icons.favorite_border),
+              const SizedBox(width: 6),
+              Flexible(
+                child: Text(
+                  product.stock == 0
+                      ? 'Momentan epuizat'
+                      : product.stock <= 3
+                      ? 'Ultimele ${product.stock} disponibile'
+                      : '${product.stock} disponibile',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: stockColor,
+                    fontWeight: product.stock <= 3
+                        ? FontWeight.w700
+                        : FontWeight.w500,
+                  ),
                 ),
               ),
             ],
           ),
+        ],
+      ),
+    );
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      margin: EdgeInsets.zero,
+      child: Stack(
+        children: [
           InkWell(
             onTap: onOpen,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    product.merchant?['name'] as String? ??
-                        product.category ??
-                        'Wasteless',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.labelMedium?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    product.name,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  if (product.merchant?['pickup_window'] != null)
-                    Row(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final bounded = constraints.hasBoundedHeight;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: bounded ? MainAxisSize.max : MainAxisSize.min,
+                  children: [
+                    Stack(
                       children: [
-                        const Icon(Icons.schedule_outlined, size: 15),
-                        const SizedBox(width: 6),
-                        Expanded(
-                          child: Text(
-                            'Ridicare ${product.merchant!['pickup_window']}',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: theme.textTheme.bodySmall,
+                        Hero(
+                          tag: 'product-image-${product.id}',
+                          child: Opacity(
+                            opacity: product.stock == 0 ? .55 : 1,
+                            child: ProductImage(product),
                           ),
                         ),
+                        Positioned(
+                          top: 12,
+                          left: 12,
+                          child: _Pill(
+                            product.isDemo
+                                ? 'DEMO · FĂRĂ PLATĂ'
+                                : 'Salvează o porție',
+                            background: theme.colorScheme.surface,
+                            foreground: theme.colorScheme.onSurface,
+                          ),
+                        ),
+                        if (discount != null)
+                          Positioned(
+                            left: 12,
+                            bottom: 12,
+                            child: _Pill(
+                              '−$discount%',
+                              background: const Color(0xFFD9EFB4),
+                              foreground: const Color(0xFF31572C),
+                              large: true,
+                            ),
+                          ),
                       ],
                     ),
-                  const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 4,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      Text(
-                        money(product.price),
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w800,
-                          color: theme.colorScheme.primary,
-                        ),
-                      ),
-                      if (discount != null) ...[
-                        Text(
-                          money(original),
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            decoration: TextDecoration.lineThrough,
-                          ),
-                        ),
-                        Text(
-                          '−$discount%',
-                          style: theme.textTheme.labelMedium?.copyWith(
-                            color: theme.colorScheme.primary,
-                          ),
-                        ),
-                      ],
-                    ],
+                    if (bounded)
+                      Expanded(child: details(true))
+                    else
+                      details(false),
+                  ],
+                );
+              },
+            ),
+          ),
+          Positioned(
+            top: 8,
+            right: 8,
+            child: IconButton.filledTonal(
+              tooltip: saved ? 'Elimină din favorite' : 'Salvează produsul',
+              onPressed: onFavorite,
+              icon: AnimatedSwitcher(
+                duration: MediaQuery.disableAnimationsOf(context)
+                    ? Duration.zero
+                    : const Duration(milliseconds: 220),
+                transitionBuilder: (child, animation) => ScaleTransition(
+                  scale: CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeOutBack,
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    product.stock == 0
-                        ? 'Momentan epuizat'
-                        : product.stock <= 3
-                        ? 'Ultimele ${product.stock} disponibile'
-                        : '${product.stock} disponibile',
-                    style: theme.textTheme.labelMedium,
-                  ),
-                ],
+                  child: child,
+                ),
+                child: Icon(
+                  saved ? Icons.favorite : Icons.favorite_border,
+                  key: ValueKey(saved),
+                  color: saved ? const Color(0xFFC0392B) : null,
+                ),
               ),
             ),
           ),
@@ -217,4 +271,34 @@ class ProductTile extends StatelessWidget {
       ),
     );
   }
+}
+
+class _Pill extends StatelessWidget {
+  const _Pill(
+    this.text, {
+    required this.background,
+    required this.foreground,
+    this.large = false,
+  });
+  final String text;
+  final Color background, foreground;
+  final bool large;
+  @override
+  Widget build(BuildContext context) => DecoratedBox(
+    decoration: BoxDecoration(
+      color: background,
+      borderRadius: BorderRadius.circular(24),
+    ),
+    child: Padding(
+      padding: EdgeInsets.symmetric(horizontal: large ? 12 : 10, vertical: 6),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: large ? 13 : 10,
+          fontWeight: FontWeight.w800,
+          color: foreground,
+        ),
+      ),
+    ),
+  );
 }

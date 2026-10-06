@@ -13,6 +13,7 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final email = TextEditingController();
   bool busy = false;
+  bool sent = false;
   String? message;
 
   @override
@@ -34,9 +35,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     try {
       await widget.auth.requestPasswordReset(value);
       if (mounted) {
-        setState(
-          () => message = 'Dacă există un cont pentru acest email, am trimis instrucțiunile de resetare.',
-        );
+        setState(() {
+          sent = true;
+          message = 'Dacă există un cont pentru acest email, am trimis instrucțiunile de resetare.';
+        });
       }
     } catch (error) {
       if (mounted) setState(() => message = AuthController.message(error));
@@ -46,38 +48,113 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Recuperare parolă')),
-    body: SafeArea(
-      child: ListView(
-        padding: const EdgeInsets.all(24),
-        children: [
-          Text(
-            'Introdu emailul contului tău.',
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          const SizedBox(height: 20),
-          TextField(
-            key: const ValueKey('recovery-email'),
-            controller: email,
-            keyboardType: TextInputType.emailAddress,
-            autofillHints: const [AutofillHints.email],
-            decoration: const InputDecoration(labelText: 'Email'),
-          ),
-          const SizedBox(height: 16),
-          FilledButton(
-            key: const ValueKey('recovery-submit'),
-            onPressed: busy ? null : submit,
-            child: Text(busy ? 'Se trimite…' : 'Trimite instrucțiuni'),
-          ),
-          if (message != null) ...[
-            const SizedBox(height: 16),
-            Semantics(liveRegion: true, child: Text(message!)),
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Scaffold(
+      appBar: AppBar(title: const Text('Recuperare parolă')),
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.all(24),
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 480),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Ai uitat parola?',
+                      style: theme.textTheme.headlineMedium,
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Introdu emailul contului tău și îți trimitem un link pentru a alege o parolă nouă.',
+                    ),
+                    const SizedBox(height: 24),
+                    TextField(
+                      key: const ValueKey('recovery-email'),
+                      controller: email,
+                      enabled: !busy,
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.send,
+                      autofillHints: const [AutofillHints.email],
+                      onSubmitted: (_) => submit(),
+                      decoration: const InputDecoration(
+                        labelText: 'Email',
+                        prefixIcon: Icon(Icons.mail_outline),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    FilledButton(
+                      key: const ValueKey('recovery-submit'),
+                      onPressed: busy ? null : submit,
+                      child: Text(
+                        busy
+                            ? 'Se trimite…'
+                            : sent
+                            ? 'Trimite din nou'
+                            : 'Trimite instrucțiuni',
+                      ),
+                    ),
+                    if (message != null) ...[
+                      const SizedBox(height: 20),
+                      Semantics(
+                        liveRegion: true,
+                        child: sent
+                            ? DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: const Color(0xffe8efdc),
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Icon(
+                                        Icons.mark_email_read_outlined,
+                                        color: theme.colorScheme.primary,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              message!,
+                                              style: theme.textTheme.titleSmall,
+                                            ),
+                                            const SizedBox(height: 6),
+                                            const Text(
+                                              'Deschide linkul în același browser și verifică și folderul Spam.',
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : Text(
+                                message!,
+                                style: TextStyle(
+                                  color: theme.colorScheme.error,
+                                ),
+                              ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ),
           ],
-        ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class ResetPasswordPage extends StatefulWidget {

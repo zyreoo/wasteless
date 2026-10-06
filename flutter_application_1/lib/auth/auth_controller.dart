@@ -169,6 +169,8 @@ class AuthController extends ChangeNotifier {
         'email_not_confirmed' =>
           'Confirmă adresa de email înainte de autentificare.',
         'weak_password' => 'Alege o parolă mai puternică.',
+        'user_already_exists' || 'email_exists' => 'Există deja un cont cu acest email. Autentifică-te sau resetează parola.',
+        'email_address_invalid' => 'Introdu o adresă de email validă.',
         'same_password' => 'Alege o parolă diferită de cea actuală.',
         'over_email_send_rate_limit' || 'over_request_rate_limit' =>
           'Prea multe încercări. Revino în câteva momente.',
