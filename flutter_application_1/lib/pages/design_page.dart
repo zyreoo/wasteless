@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 
 import '../widgets/figma_layout.dart';
 import '../auth/auth_controller.dart';
+import '../theme/app_theme.dart';
+import '../widgets/ui.dart';
 
 /// Screen catalogue mirrors the 18 artboards in the supplied Figma file.
 const designRoutes = <String, String>{
@@ -616,30 +618,29 @@ class _DesignPageState extends State<DesignPage> {
         constraints: const BoxConstraints(maxWidth: 480),
         child: ListView(
           shrinkWrap: true,
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(Space.xl),
           children: [
-            const Row(
-              children: [
-                Icon(Icons.eco, size: 32),
-                SizedBox(width: 10),
-                Text(
-                  'Wasteless',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
-                ),
-              ],
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Wordmark(size: 20),
             ),
-            const SizedBox(height: 12),
-            const Text('Mai puțină risipă. Mai mult de savurat.'),
-            const SizedBox(height: 28),
+            const SizedBox(height: Space.s),
+            Text(
+              'Salvăm mâncarea bună de la risipă.',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: Space.xxl),
             Text(
               register ? 'Începe cu un gest bun.' : 'Bine ai revenit.',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: Space.s),
             Text(
               register
-                  ? 'Creează contul tău Wasteless.'
-                  : 'Intră în cont și descoperă ce merită salvat azi.',
+                  ? 'Creează-ți contul și rezervă primele oferte.'
+                  : 'Intră în cont și vezi ce oferte te așteaptă.',
+              style: Theme.of(context).textTheme.bodyLarge
+                  ?.copyWith(color: AppColors.textSecondary),
             ),
             if (widget.auth?.notice case final notice?) ...[
               const SizedBox(height: 16),
@@ -647,11 +648,11 @@ class _DesignPageState extends State<DesignPage> {
                 liveRegion: true,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondaryContainer,
-                    borderRadius: BorderRadius.circular(12),
+                    color: AppColors.warningSoft,
+                    borderRadius: BorderRadius.circular(Radii.m),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(Space.m),
                     child: Text(notice, key: const ValueKey('auth-notice')),
                   ),
                 ),
@@ -733,46 +734,38 @@ class _DesignPageState extends State<DesignPage> {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.all(24),
+                        padding: const EdgeInsets.all(Space.xl),
                         child: Container(
                           clipBehavior: Clip.antiAlias,
                           decoration: BoxDecoration(
-                            color: const Color(0xffd9efb4),
-                            borderRadius: BorderRadius.circular(32),
+                            color: AppColors.brandSoft,
+                            borderRadius: BorderRadius.circular(Radii.l),
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               const Padding(
-                                padding: EdgeInsets.all(36),
+                                padding: EdgeInsets.all(Space.x3 - Space.s),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'MÂNCARE BUNĂ. O IDEE ȘI MAI BUNĂ.',
-                                      style: TextStyle(
-                                        fontSize: 11,
-                                        letterSpacing: 2,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    SizedBox(height: 24),
-                                    Text(
                                       'Bun de mâncat.\nPăcat de risipit.',
                                       style: TextStyle(
-                                        fontSize: 46,
+                                        fontSize: 40,
                                         height: 1.1,
-                                        letterSpacing: -2,
-                                        fontWeight: FontWeight.w800,
-                                        color: Color(0xff20291f),
+                                        letterSpacing: -1.2,
+                                        fontWeight: FontWeight.w700,
+                                        color: AppColors.text,
                                       ),
                                     ),
-                                    SizedBox(height: 20),
+                                    SizedBox(height: Space.l),
                                     Text(
-                                      'Descoperă locurile din orașul tău care dau mâncării o a doua șansă.',
+                                      'Brutăriile, piețele și restaurantele din oraș își vând surplusul de la finalul zilei la preț redus. Tu rezervi, ridici și salvezi mâncare bună.',
                                       style: TextStyle(
                                         fontSize: 16,
-                                        height: 1.6,
+                                        height: 1.55,
+                                        color: AppColors.textSecondary,
                                       ),
                                     ),
                                   ],

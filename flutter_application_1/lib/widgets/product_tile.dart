@@ -3,10 +3,13 @@ import 'image_loading.dart';
 import 'package:flutter/material.dart';
 
 import '../models/product.dart';
+import '../theme/app_theme.dart';
+import 'ui.dart';
 
 class ProductImage extends StatelessWidget {
-  const ProductImage(this.product, {super.key});
+  const ProductImage(this.product, {super.key, this.aspectRatio = 4 / 3});
   final Product product;
+  final double aspectRatio;
   @override
   Widget build(BuildContext context) {
     final uri = Uri.tryParse(product.image ?? '');
@@ -23,18 +26,18 @@ class ProductImage extends StatelessWidget {
         : ['mar', 'măr', 'mere'].contains(name)
         ? 'assets/demo/apples.webp'
         : null;
-    final fallback = ColoredBox(
-      color: const Color(0xffe8ede5),
+    const fallback = ColoredBox(
+      color: AppColors.surfaceMuted,
       child: Center(
         child: Icon(
           Icons.restaurant_outlined,
-          size: 40,
-          color: Theme.of(context).colorScheme.primary,
+          size: 32,
+          color: AppColors.textMuted,
         ),
       ),
     );
     return AspectRatio(
-      aspectRatio: 1.6,
+      aspectRatio: aspectRatio,
       child: uri?.scheme == 'https'
           ? Image.network(
               frameBuilder: softImageFrame,
@@ -58,213 +61,191 @@ class ProductImage extends StatelessWidget {
   }
 }
 
-class ProductTile extends StatelessWidget {
+class ProductTile extends StatefulWidget {
   const ProductTile({
     super.key,
     required this.product,
     required this.saved,
     required this.onFavorite,
     required this.onOpen,
+    this.imageAspect = 4 / 3,
   });
   final Product product;
   final bool saved;
   final VoidCallback? onFavorite;
   final VoidCallback onOpen;
 
+  /// Grids use 4:3; single-column phone lists use a wider 16:10 so more
+  /// offers fit on screen.
+  final double imageAspect;
+
+  @override
+  State<ProductTile> createState() => _ProductTileState();
+}
+
+class _ProductTileState extends State<ProductTile> {
+  bool hovered = false;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final product = widget.product;
     final original = product.originalPrice;
     final discount = original != null && original > product.price
         ? ((1 - product.price / original) * 100).round()
         : null;
-    final stockColor = product.stock == 0
-        ? theme.colorScheme.error
+    final soldOut = product.stock == 0;
+    final motion = MediaQuery.disableAnimationsOf(context)
+        ? Duration.zero
+        : const Duration(milliseconds: 200);
+    final (stockText, stockColor) = soldOut
+        ? ('Momentan epuizat', AppColors.error)
         : product.stock <= 3
-        ? const Color(0xFF92400E)
-        : theme.colorScheme.onSurfaceVariant;
-    Widget details(bool bounded) => Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: bounded ? MainAxisSize.max : MainAxisSize.min,
-        children: [
-          Text(
-            product.merchant?['name'] as String? ??
-                product.category ??
-                'Wasteless',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: theme.textTheme.labelMedium?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            product.name,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w800,
-              height: 1.3,
-            ),
-          ),
-          const SizedBox(height: 8),
-          if (product.merchant?['pickup_window'] != null)
-            Row(
-              children: [
-                Icon(
-                  Icons.schedule_outlined,
-                  size: 15,
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-                const SizedBox(width: 6),
-                Expanded(
-                  child: Text(
-                    'Ridicare ${product.merchant!['pickup_window']}',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.bodySmall,
-                  ),
-                ),
-              ],
-            ),
-          // In a grid every card has the same height: keep price and stock on
-          // one baseline across the row instead of leaving a blank tail.
-          if (bounded) const Spacer() else const SizedBox(height: 12),
-          Wrap(
-            spacing: 8,
-            runSpacing: 2,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              Text(
-                money(product.price),
-                style: theme.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w800,
-                  color: theme.colorScheme.primary,
-                ),
-              ),
-              if (discount != null)
-                Text(
-                  money(original),
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    decoration: TextDecoration.lineThrough,
-                  ),
-                ),
-            ],
-          ),
-          const SizedBox(height: 6),
-          Row(
-            children: [
-              Icon(
-                product.stock == 0
-                    ? Icons.remove_shopping_cart_outlined
-                    : Icons.inventory_2_outlined,
-                size: 14,
-                color: stockColor,
-              ),
-              const SizedBox(width: 6),
-              Flexible(
-                child: Text(
-                  product.stock == 0
-                      ? 'Momentan epuizat'
-                      : product.stock <= 3
-                      ? 'Ultimele ${product.stock} disponibile'
-                      : '${product.stock} disponibile',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.labelMedium?.copyWith(
-                    color: stockColor,
-                    fontWeight: product.stock <= 3
-                        ? FontWeight.w700
-                        : FontWeight.w500,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      margin: EdgeInsets.zero,
+        ? ('Ultimele ${product.stock}', AppColors.warning)
+        : ('${product.stock} disponibile', AppColors.textSecondary);
+    return MouseRegion(
+      onEnter: (_) => setState(() => hovered = true),
+      onExit: (_) => setState(() => hovered = false),
       child: Stack(
         children: [
-          InkWell(
-            onTap: onOpen,
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final bounded = constraints.hasBoundedHeight;
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: bounded ? MainAxisSize.max : MainAxisSize.min,
-                  children: [
-                    Stack(
+          Material(
+            type: MaterialType.transparency,
+            child: InkWell(
+              onTap: widget.onOpen,
+              borderRadius: BorderRadius.circular(Radii.l),
+              hoverColor: Colors.transparent,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(Radii.l),
+                    child: Stack(
                       children: [
                         Hero(
                           tag: 'product-image-${product.id}',
-                          child: Opacity(
-                            opacity: product.stock == 0 ? .55 : 1,
-                            child: ProductImage(product),
+                          child: AnimatedScale(
+                            scale: hovered ? 1.02 : 1,
+                            duration: motion,
+                            curve: Curves.easeOut,
+                            child: Opacity(
+                              opacity: soldOut ? .5 : 1,
+                              child: ProductImage(
+                                product,
+                                aspectRatio: widget.imageAspect,
+                              ),
+                            ),
                           ),
                         ),
-                        Positioned(
-                          top: 12,
-                          left: 12,
-                          child: _Pill(
-                            product.isDemo
-                                ? 'DEMO · FĂRĂ PLATĂ'
-                                : 'Salvează o porție',
-                            background: theme.colorScheme.surface,
-                            foreground: theme.colorScheme.onSurface,
+                        if (product.isDemo)
+                          const Positioned(
+                            top: Space.m,
+                            left: Space.m,
+                            child: _DemoLabel(),
                           ),
-                        ),
                         if (discount != null)
                           Positioned(
-                            left: 12,
-                            bottom: 12,
-                            child: _Pill(
-                              '−$discount%',
-                              background: const Color(0xFFD9EFB4),
-                              foreground: const Color(0xFF31572C),
-                              large: true,
-                            ),
+                            left: Space.m,
+                            bottom: Space.m,
+                            child: Pill('−$discount%', tone: PillTone.accent),
                           ),
                       ],
                     ),
-                    if (bounded)
-                      Expanded(child: details(true))
-                    else
-                      details(false),
-                  ],
-                );
-              },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      Space.xs,
+                      Space.m,
+                      Space.xs,
+                      0,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          product.name,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.titleMedium,
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          product.merchant?['name'] as String? ??
+                              product.category ??
+                              'Wasteless',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.bodySmall,
+                        ),
+                        const SizedBox(height: Space.s),
+                        Wrap(
+                          spacing: Space.s,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            Text(
+                              money(product.price),
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            if (discount != null)
+                              Text(
+                                money(original),
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: AppColors.textMuted,
+                                  decoration: TextDecoration.lineThrough,
+                                ),
+                              ),
+                          ],
+                        ),
+                        if (product.merchant?['pickup_window'] != null) ...[
+                          const SizedBox(height: Space.xs),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.schedule_outlined,
+                                size: 14,
+                                color: AppColors.textSecondary,
+                              ),
+                              const SizedBox(width: Space.xs + 2),
+                              Expanded(
+                                child: Text(
+                                  'Ridicare ${product.merchant!['pickup_window']}',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: theme.textTheme.bodySmall,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                        const SizedBox(height: 2),
+                        Text(
+                          stockText,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.labelMedium?.copyWith(
+                            color: stockColor,
+                            fontWeight: product.stock <= 3
+                                ? FontWeight.w600
+                                : FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Positioned(
-            top: 8,
-            right: 8,
-            child: IconButton.filledTonal(
-              tooltip: saved ? 'Elimină din favorite' : 'Salvează produsul',
-              onPressed: onFavorite,
-              icon: AnimatedSwitcher(
-                duration: MediaQuery.disableAnimationsOf(context)
-                    ? Duration.zero
-                    : const Duration(milliseconds: 220),
-                transitionBuilder: (child, animation) => ScaleTransition(
-                  scale: CurvedAnimation(
-                    parent: animation,
-                    curve: Curves.easeOutBack,
-                  ),
-                  child: child,
-                ),
-                child: Icon(
-                  saved ? Icons.favorite : Icons.favorite_border,
-                  key: ValueKey(saved),
-                  color: saved ? const Color(0xFFC0392B) : null,
-                ),
-              ),
+            top: Space.s,
+            right: Space.s,
+            child: _FavoriteButton(
+              saved: widget.saved,
+              onPressed: widget.onFavorite,
+              duration: motion,
             ),
           ),
         ],
@@ -273,30 +254,59 @@ class ProductTile extends StatelessWidget {
   }
 }
 
-class _Pill extends StatelessWidget {
-  const _Pill(
-    this.text, {
-    required this.background,
-    required this.foreground,
-    this.large = false,
-  });
-  final String text;
-  final Color background, foreground;
-  final bool large;
+class _DemoLabel extends StatelessWidget {
+  const _DemoLabel();
   @override
   Widget build(BuildContext context) => DecoratedBox(
     decoration: BoxDecoration(
-      color: background,
-      borderRadius: BorderRadius.circular(24),
+      color: AppColors.surface.withValues(alpha: .92),
+      borderRadius: BorderRadius.circular(Radii.pill),
     ),
-    child: Padding(
-      padding: EdgeInsets.symmetric(horizontal: large ? 12 : 10, vertical: 6),
+    child: const Padding(
+      padding: EdgeInsets.symmetric(horizontal: Space.s, vertical: 3),
       child: Text(
-        text,
+        'DEMO · FĂRĂ PLATĂ',
         style: TextStyle(
-          fontSize: large ? 13 : 10,
-          fontWeight: FontWeight.w800,
-          color: foreground,
+          fontSize: 10,
+          fontWeight: FontWeight.w600,
+          letterSpacing: .3,
+          color: AppColors.textSecondary,
+        ),
+      ),
+    ),
+  );
+}
+
+class _FavoriteButton extends StatelessWidget {
+  const _FavoriteButton({
+    required this.saved,
+    required this.onPressed,
+    required this.duration,
+  });
+  final bool saved;
+  final VoidCallback? onPressed;
+  final Duration duration;
+  @override
+  Widget build(BuildContext context) => Material(
+    color: AppColors.surface.withValues(alpha: .94),
+    shape: const CircleBorder(),
+    elevation: 0,
+    child: IconButton(
+      tooltip: saved ? 'Elimină din favorite' : 'Salvează produsul',
+      onPressed: onPressed,
+      iconSize: 20,
+      icon: AnimatedSwitcher(
+        duration: duration,
+        transitionBuilder: (child, animation) => ScaleTransition(
+          scale: Tween(begin: .6, end: 1.0).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
+          ),
+          child: child,
+        ),
+        child: Icon(
+          saved ? Icons.favorite : Icons.favorite_border,
+          key: ValueKey(saved),
+          color: saved ? AppColors.favorite : AppColors.text,
         ),
       ),
     ),

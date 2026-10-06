@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../auth/auth_controller.dart';
 import '../models/product.dart';
 import '../services/commerce_service.dart';
+import '../theme/app_theme.dart';
 import '../widgets/live_page.dart';
 
 String checkoutKey() {
@@ -51,156 +52,186 @@ class _LiveCheckoutPageState extends State<LiveCheckoutPage> {
 
   @override
   Widget build(BuildContext context) => LiveScaffold(
-    title: 'Confirmă comanda',
+    title: 'Finalizare comandă',
     body: LoadPanel<Map<String, dynamic>>(
       load: widget.service.cart,
+      errorTitle: 'Nu am putut încărca comanda',
+      loading: const ListSkeleton(rows: 3, thumbnail: false),
       builder: (cart, reload) {
         final items = cart['items'] as List;
         if (items.isEmpty) {
           return const EmptyPanel(
             'Coșul tău este gol',
             icon: Icons.shopping_bag_outlined,
+            detail: 'Adaugă o ofertă în coș înainte să finalizezi comanda.',
           );
         }
         final theme = Theme.of(context);
         final merchant = (items.first['product']?['merchants'] as Map?)
             ?.cast<String, dynamic>();
         final allDemo = items.every((i) => i['product']?['is_demo'] == true);
-        Widget section(String title, List<Widget> children) => Card(
-          margin: EdgeInsets.zero,
+        final details = Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const PageHeader(
+              'Finalizează comanda',
+              subtitle: 'Verifică detaliile înainte să confirmi.',
+            ),
+            if (merchant != null) ...[
+              const SectionTitle('Ridicare'),
+              InfoRow(
+                icon: Icons.storefront_outlined,
+                text: '${merchant['name']}',
+                emphasis: true,
+              ),
+              if (merchant['address'] != null)
+                InfoRow(
+                  icon: Icons.place_outlined,
+                  text: '${merchant['address']}',
+                ),
+              if (merchant['pickup_window'] != null)
+                InfoRow(
+                  icon: Icons.schedule_outlined,
+                  text: 'Interval de ridicare: ${merchant['pickup_window']}',
+                ),
+              const SizedBox(height: Space.xl),
+              const Divider(),
+              const SizedBox(height: Space.xl),
+            ],
+            const SectionTitle('Comanda ta'),
+            for (final item in items)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: Space.s),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 36,
+                      child: Text(
+                        '${item['quantity']}×',
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        '${item['product']?['name'] ?? 'Produs indisponibil'}',
+                      ),
+                    ),
+                    const SizedBox(width: Space.m),
+                    Text(
+                      item['line_total'] == null
+                          ? '—'
+                          : money(item['line_total']),
+                      style: theme.textTheme.titleSmall,
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        );
+        final summary = Card(
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(Space.xl),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  title,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
+                Wrap(
+                  alignment: WrapAlignment.spaceBetween,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: Space.m,
+                  children: [
+                    Text('Total', style: theme.textTheme.titleMedium),
+                    Text(
+                      money(cart['total']),
+                      style: theme.textTheme.headlineSmall,
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 12),
-                ...children,
+                const SizedBox(height: Space.l),
+                const Divider(),
+                const SizedBox(height: Space.m),
+                InfoRow(
+                  icon: allDemo
+                      ? Icons.science_outlined
+                      : Icons.payments_outlined,
+                  text: allDemo
+                      ? 'Comandă de test: produse demonstrative, fără plată sau ridicare reală.'
+                      : 'Plătești la ridicare. Confirmarea nu retrage bani.',
+                ),
+                const InfoRow(
+                  icon: Icons.qr_code_2_outlined,
+                  text: 'Primești un cod de ridicare pe care îl arăți la magazin.',
+                ),
+                if (cart['single_merchant'] == false)
+                  const InfoRow(
+                    icon: Icons.info_outline,
+                    text: 'O comandă poate conține produse de la un singur magazin. Revino în coș pentru a elimina celelalte produse.',
+                  ),
+                const SizedBox(height: Space.xl),
+                FilledButton(
+                  onPressed: busy || cart['can_checkout'] != true
+                      ? null
+                      : confirm,
+                  child: busy
+                      ? const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox.square(
+                              dimension: 18,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            ),
+                            SizedBox(width: Space.m),
+                            Flexible(
+                              child: Text(
+                                'Se trimite comanda…',
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        )
+                      : const Text('Confirmă comanda'),
+                ),
               ],
             ),
           ),
         );
-        return ListView(
-          padding: const EdgeInsets.fromLTRB(16, 20, 16, 32),
-          children: [
-            PageWidth(
-              maxWidth: 640,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  if (merchant != null) ...[
-                    section('Ridicare', [
-                      InfoRow(
-                        icon: Icons.storefront_outlined,
-                        text: '${merchant['name']}',
-                        emphasis: true,
-                      ),
-                      if (merchant['address'] != null)
-                        InfoRow(
-                          icon: Icons.place_outlined,
-                          text: '${merchant['address']}',
-                        ),
-                      if (merchant['pickup_window'] != null)
-                        InfoRow(
-                          icon: Icons.schedule_outlined,
-                          text:
-                              'Interval de ridicare: ${merchant['pickup_window']}',
-                        ),
-                    ]),
-                    const SizedBox(height: 12),
-                  ],
-                  section('Produsele tale', [
-                    for (final item in items)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6),
-                        child: Row(
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            final wide = constraints.maxWidth >= 900;
+            return ListView(
+              padding: EdgeInsets.all(wide ? Space.xxl : Space.l),
+              children: [
+                PageWidth(
+                  maxWidth: 1000,
+                  child: wide
+                      ? Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
-                              child: Text(
-                                '${item['quantity']} × ${item['product']?['name'] ?? 'Produs indisponibil'}',
+                            Expanded(child: details),
+                            const SizedBox(width: Space.x3),
+                            SizedBox(
+                              width: 340,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 72),
+                                child: summary,
                               ),
-                            ),
-                            const SizedBox(width: 12),
-                            Text(
-                              item['line_total'] == null
-                                  ? '—'
-                                  : money(item['line_total']),
-                              style: theme.textTheme.titleSmall,
                             ),
                           ],
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            details,
+                            const SizedBox(height: Space.xl),
+                            summary,
+                          ],
                         ),
-                      ),
-                    const Divider(height: 24),
-                    Wrap(
-                      alignment: WrapAlignment.spaceBetween,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      spacing: 12,
-                      children: [
-                        Text('Total', style: theme.textTheme.titleLarge),
-                        Text(
-                          money(cart['total']),
-                          style: theme.textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.w800,
-                            color: theme.colorScheme.primary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ]),
-                  const SizedBox(height: 16),
-                  InfoRow(
-                    icon: allDemo
-                        ? Icons.science_outlined
-                        : Icons.payments_outlined,
-                    text: allDemo
-                        ? 'COMANDĂ DE TEST · Produse fictive, fără plată sau ridicare reală.'
-                        : 'Plata se face la ridicare. Confirmarea comenzii nu retrage bani.',
-                  ),
-                  const InfoRow(
-                    icon: Icons.qr_code_2_outlined,
-                    text: 'După confirmare primești un cod de ridicare pe care îl arăți comerciantului.',
-                  ),
-                  if (cart['single_merchant'] == false)
-                    const InfoRow(
-                      icon: Icons.storefront_outlined,
-                      text: 'O comandă trebuie să conțină produse de la un singur comerciant. Revino în coș pentru a elimina produsele celorlalți comercianți.',
-                    ),
-                  const SizedBox(height: 20),
-                  FilledButton(
-                    onPressed: busy || cart['can_checkout'] != true
-                        ? null
-                        : confirm,
-                    child: busy
-                        ? const Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox.square(
-                                dimension: 18,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                ),
-                              ),
-                              SizedBox(width: 12),
-                              Flexible(
-                                child: Text(
-                                  'Se trimite comanda…',
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
-                          )
-                        : const Text('Confirmă comanda'),
-                  ),
-                ],
-              ),
-            ),
-          ],
+                ),
+              ],
+            );
+          },
         );
       },
     ),

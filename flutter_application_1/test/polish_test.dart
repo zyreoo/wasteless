@@ -19,8 +19,16 @@ void main() {
       baseUrl: 'https://example.invalid',
       accessToken: () async => 'test',
       client: MockClient(
-        (r) async =>
-            http.Response(jsonEncode({'items': [], 'next_offset': null}), 200),
+        // One offer, so the search field is shown (it hides when empty).
+        (r) async => http.Response(
+          jsonEncode({
+            'items': [
+              {'id': 1, 'name': 'Mere', 'price': 3.4, 'stock': 10},
+            ],
+            'next_offset': null,
+          }),
+          200,
+        ),
       ),
     );
     addTearDown(api.close);
@@ -47,9 +55,9 @@ void main() {
           .values['catalog.query'],
       'brutarie',
     );
-    await tester.tap(find.text('Salvate').last);
+    await tester.tap(find.text('Favorite').last);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Acasă').last);
+    await tester.tap(find.text('Descoperă').last);
     await tester.pumpAndSettle();
     expect(
       tester.widget<TextField>(find.byType(TextField)).controller!.text,

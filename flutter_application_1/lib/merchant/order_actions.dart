@@ -95,7 +95,7 @@ class _OrderActionsState extends State<OrderActions> {
       'ready': 'collected',
     }[status];
     return Wrap(
-      spacing: 10,
+      spacing: 8,
       runSpacing: 8,
       children: [
         if (widget.merchant && next != null)

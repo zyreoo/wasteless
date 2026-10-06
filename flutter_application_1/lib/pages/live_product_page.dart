@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../auth/auth_controller.dart';
 import '../services/commerce_service.dart';
 import '../models/product.dart';
+import '../theme/app_theme.dart';
 import '../widgets/live_page.dart';
 import '../widgets/product_tile.dart';
 
@@ -71,97 +72,66 @@ class _LiveProductPageState extends State<LiveProductPage> {
 
   @override
   Widget build(BuildContext context) => LiveScaffold(
-    title: 'Detalii produs',
+    title: 'Ofertă',
     body: LoadPanel<Product>(
       load: load,
+      errorTitle: 'Nu am putut încărca oferta',
+      loading: const _ProductSkeleton(),
       builder: (p, reload) => LayoutBuilder(
         builder: (context, constraints) {
-          final picture = Hero(
-            tag: 'product-image-${p.id}',
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(24),
-              child: ProductImage(p),
-            ),
-          );
           final theme = Theme.of(context);
+          final wide = constraints.maxWidth >= 860;
           final original = p.originalPrice;
           final discount = original != null && original > p.price
               ? ((1 - p.price / original) * 100).round()
               : null;
           final merchant = p.merchant;
+          final soldOut = p.stock == 0;
+          final picture = Hero(
+            tag: 'product-image-${p.id}',
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(Radii.l),
+              child: ProductImage(p, aspectRatio: wide ? 4 / 3 : 1.6),
+            ),
+          );
           final details = Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (merchant?['name'] != null)
                 Text(
                   merchant!['name'] as String,
-                  style: theme.textTheme.labelLarge?.copyWith(
-                    color: theme.colorScheme.primary,
-                    fontWeight: FontWeight.w700,
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    color: AppColors.brand,
                   ),
                 ),
-              const SizedBox(height: 6),
+              const SizedBox(height: Space.xs),
               Text(p.name, style: theme.textTheme.headlineMedium),
-              const SizedBox(height: 16),
+              const SizedBox(height: Space.l),
               Wrap(
-                spacing: 12,
-                runSpacing: 6,
+                spacing: Space.m,
+                runSpacing: Space.s,
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   Text(
                     money(p.price),
-                    style: theme.textTheme.headlineMedium?.copyWith(
-                      color: theme.colorScheme.primary,
-                      fontWeight: FontWeight.w800,
-                    ),
+                    style: theme.textTheme.displaySmall?.copyWith(fontSize: 30),
                   ),
                   if (discount != null) ...[
                     Text(
                       money(original),
                       style: theme.textTheme.titleMedium?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
+                        color: AppColors.textMuted,
+                        fontWeight: FontWeight.w500,
                         decoration: TextDecoration.lineThrough,
                       ),
                     ),
-                    DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFD9EFB4),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 4,
-                        ),
-                        child: Text(
-                          'Economisești $discount%',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w800,
-                            color: Color(0xFF31572C),
-                          ),
-                        ),
-                      ),
-                    ),
+                    Pill('Economisești $discount%', tone: PillTone.accent),
                   ],
                 ],
               ),
-              if (p.isDemo) ...[
-                const SizedBox(height: 16),
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.surfaceContainerLow,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(12),
-                    child: InfoRow(
-                      icon: Icons.info_outline,
-                      text: 'Produs fictiv. Comanda testează fluxul; nu presupune livrare sau plată reală.',
-                    ),
-                  ),
-                ),
-              ],
-              const SizedBox(height: 16),
+              const SizedBox(height: Space.xl),
+              const Divider(),
+              const SizedBox(height: Space.m),
               if (merchant?['pickup_window'] != null)
                 InfoRow(
                   icon: Icons.schedule_outlined,
@@ -178,123 +148,181 @@ class _LiveProductPageState extends State<LiveProductPage> {
                   text: 'Alergeni: ${p.allergens}',
                 ),
               InfoRow(
-                icon: p.stock > 0
-                    ? Icons.inventory_2_outlined
-                    : Icons.remove_shopping_cart_outlined,
-                text: p.stock == 0
+                icon: soldOut
+                    ? Icons.remove_shopping_cart_outlined
+                    : Icons.inventory_2_outlined,
+                text: soldOut
                     ? 'Stoc epuizat'
                     : p.stock <= 3
                     ? 'Ultimele ${p.stock} disponibile'
                     : '${p.stock} disponibile',
               ),
               if (p.description?.isNotEmpty == true) ...[
-                const SizedBox(height: 16),
+                const SizedBox(height: Space.l),
                 Text(
                   p.description!,
-                  style: theme.textTheme.bodyLarge?.copyWith(height: 1.5),
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
                 ),
               ],
-              const SizedBox(height: 24),
-              Row(
-                children: [
-                  DecoratedBox(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: theme.colorScheme.outlineVariant,
-                      ),
-                      borderRadius: BorderRadius.circular(16),
+              const SizedBox(height: Space.xl),
+              Builder(
+                builder: (context) {
+                  final stepper = QuantityStepper(
+                    value: quantity,
+                    onDecrement: busy || quantity <= 1
+                        ? null
+                        : () => setState(() => quantity--),
+                    onIncrement: busy || quantity >= p.stock || quantity >= 99
+                        ? null
+                        : () => setState(() => quantity++),
+                  );
+                  final cta = FilledButton.icon(
+                    onPressed: busy || p.stock < quantity ? null : add,
+                    icon: const Icon(Icons.shopping_bag_outlined, size: 18),
+                    label: Text(
+                      busy
+                          ? 'Se adaugă…'
+                          : soldOut
+                          ? 'Stoc epuizat'
+                          : 'Adaugă în coș',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          tooltip: 'Scade cantitatea',
-                          onPressed: busy || quantity <= 1
-                              ? null
-                              : () => setState(() => quantity--),
-                          icon: const Icon(Icons.remove),
-                        ),
-                        SizedBox(
-                          width: 28,
-                          child: Text(
-                            '$quantity',
-                            textAlign: TextAlign.center,
-                            style: theme.textTheme.titleMedium,
-                          ),
-                        ),
-                        IconButton(
-                          tooltip: 'Crește cantitatea',
-                          onPressed:
-                              busy || quantity >= p.stock || quantity >= 99
-                              ? null
-                              : () => setState(() => quantity++),
-                          icon: const Icon(Icons.add),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Spacer(),
-                  IconButton.outlined(
+                  );
+                  final favorite = IconButton.outlined(
                     tooltip: saved == true
                         ? 'Elimină din favorite'
                         : 'Salvează produsul',
+                    style: IconButton.styleFrom(
+                      minimumSize: const Size(48, 48),
+                      side: const BorderSide(color: AppColors.borderStrong),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(Radii.m),
+                      ),
+                    ),
                     onPressed: busy ? null : toggleFavorite,
                     icon: Icon(
                       saved == true ? Icons.favorite : Icons.favorite_border,
-                      color: saved == true ? const Color(0xFFC0392B) : null,
+                      color: saved == true ? AppColors.favorite : null,
                     ),
-                  ),
-                ],
+                  );
+                  // Phones: the main action gets its own full-width row.
+                  if (constraints.maxWidth < 480) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Row(children: [stepper, const Spacer(), favorite]),
+                        const SizedBox(height: Space.m),
+                        cta,
+                      ],
+                    );
+                  }
+                  return Row(
+                    children: [
+                      stepper,
+                      const SizedBox(width: Space.m),
+                      Expanded(child: cta),
+                      const SizedBox(width: Space.s),
+                      favorite,
+                    ],
+                  );
+                },
               ),
-              const SizedBox(height: 16),
-              FilledButton.icon(
-                onPressed: busy || p.stock < quantity ? null : add,
-                icon: const Icon(Icons.shopping_bag_outlined),
-                label: Text(
-                  busy
-                      ? 'Se adaugă…'
-                      : p.stock == 0
-                      ? 'Stoc epuizat'
-                      : 'Adaugă în coș',
-                ),
+              const SizedBox(height: Space.m),
+              Text(
+                p.isDemo
+                    ? 'Ofertă demonstrativă: comanda testează fluxul, fără plată sau ridicare reală.'
+                    : 'Plătești la ridicare, direct la magazin.',
+                style: theme.textTheme.bodySmall,
               ),
-              if (p.stock > 0 && !p.isDemo) ...[
-                const SizedBox(height: 8),
-                Text(
-                  'Plătești la ridicare, direct la comerciant.',
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.bodySmall,
-                ),
-              ],
             ],
           );
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 1100),
-                child: constraints.maxWidth >= 800
-                    ? Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(child: picture),
-                          const SizedBox(width: 40),
-                          Expanded(child: details),
-                        ],
-                      )
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          picture,
-                          const SizedBox(height: 24),
-                          details,
-                        ],
-                      ),
-              ),
+            padding: EdgeInsets.all(wide ? Space.xxl : Space.l),
+            child: PageWidth(
+              maxWidth: wide ? 1100 : 640,
+              child: wide
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(flex: 11, child: picture),
+                        const SizedBox(width: Space.x3),
+                        Expanded(flex: 9, child: details),
+                      ],
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        picture,
+                        const SizedBox(height: Space.xl),
+                        details,
+                      ],
+                    ),
             ),
           );
         },
       ),
     ),
+  );
+}
+
+class _ProductSkeleton extends StatelessWidget {
+  const _ProductSkeleton();
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) {
+      final wide = constraints.maxWidth >= 860;
+      const picture = AspectRatio(
+        aspectRatio: 4 / 3,
+        child: SkeletonBox(radius: Radii.l),
+      );
+      const details = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SkeletonBox(width: 120, height: 14),
+          SizedBox(height: Space.s),
+          SkeletonBox(width: 280, height: 28),
+          SizedBox(height: Space.l),
+          SkeletonBox(width: 160, height: 32),
+          SizedBox(height: Space.xl),
+          SkeletonBox(width: 240),
+          SizedBox(height: Space.m),
+          SkeletonBox(width: 200),
+          SizedBox(height: Space.m),
+          SkeletonBox(width: 220),
+        ],
+      );
+      return Semantics(
+        label: 'Se încarcă oferta',
+        child: ExcludeSemantics(
+          child: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.all(wide ? Space.xxl : Space.l),
+            child: PageWidth(
+              maxWidth: 1100,
+              child: wide
+                  ? const Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(flex: 11, child: picture),
+                        SizedBox(width: Space.x3),
+                        Expanded(flex: 9, child: details),
+                      ],
+                    )
+                  : const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        picture,
+                        SizedBox(height: Space.xl),
+                        details,
+                      ],
+                    ),
+            ),
+          ),
+        ),
+      );
+    },
   );
 }

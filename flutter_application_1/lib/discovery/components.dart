@@ -2,6 +2,8 @@ import '../widgets/image_loading.dart';
 
 import 'package:flutter/material.dart';
 
+import '../theme/app_theme.dart';
+
 import 'merchant.dart';
 import 'preferences.dart';
 
@@ -10,37 +12,38 @@ const moss = Color(0xff315c37);
 const lime = Color(0xffd9efb4);
 const paper = Color(0xfffafaf7);
 
+/// Section label + page title + supporting line, in the shared type scale.
 class PageIntro extends StatelessWidget {
   const PageIntro(this.eyebrow, this.title, this.subtitle, {super.key});
   final String eyebrow, title, subtitle;
   @override
-  Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        eyebrow.toUpperCase(),
-        style: const TextStyle(
-          fontSize: 11,
-          letterSpacing: 2,
-          fontWeight: FontWeight.w700,
-          color: moss,
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final narrow = MediaQuery.sizeOf(context).width < 600;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          eyebrow,
+          style: theme.textTheme.titleSmall?.copyWith(color: AppColors.brand),
         ),
-      ),
-      const SizedBox(height: 10),
-      Text(
-        title,
-        style: TextStyle(
-          fontSize: MediaQuery.sizeOf(context).width < 600 ? 26 : 36,
-          height: 1.2,
-          letterSpacing: -0.6,
-          fontWeight: FontWeight.w700,
-          color: ink,
+        const SizedBox(height: Space.xs),
+        Text(
+          title.replaceAll('\n', ' '),
+          style: narrow
+              ? theme.textTheme.headlineSmall
+              : theme.textTheme.headlineMedium,
         ),
-      ),
-      const SizedBox(height: 12),
-      Text(subtitle, style: const TextStyle(fontSize: 15, height: 1.6)),
-    ],
-  );
+        const SizedBox(height: Space.s),
+        Text(
+          subtitle,
+          style:
+              (narrow ? theme.textTheme.bodyMedium : theme.textTheme.bodyLarge)
+                  ?.copyWith(color: AppColors.textSecondary),
+        ),
+      ],
+    );
+  }
 }
 
 class DemoNotice extends StatelessWidget {

@@ -239,14 +239,16 @@ class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Scaffold(
-      appBar: AppBar(title: const Text('Contul meu')),
+    final name = (widget.auth.user?.userMetadata?['display_name'] as String?)
+        ?.trim();
+    return LiveScaffold(
+      title: 'Contul meu',
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
+          padding: const EdgeInsets.all(Space.xl),
           children: [
             PageWidth(
-              maxWidth: 640,
+              maxWidth: 560,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -254,13 +256,28 @@ class _AccountPageState extends State<AccountPage> {
                     future: identity,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState != ConnectionState.done) {
-                        return const Padding(
-                          padding: EdgeInsets.all(24),
-                          child: Center(child: CircularProgressIndicator()),
+                        return const Row(
+                          children: [
+                            SkeletonBox(
+                              width: 56,
+                              height: 56,
+                              radius: Radii.pill,
+                            ),
+                            SizedBox(width: Space.l),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SkeletonBox(width: 160, height: 18),
+                                SizedBox(height: Space.s),
+                                SkeletonBox(width: 200, height: 12),
+                              ],
+                            ),
+                          ],
                         );
                       }
                       if (snapshot.hasError) {
                         return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(AuthController.message(snapshot.error!)),
                             TextButton(
@@ -275,88 +292,96 @@ class _AccountPageState extends State<AccountPage> {
                           ],
                         );
                       }
-                      final email =
-                          snapshot.data['email'] as String? ?? 'Contul tău';
-                      return Card(
-                        margin: EdgeInsets.zero,
-                        child: Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 26,
-                                backgroundColor: const Color(0xFFD9EFB4),
-                                child: Text(
-                                  email.isEmpty ? '?' : email[0].toUpperCase(),
-                                  style: theme.textTheme.titleLarge?.copyWith(
-                                    color: theme.colorScheme.primary,
-                                  ),
-                                ),
+                      final email = snapshot.data['email'] as String? ?? '';
+                      final title = name?.isNotEmpty == true
+                          ? name!
+                          : email.isNotEmpty
+                          ? email
+                          : 'Contul tău';
+                      return Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 28,
+                            backgroundColor: AppColors.brandSoft,
+                            child: Text(
+                              title[0].toUpperCase(),
+                              style: theme.textTheme.titleLarge?.copyWith(
+                                color: AppColors.brand,
                               ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      email,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: theme.textTheme.titleMedium
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                    ),
-                                    const Text('Cont Wasteless'),
-                                  ],
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
+                          const SizedBox(width: Space.l),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  title,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: theme.textTheme.titleLarge,
+                                ),
+                                if (title != email && email.isNotEmpty)
+                                  Text(
+                                    email,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: theme.textTheme.bodySmall,
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ],
                       );
                     },
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: Space.xxl),
                   Card(
-                    margin: EdgeInsets.zero,
                     clipBehavior: Clip.antiAlias,
                     child: Column(
                       children: [
-                        for (final item in <(IconData, String, String)>[
+                        for (final (i, item) in <(IconData, String, String)>[
                           (
                             Icons.receipt_long_outlined,
                             'Comenzile mele',
                             '/history',
                           ),
+                          (Icons.favorite_border, 'Favorite', '/saved'),
                           (Icons.tune, 'Setări și preferințe', '/settings'),
-                          (Icons.map_outlined, 'Descoperă pe hartă', '/map'),
                           (
                             Icons.storefront_outlined,
                             'Pentru comercianți',
                             '/business',
                           ),
                           (Icons.help_outline, 'Ajutor', '/help'),
-                          (Icons.eco_outlined, 'Despre noi', '/about'),
-                        ])
+                          (Icons.eco_outlined, 'Despre Wasteless', '/about'),
+                        ].indexed) ...[
+                          if (i > 0) const Divider(indent: 56),
                           ListTile(
-                            leading: Icon(
-                              item.$1,
-                              color: theme.colorScheme.primary,
-                            ),
+                            leading: Icon(item.$1, size: 22),
                             title: Text(item.$2),
-                            trailing: const Icon(Icons.chevron_right),
+                            trailing: const Icon(
+                              Icons.chevron_right,
+                              color: AppColors.textMuted,
+                            ),
                             onTap: () => Navigator.pushNamed(context, item.$3),
                           ),
+                        ],
                       ],
                     ),
                   ),
-                  const SizedBox(height: 24),
-                  OutlinedButton.icon(
-                    onPressed: signingOut ? null : logout,
-                    icon: const Icon(Icons.logout),
-                    label: Text(
-                      signingOut ? 'Se deconectează…' : 'Deconectare',
+                  const SizedBox(height: Space.xl),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextButton.icon(
+                      onPressed: signingOut ? null : logout,
+                      style: TextButton.styleFrom(
+                        foregroundColor: AppColors.error,
+                      ),
+                      icon: const Icon(Icons.logout, size: 18),
+                      label: Text(
+                        signingOut ? 'Se deconectează…' : 'Deconectare',
+                      ),
                     ),
                   ),
                 ],

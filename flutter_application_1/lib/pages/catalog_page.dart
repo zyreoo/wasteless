@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../auth/auth_controller.dart';
 import '../models/product.dart';
 import '../services/commerce_service.dart';
+import '../theme/app_theme.dart';
 import '../widgets/live_page.dart';
 import '../widgets/product_tile.dart';
 
@@ -123,10 +124,10 @@ class _CatalogPageState extends State<CatalogPage> {
   @override
   Widget build(BuildContext context) => LiveScaffold(
     title: widget.savedOnly
-        ? 'Produse salvate'
+        ? 'Favorite'
         : widget.search
         ? 'Caută oferte'
-        : 'Wasteless',
+        : 'Descoperă',
     index: widget.savedOnly
         ? 2
         : widget.search
@@ -134,7 +135,10 @@ class _CatalogPageState extends State<CatalogPage> {
         : 0,
     body: LoadPanel(
       load: load,
-      loading: _CatalogSkeleton(hero: showHero(context)),
+      errorTitle: widget.savedOnly
+          ? 'Nu am putut încărca favoritele'
+          : 'Nu am putut încărca ofertele',
+      loading: _CatalogSkeleton(header: !widget.savedOnly),
       builder: (data, reload) {
         // Load-more appends to the pager after this snapshot was taken.
         final all = widget.savedOnly ? data : pager.items;
@@ -153,34 +157,37 @@ class _CatalogPageState extends State<CatalogPage> {
             .toSet();
         return LayoutBuilder(
           builder: (context, constraints) {
-            final viewportWidth = MediaQuery.sizeOf(context).width;
-            final columns = viewportWidth >= 1180
+            final width = constraints.maxWidth;
+            final gutter = width >= 600 ? Space.xxl : Space.l;
+            final content = (width - gutter * 2).clamp(0.0, 1200.0);
+            final side = (width - content) / 2;
+            final columns = content >= 1080
+                ? 4
+                : content >= 760
                 ? 3
-                : viewportWidth >= 700
+                : content >= 480
                 ? 2
                 : 1;
-            final side = constraints.maxWidth >= 1240
-                ? (constraints.maxWidth - 1180) / 2
-                : 16.0;
-            final scale = MediaQuery.textScalerOf(context).scale(1);
+            final imageAspect = columns == 1 ? 1.6 : 4 / 3;
             Widget card(int index) {
               final p = products[index];
               return TweenAnimationBuilder<double>(
                 tween: Tween(begin: 0, end: 1),
                 duration: MediaQuery.disableAnimationsOf(context)
                     ? Duration.zero
-                    : Duration(milliseconds: 280 + (index % 6) * 50),
+                    : Duration(milliseconds: 220 + (index % 8) * 30),
                 curve: Curves.easeOutCubic,
                 builder: (_, value, child) => Opacity(
                   opacity: value,
                   child: Transform.translate(
-                    offset: Offset(0, 16 * (1 - value)),
+                    offset: Offset(0, 8 * (1 - value)),
                     child: child,
                   ),
                 ),
                 child: ProductTile(
                   key: ValueKey('product-${p.id}'),
                   product: p,
+                  imageAspect: imageAspect,
                   saved: saved.contains(p.id),
                   onFavorite: busy.contains(p.id)
                       ? null
@@ -197,55 +204,47 @@ class _CatalogPageState extends State<CatalogPage> {
               );
             }
 
-            Widget? emptyState() => all.isEmpty
+            void clearFilters() {
+              searchController.clear();
+              setState(() {
+                query = '';
+                selectedCategory = null;
+              });
+              remember();
+            }
+
+            final Widget? empty = all.isEmpty
                 ? EmptyPanel(
                     widget.savedOnly
-                        ? 'Nu ai produse salvate'
-                        : 'Nu sunt oferte disponibile acum',
+                        ? 'Încă nu ai favorite'
+                        : 'Nu sunt oferte acum',
                     icon: widget.savedOnly
                         ? Icons.favorite_border
-                        : Icons.storefront_outlined,
+                        : Icons.local_offer_outlined,
                     detail: widget.savedOnly
-                        ? 'Apasă inima de pe o ofertă ca s-o găsești rapid aici.'
-                        : 'Revino mai târziu pentru oferte noi.',
+                        ? 'Apasă inima de pe o ofertă ca să o găsești rapid aici.'
+                        : 'Magazinele adaugă oferte pe parcursul zilei. Revino puțin mai târziu.',
                   )
                 : products.isEmpty
-                ? Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
+                ? StatusPanel(
+                    icon: Icons.search_off_rounded,
+                    title: 'Nicio ofertă găsită',
+                    detail: query.isNotEmpty
+                        ? 'Nu avem nimic pentru „$query”. Încearcă alt cuvânt sau altă categorie.'
+                        : 'Nu sunt oferte în această categorie acum.',
+                    action: Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: Space.s,
+                      runSpacing: Space.s,
                       children: [
-                        Icon(
-                          Icons.search_off,
-                          size: 48,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          'Nu am găsit produse',
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        const SizedBox(height: 4),
-                        const Text(
-                          'Încearcă alt cuvânt sau altă categorie.',
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 8),
-                        TextButton(
-                          onPressed: () {
-                            searchController.clear();
-                            setState(() {
-                              query = '';
-                              selectedCategory = null;
-                            });
-                            remember();
-                          },
+                        OutlinedButton(
+                          onPressed: clearFilters,
                           child: const Text('Șterge filtrele'),
                         ),
                         if (canLoadMore)
                           _LoadMore(
                             loading: pager.loading,
-                            label: 'Caută în mai multe produse',
+                            label: 'Caută în mai multe oferte',
                             onPressed: () => loadMore(manual: true),
                           ),
                       ],
@@ -253,7 +252,7 @@ class _CatalogPageState extends State<CatalogPage> {
                   )
                 : null;
 
-            final empty = emptyState();
+            final theme = Theme.of(context);
             return RefreshIndicator(
               onRefresh: reload,
               child: NotificationListener<ScrollNotification>(
@@ -270,49 +269,70 @@ class _CatalogPageState extends State<CatalogPage> {
                 child: PageStorage(
                   bucket: memory?.bucket ?? fallbackBucket,
                   child: CustomScrollView(
-                    key: PageStorageKey(
-                      '$memoryKey.${columns == 1 ? 'list' : 'grid'}',
-                    ),
+                    key: PageStorageKey('$memoryKey.$columns'),
                     // Header, search and filters scroll away with the
                     // offers so the products get the screen.
                     slivers: [
-                      if (showHero(context))
-                        const SliverToBoxAdapter(child: _CatalogHero()),
-                      SliverToBoxAdapter(
-                        child: Center(
-                          child: ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 1180),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                16,
-                                20,
-                                16,
-                                12,
-                              ),
-                              child: TextField(
-                                controller: searchController,
-                                textInputAction: TextInputAction.search,
-                                decoration: InputDecoration(
-                                  hintText: 'Caută un produs',
-                                  prefixIcon: const Icon(Icons.search),
-                                  suffixIcon: query.isEmpty
-                                      ? null
-                                      : IconButton(
-                                          tooltip: 'Șterge căutarea',
-                                          onPressed: () {
-                                            searchController.clear();
-                                            setState(() => query = '');
-                                            remember();
-                                          },
-                                          icon: const Icon(Icons.close),
+                      SliverPadding(
+                        padding: EdgeInsets.fromLTRB(side, gutter, side, 0),
+                        sliver: SliverToBoxAdapter(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              if (!widget.savedOnly && !widget.search)
+                                PageHeader(
+                                  'Mâncare bună, la preț redus',
+                                  subtitle: 'Salvăm de la risipă produsele rămase la magazinele din oraș.',
+                                  trailing: width >= 600
+                                      ? OutlinedButton.icon(
+                                          onPressed: () => Navigator.pushNamed(
+                                            context,
+                                            '/map',
+                                          ),
+                                          icon: const Icon(
+                                            Icons.map_outlined,
+                                            size: 18,
+                                          ),
+                                          label: const Text('Vezi pe hartă'),
+                                        )
+                                      : IconButton.outlined(
+                                          tooltip: 'Vezi pe hartă',
+                                          onPressed: () => Navigator.pushNamed(
+                                            context,
+                                            '/map',
+                                          ),
+                                          icon: const Icon(Icons.map_outlined),
                                         ),
                                 ),
-                                onChanged: (v) {
-                                  setState(() => query = v);
-                                  remember();
-                                },
-                              ),
-                            ),
+                              if (all.isNotEmpty) ...[
+                                TextField(
+                                  controller: searchController,
+                                  textInputAction: TextInputAction.search,
+                                  decoration: InputDecoration(
+                                    hintText: widget.savedOnly
+                                        ? 'Caută în favorite'
+                                        : 'Caută o ofertă sau un produs',
+                                    prefixIcon: const Icon(Icons.search),
+                                    suffixIcon: query.isEmpty
+                                        ? null
+                                        : IconButton(
+                                            tooltip: 'Șterge căutarea',
+                                            onPressed: () {
+                                              searchController.clear();
+                                              setState(() => query = '');
+                                              remember();
+                                            },
+                                            icon: const Icon(Icons.close),
+                                          ),
+                                  ),
+                                  onChanged: (v) {
+                                    setState(() => query = v);
+                                    remember();
+                                  },
+                                ),
+                                const SizedBox(height: Space.m),
+                              ],
+                            ],
                           ),
                         ),
                       ),
@@ -320,7 +340,7 @@ class _CatalogPageState extends State<CatalogPage> {
                         SliverToBoxAdapter(
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
-                            padding: EdgeInsets.fromLTRB(side, 0, side, 12),
+                            padding: EdgeInsets.symmetric(horizontal: side),
                             child: Row(
                               children: [
                                 for (final category in <String?>[
@@ -328,7 +348,9 @@ class _CatalogPageState extends State<CatalogPage> {
                                   ...categories,
                                 ])
                                   Padding(
-                                    padding: const EdgeInsets.only(right: 8),
+                                    padding: const EdgeInsets.only(
+                                      right: Space.s,
+                                    ),
                                     child: ChoiceChip(
                                       label: Text(category ?? 'Toate'),
                                       selected: selectedCategory == category,
@@ -353,46 +375,59 @@ class _CatalogPageState extends State<CatalogPage> {
                         SliverPadding(
                           padding: EdgeInsets.fromLTRB(
                             side,
-                            4,
+                            Space.xl,
                             side,
-                            canLoadMore ? 8 : 32,
+                            Space.l,
                           ),
-                          sliver: columns == 1
-                              ? SliverList.separated(
-                                  itemCount: products.length,
-                                  separatorBuilder: (_, _) =>
-                                      const SizedBox(height: 16),
-                                  itemBuilder: (_, index) => card(index),
-                                )
-                              : SliverGrid.builder(
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: columns,
-                                        crossAxisSpacing: 18,
-                                        mainAxisSpacing: 18,
-                                        mainAxisExtent:
-                                            ((constraints.maxWidth.clamp(
-                                                          0,
-                                                          1180,
-                                                        ) -
-                                                        32 -
-                                                        18 * (columns - 1)) /
-                                                    columns) /
-                                                1.6 +
-                                            190 * scale,
-                                      ),
-                                  itemCount: products.length,
-                                  itemBuilder: (_, index) => card(index),
-                                ),
+                          sliver: SliverToBoxAdapter(
+                            child: Text(
+                              products.length == 1
+                                  ? '1 ofertă'
+                                  : '${products.length} oferte',
+                              style: theme.textTheme.titleSmall?.copyWith(
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SliverPadding(
+                          padding: EdgeInsets.fromLTRB(
+                            side,
+                            0,
+                            side,
+                            canLoadMore ? Space.l : Space.x3,
+                          ),
+                          // Rows of naturally sized cards: no fixed cell
+                          // height, so no gaps or clipping at any text size.
+                          sliver: SliverList.separated(
+                            itemCount: (products.length / columns).ceil(),
+                            separatorBuilder: (_, _) =>
+                                const SizedBox(height: Space.xxl),
+                            itemBuilder: (_, row) => Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                for (var c = 0; c < columns; c++) ...[
+                                  if (c > 0) const SizedBox(width: Space.xl),
+                                  Expanded(
+                                    child: row * columns + c < products.length
+                                        ? card(row * columns + c)
+                                        : const SizedBox(),
+                                  ),
+                                ],
+                              ],
+                            ),
+                          ),
                         ),
                         if (canLoadMore)
                           SliverToBoxAdapter(
                             child: Padding(
-                              padding: const EdgeInsets.only(bottom: 32),
-                              child: _LoadMore(
-                                loading: pager.loading,
-                                label: 'Încarcă mai multe oferte',
-                                onPressed: () => loadMore(manual: true),
+                              padding: const EdgeInsets.only(bottom: Space.x3),
+                              child: Center(
+                                child: _LoadMore(
+                                  loading: pager.loading,
+                                  label: 'Încarcă mai multe oferte',
+                                  onPressed: () => loadMore(manual: true),
+                                ),
                               ),
                             ),
                           ),
@@ -407,107 +442,87 @@ class _CatalogPageState extends State<CatalogPage> {
       },
     ),
   );
-
-  bool showHero(BuildContext context) =>
-      !widget.savedOnly &&
-      !widget.search &&
-      MediaQuery.textScalerOf(context).scale(1) <= 1.3;
 }
 
-/// First-load placeholder in the shape of the real grid, so nothing jumps.
+/// First-load placeholder shaped like the real header and grid.
 class _CatalogSkeleton extends StatelessWidget {
-  const _CatalogSkeleton({required this.hero});
-  final bool hero;
+  const _CatalogSkeleton({required this.header});
+  final bool header;
   @override
-  Widget build(BuildContext context) {
-    final width = MediaQuery.sizeOf(context).width;
-    final columns = width >= 1180
-        ? 3
-        : width >= 700
-        ? 2
-        : 1;
-    const block = Color(0xffeceee6);
-    Widget bar(double w, double h) => Container(
-      width: w,
-      height: h,
-      decoration: BoxDecoration(
-        color: block,
-        borderRadius: BorderRadius.circular(6),
-      ),
-    );
-    return Semantics(
-      label: 'Se încarcă ofertele',
-      child: ExcludeSemantics(
-        child: ListView(
-          physics: const NeverScrollableScrollPhysics(),
-          children: [
-            if (hero) const _CatalogHero(),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 1180),
-                  child: Container(
-                    height: 52,
-                    decoration: BoxDecoration(
-                      color: block,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-              ),
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) {
+      final width = constraints.maxWidth;
+      final gutter = width >= 600 ? Space.xxl : Space.l;
+      final content = (width - gutter * 2).clamp(0.0, 1200.0);
+      final columns = content >= 1080
+          ? 4
+          : content >= 760
+          ? 3
+          : content >= 480
+          ? 2
+          : 1;
+      return Semantics(
+        label: 'Se încarcă ofertele',
+        child: ExcludeSemantics(
+          child: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.symmetric(
+              horizontal: (width - content) / 2,
+              vertical: gutter,
             ),
-            Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 1180),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      for (var c = 0; c < columns; c++) ...[
-                        if (c > 0) const SizedBox(width: 18),
-                        Expanded(
-                          child: Card(
-                            margin: EdgeInsets.zero,
-                            clipBehavior: Clip.antiAlias,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const AspectRatio(
-                                  aspectRatio: 1.6,
-                                  child: ColoredBox(color: block),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(16),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      bar(90, 12),
-                                      const SizedBox(height: 10),
-                                      bar(180, 16),
-                                      const SizedBox(height: 10),
-                                      bar(120, 12),
-                                      const SizedBox(height: 22),
-                                      bar(80, 20),
-                                    ],
-                                  ),
-                                ),
-                              ],
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (header) ...[
+                  const SkeletonBox(width: 320, height: 28),
+                  const SizedBox(height: Space.s),
+                  const SkeletonBox(width: 260),
+                  const SizedBox(height: Space.xl),
+                ],
+                const SkeletonBox(height: 50, radius: Radii.m),
+                const SizedBox(height: Space.m),
+                const Row(
+                  children: [
+                    SkeletonBox(width: 64, height: 32, radius: Radii.pill),
+                    SizedBox(width: Space.s),
+                    SkeletonBox(width: 84, height: 32, radius: Radii.pill),
+                    SizedBox(width: Space.s),
+                    SkeletonBox(width: 72, height: 32, radius: Radii.pill),
+                  ],
+                ),
+                const SizedBox(height: Space.xl + Space.xl),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    for (var c = 0; c < columns; c++) ...[
+                      if (c > 0) const SizedBox(width: Space.xl),
+                      const Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AspectRatio(
+                              aspectRatio: 4 / 3,
+                              child: SkeletonBox(radius: Radii.l),
                             ),
-                          ),
+                            SizedBox(height: Space.m),
+                            SkeletonBox(width: 170, height: 16),
+                            SizedBox(height: Space.s),
+                            SkeletonBox(width: 110, height: 12),
+                            SizedBox(height: Space.m),
+                            SkeletonBox(width: 80, height: 18),
+                          ],
                         ),
-                      ],
+                      ),
                     ],
-                  ),
+                  ],
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
-    );
-  }
+      );
+    },
+  );
 }
 
 class _LoadMore extends StatelessWidget {
@@ -520,85 +535,14 @@ class _LoadMore extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
   @override
-  Widget build(BuildContext context) => Center(
-    child: Padding(
-      padding: const EdgeInsets.all(12),
-      child: loading
-          ? const SizedBox.square(
-              dimension: 32,
-              child: CircularProgressIndicator(),
-            )
-          : OutlinedButton(
-              key: const ValueKey('load-more'),
-              onPressed: onPressed,
-              child: Text(label),
-            ),
-    ),
-  );
-}
-
-class _CatalogHero extends StatelessWidget {
-  const _CatalogHero();
-  @override
-  Widget build(BuildContext context) => Container(
-    width: double.infinity,
-    constraints: const BoxConstraints(minHeight: 180),
-    decoration: const BoxDecoration(
-      image: DecorationImage(
-        image: AssetImage('assets/demo/rescue-bag.webp'),
-        fit: BoxFit.cover,
-        alignment: Alignment.centerRight,
-      ),
-    ),
-    child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
-      // On phones the photo sits behind the copy, so the wash covers more.
-      decoration: BoxDecoration(
-        gradient: MediaQuery.sizeOf(context).width < 600
-            ? const LinearGradient(
-                colors: [
-                  Color(0xF5FAF9F6),
-                  Color(0xE6FAF9F6),
-                  Color(0x80FAF9F6),
-                ],
-                stops: [0, .62, 1],
-              )
-            : const LinearGradient(
-                colors: [
-                  Color(0xF2FAF9F6),
-                  Color(0xBFFAF9F6),
-                  Color(0x00FAF9F6),
-                ],
-                stops: [0, .48, .82],
-              ),
-      ),
-      child: Align(
-        heightFactor: 1,
-        alignment: Alignment.centerLeft,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 430),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Salvează mâncarea.\nBucură-te de preț.',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                'Descoperă produse bune, disponibile azi, înainte să fie risipite.',
-              ),
-              const SizedBox(height: 14),
-              FilledButton.icon(
-                onPressed: () => Navigator.pushNamed(context, '/map'),
-                icon: const Icon(Icons.map_outlined, size: 18),
-                label: const Text('Explorează harta'),
-              ),
-            ],
-          ),
-        ),
-      ),
-    ),
-  );
+  Widget build(BuildContext context) => loading
+      ? const SizedBox.square(
+          dimension: 28,
+          child: CircularProgressIndicator(strokeWidth: 2.5),
+        )
+      : OutlinedButton(
+          key: const ValueKey('load-more'),
+          onPressed: onPressed,
+          child: Text(label),
+        );
 }

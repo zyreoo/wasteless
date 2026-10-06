@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../auth/auth_controller.dart';
 import '../services/commerce_service.dart';
 import '../models/product.dart';
+import '../theme/app_theme.dart';
 import '../widgets/live_page.dart';
+import '../widgets/product_tile.dart';
 import '../discovery/components.dart';
 import '../pages/live_orders_page.dart';
 import 'order_actions.dart';
@@ -97,7 +99,7 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
         return RefreshIndicator(
           onRefresh: () => run(() async {}),
           child: ListView(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(Space.xl),
             children: [
               if (merchant == null)
                 PageIntro(
@@ -106,25 +108,35 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
                   'Date sincronizate între conturi. Ofertele sunt fictive, iar comenzile nu implică plăți sau ridicări reale.',
                 ),
               if (merchant != null) ...[
-                Text(
-                  merchant['name'] as String,
-                  style: Theme.of(context).textTheme.headlineSmall,
+                Wrap(
+                  spacing: Space.m,
+                  runSpacing: Space.s,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text(
+                      merchant['name'] as String,
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    const Pill('Mod demo', tone: PillTone.warning),
+                  ],
                 ),
-                const SizedBox(height: 8),
-                const Text(
-                  'Comenzile și ofertele tale, într-un singur loc. · MOD DEMO',
+                const SizedBox(height: Space.xs),
+                Text(
+                  '${merchant['address']} · Ridicare ${merchant['pickup_window']}',
+                  style: Theme.of(context).textTheme.bodyMedium
+                      ?.copyWith(color: AppColors.textSecondary),
                 ),
               ],
-              const SizedBox(height: 16),
+              const SizedBox(height: Space.l),
               Wrap(
-                spacing: 10,
-                runSpacing: 8,
+                spacing: Space.s,
+                runSpacing: Space.s,
                 children: [
                   OutlinedButton.icon(
                     onPressed: busy
                         ? null
                         : () => edit(merchant, profile: true),
-                    icon: const Icon(Icons.storefront),
+                    icon: const Icon(Icons.storefront_outlined, size: 18),
                     label: Text(
                       merchant == null
                           ? 'Creează profil comerciant'
@@ -133,7 +145,7 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
                   ),
                   TextButton.icon(
                     onPressed: busy ? null : () => run(() async {}),
-                    icon: const Icon(Icons.refresh),
+                    icon: const Icon(Icons.refresh, size: 18),
                     label: const Text('Actualizează'),
                   ),
                   TextButton(
@@ -143,23 +155,25 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
                 ],
               ),
               if (merchant != null) ...[
-                const SizedBox(height: 16),
-                Text(
-                  '${merchant['address']}\nRidicare: ${merchant['pickup_window']}',
-                ),
-                const SizedBox(height: 16),
-                Wrap(
-                  spacing: 12,
-                  runSpacing: 8,
-                  children: [
-                    Chip(label: Text('$active comenzi active')),
-                    Chip(label: Text('${products.length} oferte')),
-                    Chip(
-                      label: Text('${money(revenue)} · total simulat ridicat'),
+                const SizedBox(height: Space.xl),
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: Space.l),
+                    child: Row(
+                      children: [
+                        _Stat(value: '$active', label: 'Comenzi active'),
+                        const _StatDivider(),
+                        _Stat(value: '${products.length}', label: 'Oferte'),
+                        const _StatDivider(),
+                        _Stat(
+                          value: money(revenue),
+                          label: 'Ridicat (simulat)',
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: Space.xl),
                 SegmentedButton<int>(
                   segments: const [
                     ButtonSegment(
@@ -201,49 +215,111 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
                     const Text(
                       'Publică prima ofertă sau adaugă produsele fictive pentru test.',
                     ),
-                  for (final p in products)
+                  if (products.isNotEmpty)
                     Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              p['name'],
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                            Text(
-                              '${money(p['price'])} · ${p['stock']} disponibile · ${p['active'] == true ? 'Publicată' : 'Ascunsă'}',
-                            ),
-                            Wrap(
-                              spacing: 8,
-                              children: [
-                                TextButton(
-                                  onPressed: busy
-                                      ? null
-                                      : () =>
-                                            edit(Map<String, dynamic>.from(p)),
-                                  child: const Text('Editează / stoc'),
-                                ),
-                                TextButton(
-                                  onPressed: busy
-                                      ? null
-                                      : () => run(
-                                          () => widget.service.availability(
-                                            p['id'] as int,
-                                            p['active'] != true,
-                                          ),
+                      clipBehavior: Clip.antiAlias,
+                      child: Column(
+                        children: [
+                          for (final (i, p) in products.indexed) ...[
+                            if (i > 0) const Divider(),
+                            Padding(
+                              padding: const EdgeInsets.all(Space.l),
+                              child: Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                      Radii.s,
+                                    ),
+                                    child: SizedBox(
+                                      width: 56,
+                                      child: ProductImage(
+                                        Product.fromJson(
+                                          Map<String, dynamic>.from(p),
                                         ),
-                                  child: Text(
-                                    p['active'] == true
-                                        ? 'Ascunde oferta'
-                                        : 'Publică oferta',
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(width: Space.l),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          p['name'],
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall,
+                                        ),
+                                        const SizedBox(height: 2),
+                                        Wrap(
+                                          spacing: Space.s,
+                                          runSpacing: Space.xs,
+                                          crossAxisAlignment:
+                                              WrapCrossAlignment.center,
+                                          children: [
+                                            Text(
+                                              '${money(p['price'])} · ${p['stock']} disponibile',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall,
+                                            ),
+                                            Pill(
+                                              p['active'] == true
+                                                  ? 'Publicată'
+                                                  : 'Ascunsă',
+                                              tone: p['active'] == true
+                                                  ? PillTone.success
+                                                  : PillTone.neutral,
+                                            ),
+                                          ],
+                                        ),
+                                        Wrap(
+                                          children: [
+                                            TextButton(
+                                              onPressed: busy
+                                                  ? null
+                                                  : () => edit(
+                                                      Map<String, dynamic>.from(
+                                                        p,
+                                                      ),
+                                                    ),
+                                              child: const Text(
+                                                'Editează / stoc',
+                                              ),
+                                            ),
+                                            TextButton(
+                                              onPressed: busy
+                                                  ? null
+                                                  : () => run(
+                                                      () => widget.service
+                                                          .availability(
+                                                            p['id'] as int,
+                                                            p['active'] != true,
+                                                          ),
+                                                    ),
+                                              style: TextButton.styleFrom(
+                                                foregroundColor:
+                                                    AppColors.textSecondary,
+                                              ),
+                                              child: Text(
+                                                p['active'] == true
+                                                    ? 'Ascunde oferta'
+                                                    : 'Publică oferta',
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
-                        ),
+                        ],
                       ),
                     ),
                 ] else ...[
@@ -251,35 +327,65 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
                     const Text(
                       'Comenzile clienților apar aici. Poți testa cu alt cont sau din „Vezi ca un client”.',
                     ),
-                  for (final o in orders)
+                  if (orders.isNotEmpty)
                     Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Comanda #${o['id']} · ${orderStatus(o['status'])}',
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                            Text(
-                              '${orderDate(o['created_at'])} · ${money(o['total_price'])}',
-                            ),
-                            for (final line in o['order_items'])
-                              Text(
-                                '${line['quantity']} × ${line['product_name']}',
+                      clipBehavior: Clip.antiAlias,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          for (final (i, o) in orders.indexed) ...[
+                            if (i > 0) const Divider(),
+                            Padding(
+                              padding: const EdgeInsets.all(Space.l),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Wrap(
+                                    spacing: Space.s,
+                                    runSpacing: Space.xs,
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Comanda #${o['id']}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium,
+                                      ),
+                                      StatusPill(o['status'] as String),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    '${orderDate(o['created_at'])} · ${money(o['total_price'])}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall,
+                                  ),
+                                  const SizedBox(height: Space.s),
+                                  for (final line in o['order_items'])
+                                    Text(
+                                      '${line['quantity']} × ${line['product_name']}',
+                                    ),
+                                  if (o['cancellation_reason'] != null)
+                                    Text(
+                                      'Motiv: ${o['cancellation_reason']}',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall,
+                                    ),
+                                  const SizedBox(height: Space.m),
+                                  OrderActions(
+                                    order: Map<String, dynamic>.from(o),
+                                    service: widget.service,
+                                    merchant: true,
+                                    reload: reload,
+                                  ),
+                                ],
                               ),
-                            if (o['cancellation_reason'] != null)
-                              Text('Motiv: ${o['cancellation_reason']}'),
-                            const SizedBox(height: 12),
-                            OrderActions(
-                              order: Map<String, dynamic>.from(o),
-                              service: widget.service,
-                              merchant: true,
-                              reload: reload,
                             ),
                           ],
-                        ),
+                        ],
                       ),
                     ),
                 ],
@@ -494,4 +600,41 @@ class _MerchantEditorState extends State<MerchantEditor> {
       ),
     ),
   );
+}
+
+class _Stat extends StatelessWidget {
+  const _Stat({required this.value, required this.label});
+  final String value, label;
+  @override
+  Widget build(BuildContext context) => Expanded(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: Space.l),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              value,
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            label,
+            maxLines: 2,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+class _StatDivider extends StatelessWidget {
+  const _StatDivider();
+  @override
+  Widget build(BuildContext context) =>
+      const SizedBox(height: 40, child: VerticalDivider(width: 1));
 }
