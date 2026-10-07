@@ -12,7 +12,9 @@ class ProductImage extends StatelessWidget {
   final double aspectRatio;
   @override
   Widget build(BuildContext context) {
-    final uri = Uri.tryParse(product.image ?? '');
+    // A shop photo represents its surprise bags; product images are a fallback.
+    final shopPhoto = product.merchant?['image_url'] as String?;
+    final uri = Uri.tryParse(shopPhoto ?? product.image ?? '');
     final name = product.name.toLowerCase();
     final demoImage =
         const [
@@ -199,7 +201,7 @@ class _ProductTileState extends State<ProductTile> {
                               ),
                           ],
                         ),
-                        if (product.merchant?['pickup_window'] != null) ...[
+                        if (product.pickupLabel != null) ...[
                           const SizedBox(height: Space.xs),
                           Row(
                             children: [
@@ -211,7 +213,7 @@ class _ProductTileState extends State<ProductTile> {
                               const SizedBox(width: Space.xs + 2),
                               Expanded(
                                 child: Text(
-                                  'Ridicare ${product.merchant!['pickup_window']}',
+                                  'Ridicare ${product.pickupLabel}',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: theme.textTheme.bodySmall,

@@ -33,6 +33,8 @@ FLUTTER_CONTRACT = {
     ('POST', '/api/merchant/products'),
     ('PUT', '/api/merchant/products/{product_id}'),
     ('PATCH', '/api/merchant/products/{product_id}'),
+    ('POST', '/api/merchant/photo'),
+    ('DELETE', '/api/merchant/photo'),
 }
 
 

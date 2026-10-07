@@ -38,6 +38,8 @@ class ApiService {
     String path, {
     Object? body,
     String? idempotencyKey,
+    List<int>? bytes,
+    String? contentType,
   }) async {
     final token = await accessToken();
     if (token == null) {
@@ -54,12 +56,16 @@ class ApiService {
       );
       request.headers.addAll({
         'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json',
+        'Content-Type': contentType ?? 'application/json',
       });
       if (idempotencyKey != null) {
         request.headers['Idempotency-Key'] = idempotencyKey;
       }
-      if (body != null) request.body = jsonEncode(body);
+      if (bytes != null) {
+        request.bodyBytes = bytes;
+      } else if (body != null) {
+        request.body = jsonEncode(body);
+      }
       response = await (() async => http.Response.fromStream(
         await _client.send(request),
       ))().timeout(timeout);

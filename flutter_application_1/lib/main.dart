@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'discovery/discovery_page.dart';
 import 'discovery/information_pages.dart';
+import 'discovery/legal_pages.dart';
 import 'discovery/merchant.dart';
 import 'discovery/preferences.dart';
 import 'auth/auth_controller.dart';
@@ -165,6 +166,8 @@ class WastelessApp extends StatelessWidget {
                 : const DiscoveryPage(),
           '/help' => const HelpPage(),
           '/about' => const AboutPage(),
+          '/terms' => const TermsPage(),
+          '/privacy' => const PrivacyPage(),
           '/business' =>
             auth.signedIn
                 ? MerchantDashboard(service: CommerceService(api))
@@ -355,6 +358,16 @@ class _AccountPageState extends State<AccountPage> {
                           ),
                           (Icons.help_outline, 'Ajutor', '/help'),
                           (Icons.eco_outlined, 'Despre Wasteless', '/about'),
+                          (
+                            Icons.description_outlined,
+                            'Termeni de utilizare',
+                            '/terms',
+                          ),
+                          (
+                            Icons.privacy_tip_outlined,
+                            'Confidențialitate',
+                            '/privacy',
+                          ),
                         ].indexed) ...[
                           if (i > 0) const Divider(indent: 56),
                           ListTile(

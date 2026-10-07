@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_application_1/auth/auth_controller.dart';
+import 'package:flutter_application_1/discovery/legal_pages.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:flutter_application_1/pages/design_page.dart';
 import 'package:flutter_application_1/services/api_service.dart';
@@ -144,6 +145,15 @@ void main() {
       find.textContaining('Nu se pot comanda', skipOffstage: false),
       findsWidgets,
     );
+    await stop(tester, app);
+  });
+
+  testWidgets('Terms and privacy open for signed-out visitors', (tester) async {
+    final app = await start(tester, signedIn: false);
+    await open(tester, '/terms');
+    expect(find.byType(TermsPage), findsOneWidget);
+    await open(tester, '/privacy');
+    expect(find.byType(PrivacyPage), findsOneWidget);
     await stop(tester, app);
   });
 }

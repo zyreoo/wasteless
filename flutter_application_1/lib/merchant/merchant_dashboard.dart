@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../auth/auth_controller.dart';
@@ -10,9 +11,32 @@ import '../discovery/components.dart';
 import '../pages/live_orders_page.dart';
 import 'order_actions.dart';
 
+/// A picked photo: its bytes and MIME type, or null when the picker was closed.
+typedef PickedPhoto = ({List<int> bytes, String contentType});
+
+/// Opens the platform file picker for a JPEG, PNG or WebP image.
+Future<PickedPhoto?> pickShopPhoto() async {
+  final file = await FilePicker.pickFile(
+    type: FileType.custom,
+    allowedExtensions: const ['jpg', 'jpeg', 'png', 'webp'],
+  );
+  if (file == null) return null;
+  final type = switch (file.extension?.toLowerCase()) {
+    'png' => 'image/png',
+    'webp' => 'image/webp',
+    _ => 'image/jpeg',
+  };
+  return (bytes: await file.readAsBytes(), contentType: type);
+}
+
 class MerchantDashboard extends StatefulWidget {
-  const MerchantDashboard({super.key, required this.service});
+  const MerchantDashboard({
+    super.key,
+    required this.service,
+    this.pickPhoto = pickShopPhoto,
+  });
   final CommerceService service;
+  final Future<PickedPhoto?> Function() pickPhoto;
   @override
   State<MerchantDashboard> createState() => _MerchantDashboardState();
 }
@@ -42,6 +66,20 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
     } finally {
       if (mounted) setState(() => busy = false);
     }
+  }
+
+  Future<void> changePhoto() async {
+    final photo = await widget.pickPhoto();
+    if (photo == null || !mounted) return;
+    if (photo.bytes.length > 2 * 1024 * 1024) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Imaginea poate avea cel mult 2 MB.')),
+      );
+      return;
+    }
+    await run(
+      () => widget.service.uploadShopPhoto(photo.bytes, photo.contentType),
+    );
   }
 
   Future<void> edit(Map<String, dynamic>? data, {bool profile = false}) async {
@@ -108,24 +146,71 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
                   'Date sincronizate între conturi. Ofertele sunt fictive, iar comenzile nu implică plăți sau ridicări reale.',
                 ),
               if (merchant != null) ...[
-                Wrap(
-                  spacing: Space.m,
-                  runSpacing: Space.s,
-                  crossAxisAlignment: WrapCrossAlignment.center,
+                Row(
                   children: [
-                    Text(
-                      merchant['name'] as String,
-                      style: Theme.of(context).textTheme.headlineMedium,
+                    ShopAvatar(
+                      imageUrl: merchant['image_url'] as String?,
+                      size: 56,
                     ),
-                    const Pill('Mod demo', tone: PillTone.warning),
+                    const SizedBox(width: Space.l),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Wrap(
+                            spacing: Space.m,
+                            runSpacing: Space.s,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              Text(
+                                merchant['name'] as String,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium,
+                              ),
+                              if (merchant['status'] == 'pending')
+                                const Pill(
+                                  'În verificare',
+                                  tone: PillTone.warning,
+                                )
+                              else if (merchant['status'] == 'rejected')
+                                const Pill('Neaprobat', tone: PillTone.error),
+                              const Pill('Mod demo', tone: PillTone.neutral),
+                            ],
+                          ),
+                          const SizedBox(height: Space.xs),
+                          Text(
+                            '${merchant['address']} · Ridicare ${merchant['pickup_window']}',
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(color: AppColors.textSecondary),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-                const SizedBox(height: Space.xs),
-                Text(
-                  '${merchant['address']} · Ridicare ${merchant['pickup_window']}',
-                  style: Theme.of(context).textTheme.bodyMedium
-                      ?.copyWith(color: AppColors.textSecondary),
-                ),
+                if (merchant['status'] == 'pending' ||
+                    merchant['status'] == 'rejected') ...[
+                  const SizedBox(height: Space.l),
+                  DecoratedBox(
+                    key: const ValueKey('approval-notice'),
+                    decoration: BoxDecoration(
+                      color: merchant['status'] == 'pending'
+                          ? AppColors.warningSoft
+                          : AppColors.errorSoft,
+                      borderRadius: BorderRadius.circular(Radii.m),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(Space.m),
+                      child: InfoRow(
+                        icon: Icons.verified_outlined,
+                        text: merchant['status'] == 'pending'
+                            ? 'Magazinul tău este în verificare. Poți pregăti ofertele de acum; clienții le văd după aprobare.'
+                            : 'Magazinul nu a fost aprobat. Ofertele nu sunt vizibile clienților.',
+                      ),
+                    ),
+                  ),
+                ],
               ],
               const SizedBox(height: Space.l),
               Wrap(
@@ -143,6 +228,27 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
                           : 'Editează profilul',
                     ),
                   ),
+                  if (merchant != null)
+                    OutlinedButton.icon(
+                      key: const ValueKey('shop-photo'),
+                      onPressed: busy ? null : changePhoto,
+                      icon: const Icon(Icons.photo_camera_outlined, size: 18),
+                      label: Text(
+                        merchant['image_url'] == null
+                            ? 'Adaugă fotografia magazinului'
+                            : 'Schimbă fotografia',
+                      ),
+                    ),
+                  if (merchant?['image_url'] != null)
+                    TextButton(
+                      onPressed: busy
+                          ? null
+                          : () => run(widget.service.removeShopPhoto),
+                      style: TextButton.styleFrom(
+                        foregroundColor: AppColors.textSecondary,
+                      ),
+                      child: const Text('Elimină fotografia'),
+                    ),
                   TextButton.icon(
                     onPressed: busy ? null : () => run(() async {}),
                     icon: const Icon(Icons.refresh, size: 18),
@@ -417,6 +523,11 @@ class _MerchantEditorState extends State<MerchantEditor> {
   final fields = <String, TextEditingController>{};
   bool busy = false;
   String image = 'assets/demo/rescue-bag.webp';
+
+  /// Pickup day relative to today: null = no date (the shop's usual window).
+  int? pickupDay;
+  final pickupFrom = TextEditingController(text: '19:00');
+  final pickupTo = TextEditingController(text: '20:00');
   @override
   void initState() {
     super.initState();
@@ -443,6 +554,34 @@ class _MerchantEditorState extends State<MerchantEditor> {
       );
     }
     image = widget.data?['image_path'] as String? ?? image;
+    final start = parseTime(widget.data?['pickup_start']);
+    final end = parseTime(widget.data?['pickup_end']);
+    if (start != null && end != null) {
+      final day = DateUtils.dateOnly(start)
+          .difference(DateUtils.dateOnly(DateTime.now()))
+          .inDays;
+      if (day >= 0 && day <= 2) {
+        pickupDay = day;
+        String hhmm(DateTime t) =>
+            '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
+        pickupFrom.text = hhmm(start);
+        pickupTo.text = hhmm(end);
+      }
+    }
+  }
+
+  static DateTime? _at(int day, String hhmm) {
+    final m = RegExp(r'^([01]?\d|2[0-3])[:.]([0-5]\d)$')
+        .firstMatch(hhmm.trim());
+    if (m == null) return null;
+    final today = DateUtils.dateOnly(DateTime.now());
+    return DateTime(
+      today.year,
+      today.month,
+      today.day + day,
+      int.parse(m.group(1)!),
+      int.parse(m.group(2)!),
+    );
   }
 
   @override
@@ -450,6 +589,8 @@ class _MerchantEditorState extends State<MerchantEditor> {
     for (final c in fields.values) {
       c.dispose();
     }
+    pickupFrom.dispose();
+    pickupTo.dispose();
     super.dispose();
   }
 
@@ -471,6 +612,13 @@ class _MerchantEditorState extends State<MerchantEditor> {
           data[key] = (data[key] as String).replaceAll(',', '.');
         }
         data['image_path'] = image;
+        final day = pickupDay;
+        if (day != null) {
+          final start = _at(day, pickupFrom.text)!;
+          final end = _at(day, pickupTo.text)!;
+          data['pickup_start'] = start.toUtc().toIso8601String();
+          data['pickup_end'] = end.toUtc().toIso8601String();
+        }
         await widget.service.saveProduct(data, id: widget.data?['id'] as int?);
       }
       if (mounted) Navigator.pop(context, true);
@@ -589,6 +737,70 @@ class _MerchantEditorState extends State<MerchantEditor> {
                   ],
                   onChanged: busy ? null : (v) => setState(() => image = v!),
                 ),
+              if (!widget.profile) ...[
+                const SizedBox(height: Space.l),
+                DropdownButtonFormField<int?>(
+                  key: const ValueKey('pickup-day'),
+                  initialValue: pickupDay,
+                  decoration: const InputDecoration(
+                    labelText: 'Ziua ridicării',
+                  ),
+                  items: const [
+                    DropdownMenuItem(
+                      value: null,
+                      child: Text('Intervalul obișnuit al magazinului'),
+                    ),
+                    DropdownMenuItem(value: 0, child: Text('Azi')),
+                    DropdownMenuItem(value: 1, child: Text('Mâine')),
+                    DropdownMenuItem(value: 2, child: Text('Poimâine')),
+                  ],
+                  onChanged: busy ? null : (v) => setState(() => pickupDay = v),
+                ),
+                if (pickupDay != null) ...[
+                  const SizedBox(height: Space.l),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          key: const ValueKey('pickup-from'),
+                          controller: pickupFrom,
+                          enabled: !busy,
+                          decoration: const InputDecoration(
+                            labelText: 'De la (HH:MM)',
+                          ),
+                          validator: (v) =>
+                              _at(0, v ?? '') == null ? 'Ex.: 19:00' : null,
+                        ),
+                      ),
+                      const SizedBox(width: Space.m),
+                      Expanded(
+                        child: TextFormField(
+                          key: const ValueKey('pickup-to'),
+                          controller: pickupTo,
+                          enabled: !busy,
+                          decoration: const InputDecoration(
+                            labelText: 'Până la (HH:MM)',
+                          ),
+                          validator: (v) {
+                            final day = pickupDay ?? 0;
+                            final from = _at(day, pickupFrom.text);
+                            final to = _at(day, v ?? '');
+                            if (to == null) return 'Ex.: 20:00';
+                            if (from != null && !to.isAfter(from)) {
+                              return 'După ora de început';
+                            }
+                            if (!to.isAfter(DateTime.now())) {
+                              return 'Intervalul s-a încheiat';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ],
               const SizedBox(height: 24),
               FilledButton(
                 onPressed: busy ? null : save,

@@ -673,7 +673,23 @@ class _DesignPageState extends State<DesignPage> {
                 onChanged: submitting
                     ? null
                     : (v) => setState(() => accepted = v ?? false),
-                title: const Text('Sunt de acord cu termenii de utilizare.'),
+                title: const Text(
+                  'Sunt de acord cu termenii de utilizare și am citit politica de confidențialitate.',
+                ),
+              ),
+            if (register)
+              Wrap(
+                spacing: Space.s,
+                children: [
+                  TextButton(
+                    onPressed: () => go('/terms'),
+                    child: const Text('Termeni de utilizare'),
+                  ),
+                  TextButton(
+                    onPressed: () => go('/privacy'),
+                    child: const Text('Confidențialitate'),
+                  ),
+                ],
               ),
             FilledButton(
               onPressed: submitting ? null : () => authenticate(register),

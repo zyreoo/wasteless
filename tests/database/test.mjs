@@ -123,5 +123,54 @@ check((await asUser(C,'select * from "order" where id=$1',[demoOrder])).length,0
 await denied(C,"select wasteless_order_transition($1,'cancelled','','Test')",[cancelled]);
 await denied(A,'update merchants set owner_id=$1 where id=$2',[B,mid]);
 
-console.log(`${checks} database checks passed: real SQL migration, RLS, ownership, stock, price snapshots, rollback and idempotency.`);
+
+// Marketplace foundations: approval, shop photos, dated pickup windows.
+await db.exec(readFileSync(new URL('../../supabase/migrations/20261007120000_marketplace_foundations.sql',import.meta.url),'utf8'));
+check((await db.query('select status from merchants where id=$1',[mid])).rows[0].status,'approved');
+check((await asUser(B,'select id from merchants where id=$1',[mid])).length,1);
+const D='77777777-7777-4777-8777-777777777777', E='88888888-8888-4888-8888-888888888888';
+await db.query('insert into auth.users values($1),($2)',[D,E]);
+const newShop=(await asUser(D,"select wasteless_merchant('profile',$1) as id",[{...profile,name:'Cuptorul Urban'}]))[0].id;
+check((await db.query('select status from merchants where id=$1',[newShop])).rows[0].status,'pending');
+const bag={name:'Pachet surpriză de patiserie premium',price:22,original_price:65,stock:3,category:'Patiserie',allergens:'Poate conține: gluten',description:'Valoare estimată 65 lei',image_path:'assets/demo/rescue-bag.webp'};
+const pendingBag=(await asUser(D,"select wasteless_merchant('product',$1) as id",[bag]))[0].id;
+check((await asUser(D,'select id from merchants where id=$1',[newShop])).length,1);
+check((await asUser(D,'select id from product where id=$1',[pendingBag])).length,1);
+check((await asUser(B,'select id from merchants where id=$1',[newShop])).length,0);
+check((await asUser(B,'select id from product where id=$1',[pendingBag])).length,0);
+await denied(B,"select wasteless_cart('add',$1,null,1)",[pendingBag]);
+await denied(B,"select wasteless_favorite($1,true)",[pendingBag]);
+await denied(D,"update merchants set status='approved' where id=$1",[newShop]);
+await db.query("update merchants set status='approved' where id=$1",[newShop]);
+check((await asUser(B,'select id from product where id=$1',[pendingBag])).length,1);
+const photo=(uid)=>`https://abc.supabase.co/storage/v1/object/public/shop-images/${uid}/shop.webp`;
+await asUser(D,"select wasteless_merchant('photo',$1)",[{image_url:photo(D)}]);
+check((await asUser(B,'select image_url from merchants where id=$1',[newShop]))[0].image_url,photo(D));
+await denied(D,"select wasteless_merchant('photo',$1)",[{image_url:photo(E)}]);
+await denied(D,"select wasteless_merchant('photo',$1)",[{image_url:'https://tracker.example/pixel.png'}]);
+await asUser(D,"select wasteless_merchant('photo',$1)",[{image_url:null}]);
+check((await db.query('select image_url from merchants where id=$1',[newShop])).rows[0].image_url,null);
+const at=(h)=>new Date(Date.now()+h*3600e3).toISOString();
+const dated=(await asUser(D,"select wasteless_merchant('product',$1) as id",[{...bag,name:'Pachet de gustări de seară',pickup_start:at(2),pickup_end:at(3)}]))[0].id;
+check((await asUser(B,'select (pickup_end > pickup_start) as ok from product where id=$1',[dated]))[0].ok,true);
+for (const w of [{pickup_start:at(2)},{pickup_start:at(-3),pickup_end:at(-2)},{pickup_start:at(3),pickup_end:at(2)},{pickup_start:at(200),pickup_end:at(201)},{pickup_start:at(1),pickup_end:at(14)}])
+  await denied(D,"select wasteless_merchant('product',$1)",[{...bag,...w}]);
+// One pickup window per order, and the order keeps the window.
+await asUser(B,"select wasteless_cart('clear')");
+await asUser(B,"select wasteless_cart('add',$1,null,1)",[dated]);
+await asUser(B,"select wasteless_cart('add',$1,null,1)",[pendingBag]);
+await denied(B,"select wasteless_checkout('99999999-9999-4999-8999-999999999991')");
+await asUser(B,"select wasteless_cart('clear')");
+await asUser(B,"select wasteless_cart('add',$1,null,2)",[dated]);
+const datedOrder=(await asUser(B,"select wasteless_checkout('99999999-9999-4999-8999-999999999992') as id"))[0].id;
+check((await asUser(B,'select (o.pickup_start = p.pickup_start and o.pickup_end = p.pickup_end) as same from "order" o, product p where o.id=$1 and p.id=$2',[datedOrder,dated]))[0].same,true);
+// Expired bags disappear and cannot be bought, even from an existing cart.
+await asUser(B,"select wasteless_cart('add',$1,null,1)",[dated]);
+await db.query("update product set pickup_start=now()-interval '3 hours', pickup_end=now()-interval '1 hour' where id=$1",[dated]);
+check((await asUser(B,'select id from product where id=$1',[dated])).length,0);
+await denied(B,"select wasteless_checkout('99999999-9999-4999-8999-999999999993')");
+await denied(B,"select wasteless_cart('add',$1,null,1)",[dated]);
+check((await asUser(D,'select id from product where id=$1',[dated])).length,1);
+
+console.log(`${checks} database checks passed: real SQL migration, RLS, ownership, stock, price snapshots, rollback, idempotency, approval, shop photos and pickup windows.`);
 await db.close();

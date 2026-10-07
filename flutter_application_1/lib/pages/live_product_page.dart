@@ -132,10 +132,10 @@ class _LiveProductPageState extends State<LiveProductPage> {
               const SizedBox(height: Space.xl),
               const Divider(),
               const SizedBox(height: Space.m),
-              if (merchant?['pickup_window'] != null)
+              if (p.pickupLabel != null)
                 InfoRow(
                   icon: Icons.schedule_outlined,
-                  text: 'Ridicare: ${merchant!['pickup_window']}',
+                  text: 'Ridicare: ${p.pickupLabel}',
                 ),
               if (merchant?['address'] != null)
                 InfoRow(

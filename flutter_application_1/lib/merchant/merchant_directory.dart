@@ -8,6 +8,8 @@ import '../models/product.dart';
 import '../widgets/live_page.dart';
 import '../widgets/product_tile.dart';
 import '../discovery/components.dart';
+import '../discovery/location.dart';
+import '../discovery/preferences.dart';
 
 class MerchantDirectory extends StatefulWidget {
   const MerchantDirectory({
@@ -148,6 +150,19 @@ class _MerchantDirectoryState extends State<MerchantDirectory> {
                 ),
               )
               .toList();
+          // Nearest shop first, from the user's location or the city centre.
+          final reference =
+              NearbyLocation.instance.here ??
+              cityCenter(AppPreferences.instance.city);
+          double? km(Map<String, dynamic> m) {
+            final point = shopPoint(m);
+            return point == null ? null : distanceKm(reference, point);
+          }
+
+          shops.sort(
+            (a, b) =>
+                (km(a) ?? double.infinity).compareTo(km(b) ?? double.infinity),
+          );
           final wide = bounds.maxWidth >= 900;
           final list = ListView(
             padding: const EdgeInsets.all(20),
@@ -178,9 +193,10 @@ class _MerchantDirectoryState extends State<MerchantDirectory> {
                 Card(
                   child: ListTile(
                     contentPadding: const EdgeInsets.all(16),
+                    leading: ShopAvatar(imageUrl: m['image_url'] as String?),
                     title: Text(m['name'] as String),
                     subtitle: Text(
-                      '${m['address']}\n${data.$2.where((p) => p.merchantId == m['id'] && p.stock > 0).length} oferte în stoc · ${m['pickup_window']}',
+                      '${km(m) == null ? '' : '${distanceLabel(km(m)!)} · '}${m['address']}\n${data.$2.where((p) => p.merchantId == m['id'] && p.stock > 0).length} oferte în stoc · ${m['pickup_window']}',
                     ),
                     isThreeLine: true,
                     trailing: const Icon(Icons.chevron_right),

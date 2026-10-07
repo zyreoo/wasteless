@@ -70,6 +70,10 @@ class _LiveCheckoutPageState extends State<LiveCheckoutPage> {
         final merchant = (items.first['product']?['merchants'] as Map?)
             ?.cast<String, dynamic>();
         final allDemo = items.every((i) => i['product']?['is_demo'] == true);
+        final first = items.first['product'] as Map<String, dynamic>?;
+        final pickup = first == null
+            ? null
+            : Product.fromJson(first).pickupLabel;
         final details = Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -89,10 +93,10 @@ class _LiveCheckoutPageState extends State<LiveCheckoutPage> {
                   icon: Icons.place_outlined,
                   text: '${merchant['address']}',
                 ),
-              if (merchant['pickup_window'] != null)
+              if (pickup != null)
                 InfoRow(
                   icon: Icons.schedule_outlined,
-                  text: 'Interval de ridicare: ${merchant['pickup_window']}',
+                  text: 'Interval de ridicare: $pickup',
                 ),
               const SizedBox(height: Space.xl),
               const Divider(),

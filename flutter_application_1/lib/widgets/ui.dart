@@ -270,3 +270,35 @@ class QuantityStepper extends StatelessWidget {
     ),
   );
 }
+
+/// Round shop photo, or a neutral storefront mark when there is none.
+class ShopAvatar extends StatelessWidget {
+  const ShopAvatar({super.key, this.imageUrl, this.size = 40});
+  final String? imageUrl;
+  final double size;
+  @override
+  Widget build(BuildContext context) {
+    final fallback = Icon(
+      Icons.storefront_outlined,
+      size: size * .5,
+      color: AppColors.textSecondary,
+    );
+    return Container(
+      width: size,
+      height: size,
+      clipBehavior: Clip.antiAlias,
+      decoration: const BoxDecoration(
+        color: AppColors.surfaceMuted,
+        shape: BoxShape.circle,
+      ),
+      child: Uri.tryParse(imageUrl ?? '')?.scheme == 'https'
+          ? Image.network(
+              imageUrl!,
+              fit: BoxFit.cover,
+              excludeFromSemantics: true,
+              errorBuilder: (_, error, stack) => Center(child: fallback),
+            )
+          : Center(child: fallback),
+    );
+  }
+}

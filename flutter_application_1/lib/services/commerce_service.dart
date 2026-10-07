@@ -152,6 +152,20 @@ class CommerceService {
     await api.request('PUT', '/api/merchant/profile', body: data);
   }
 
+  /// Uploads a JPEG, PNG or WebP shop photo (max 2 MB, checked by the API).
+  Future<void> uploadShopPhoto(List<int> bytes, String contentType) async {
+    await api.request(
+      'POST',
+      '/api/merchant/photo',
+      bytes: bytes,
+      contentType: contentType,
+    );
+  }
+
+  Future<void> removeShopPhoto() async {
+    await api.request('DELETE', '/api/merchant/photo');
+  }
+
   Future<void> seedProducts() async {
     await api.request('POST', '/api/merchant/seed');
   }

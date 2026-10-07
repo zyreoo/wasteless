@@ -72,6 +72,12 @@ void main() {
   testWidgets('Logout removes account data and protected navigation stack', (
     tester,
   ) async {
+    // Realistic desktop window: the shop-first catalogue puts filters, the
+    // distance line and a shop header above the first bag.
+    tester.view.physicalSize = const Size(1280, 1000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
     final auth = AuthController(c);
     await auth.login('a@example.invalid', 'password');
     final api = ApiService(

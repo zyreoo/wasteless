@@ -296,11 +296,16 @@ class LiveOrderDetailPage extends StatelessWidget {
                           icon: Icons.place_outlined,
                           text: '${order['pickup_address']}',
                         ),
-                      if (order['pickup_window'] != null)
+                      if ((pickupWindowLabel(
+                                parseTime(order['pickup_start']),
+                                parseTime(order['pickup_end']),
+                              ) ??
+                              order['pickup_window']) !=
+                          null)
                         InfoRow(
                           icon: Icons.schedule_outlined,
                           text:
-                              'Interval de ridicare: ${order['pickup_window']}',
+                              'Interval de ridicare: ${pickupWindowLabel(parseTime(order['pickup_start']), parseTime(order['pickup_end'])) ?? order['pickup_window']}',
                         ),
                     ],
                     const SizedBox(height: Space.xl),

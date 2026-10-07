@@ -6,6 +6,8 @@
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Wasteless folosește locația doar pe dispozitiv, pentru a-ți arăta magazinele din apropiere.</string>
 	<key>CFBundleDisplayName</key>
 	<string>Wasteless</string>
 	<key>CFBundleExecutable</key>

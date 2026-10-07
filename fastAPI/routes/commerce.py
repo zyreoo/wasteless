@@ -1,8 +1,8 @@
 from typing import Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, Header, Query, Response
-from pydantic import BaseModel, ConfigDict, Field
+from fastapi import APIRouter, Depends, Header, HTTPException, Query, Request, Response
+from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, model_validator
 
 from auth import Identity, current_user
 from repositories.commerce_repository import CommerceRepository
@@ -130,6 +130,18 @@ class MerchantProductInput(BaseModel):
     category: str = Field(min_length=2, max_length=80)
     allergens: str = Field(min_length=2, max_length=500)
     image_path: Literal['assets/demo/apples.webp', 'assets/demo/pears.webp', 'assets/demo/rescue-bag.webp']
+    # Optional dated pickup window; the database also requires it to be in the
+    # future, within a week and at most 12 hours long.
+    pickup_start: AwareDatetime | None = None
+    pickup_end: AwareDatetime | None = None
+
+    @model_validator(mode='after')
+    def pickup_window_is_complete(self):
+        if (self.pickup_start is None) != (self.pickup_end is None):
+            raise ValueError('pickup_start and pickup_end go together')
+        if self.pickup_end is not None and self.pickup_end <= self.pickup_start:
+            raise ValueError('pickup_end must be after pickup_start')
+        return self
 
 
 class AvailabilityInput(BaseModel):
@@ -188,3 +200,44 @@ def merchant_availability(product_id: int, data: AvailabilityInput, repo: Repo):
 def transition_order(order_id: int, data: TransitionInput, repo: Repo):
     repo.rpc('order_transition', {'p_order_id': order_id, 'p_status': data.status, 'p_code': data.code, 'p_reason': data.reason})
     return Response(status_code=204)
+
+
+PHOTO_LIMIT = 2 * 1024 * 1024
+PHOTO_TYPES = {'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp'}
+
+
+def _photo_kind(content: bytes):
+    if content.startswith(b'\xff\xd8\xff'):
+        return 'image/jpeg'
+    if content.startswith(b'\x89PNG\r\n\x1a\n'):
+        return 'image/png'
+    if content[:4] == b'RIFF' and content[8:12] == b'WEBP':
+        return 'image/webp'
+    return None
+
+
+@router.post('/merchant/photo')
+async def merchant_photo(request: Request, repo: Repo):
+    """Raw image body (JPEG, PNG or WebP, max 2 MB). The declared type must match
+    the file's actual bytes."""
+    declared = request.headers.get('content-type', '').split(';')[0].strip().lower()
+    if declared not in PHOTO_TYPES:
+        raise HTTPException(415, 'Folosește o imagine JPEG, PNG sau WebP.')
+    if int(request.headers.get('content-length') or 0) > PHOTO_LIMIT:
+        raise HTTPException(413, 'Imaginea poate avea cel mult 2 MB.')
+    content = bytearray()
+    async for chunk in request.stream():
+        content.extend(chunk)
+        if len(content) > PHOTO_LIMIT:
+            raise HTTPException(413, 'Imaginea poate avea cel mult 2 MB.')
+    if not content or _photo_kind(bytes(content)) != declared:
+        raise HTTPException(415, 'Fișierul nu este o imagine JPEG, PNG sau WebP validă.')
+    url = repo.upload_shop_photo(bytes(content), declared, PHOTO_TYPES[declared])
+    repo.rpc('merchant', {'p_action': 'photo', 'p_data': {'image_url': url}})
+    return repo.dashboard()
+
+
+@router.delete('/merchant/photo')
+def merchant_photo_remove(repo: Repo):
+    repo.rpc('merchant', {'p_action': 'photo', 'p_data': {'image_url': None}})
+    return repo.dashboard()
