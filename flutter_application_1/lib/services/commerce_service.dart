@@ -57,11 +57,19 @@ class Pager<T> {
 }
 
 class CommerceService {
-  const CommerceService(this.api);
+  const CommerceService(this.api, {this.guest = false});
   final ApiService api;
 
+  /// A visitor without an account: offers and shops load, and actions that
+  /// need an account (favourites, cart, orders) ask them to sign in.
+  final bool guest;
+
   Future<ApiPage<Product>> productPage(int offset) async {
-    final data = await api.request('GET', '/api/products?offset=$offset');
+    final data = await api.request(
+      'GET',
+      '/api/products?offset=$offset',
+      public: true,
+    );
     return (
       items: (data['items'] as List).map((j) => Product.fromJson(j)).toList(),
       next: data['next_offset'] as int?,
@@ -91,6 +99,7 @@ class CommerceService {
       final data = await api.request(
         'GET',
         saved ? '/api/favorites' : '/api/products?offset=$offset',
+        public: !saved,
       );
       items.addAll((data['items'] as List).map((j) => Product.fromJson(j)));
       offset = data['next_offset'] as int?;
@@ -98,8 +107,9 @@ class CommerceService {
     return items;
   }
 
-  Future<Product> product(int id) async =>
-      Product.fromJson(await api.request('GET', '/api/products/$id'));
+  Future<Product> product(int id) async => Product.fromJson(
+    await api.request('GET', '/api/products/$id', public: true),
+  );
   Future<void> favorite(int id, bool saved) async {
     await api.request(
       saved ? 'POST' : 'DELETE',
@@ -145,7 +155,8 @@ class CommerceService {
     await api.request('GET', '/api/merchant/dashboard'),
   );
   Future<List<Map<String, dynamic>>> merchants() async =>
-      ((await api.request('GET', '/api/merchants'))['items'] as List)
+      ((await api.request('GET', '/api/merchants', public: true))['items']
+              as List)
           .map((m) => Map<String, dynamic>.from(m))
           .toList();
   Future<void> saveMerchant(Map<String, dynamic> data) async {

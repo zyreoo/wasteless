@@ -15,8 +15,28 @@ String orderStatus(String value) => switch (value) {
   'ready' => 'Pregătită',
   'collected' => 'Ridicată',
   'cancelled' => 'Anulată',
+  'not_collected' => 'Neridicată',
   _ => value,
 };
+
+/// Orders the shop still has to hand over.
+const openStatuses = {'confirmed', 'accepted', 'ready'};
+
+/// Orders refresh on their own so new orders and status changes show up
+/// without pulling to refresh.
+const ordersRefresh = Duration(seconds: 30);
+
+/// True once an open order's pickup time is over: the end of its dated window,
+/// or, for the shop's usual daily window, any day after the order was placed.
+bool pickupEnded(Map<String, dynamic> order, {DateTime? now}) {
+  if (!openStatuses.contains(order['status'])) return false;
+  final at = now ?? DateTime.now();
+  final end = parseTime(order['pickup_end']);
+  if (end != null) return !end.isAfter(at);
+  final placed = DateTime.parse(order['created_at'] as String).toLocal();
+  return DateUtils.dateOnly(placed).isBefore(DateUtils.dateOnly(at));
+}
+
 String orderDate(String value) =>
     DateFormat('dd.MM.yyyy HH:mm').format(DateTime.parse(value).toLocal());
 
@@ -52,6 +72,7 @@ class _LiveOrdersPageState extends State<LiveOrdersPage> {
     index: 4,
     body: LoadPanel<List<Map<String, dynamic>>>(
       load: pager.refresh,
+      refreshEvery: ordersRefresh,
       errorTitle: 'Nu am putut încărca comenzile',
       loading: const ListSkeleton(),
       builder: (_, reload) {
@@ -215,13 +236,17 @@ class LiveOrderDetailPage extends StatelessWidget {
     title: confirmation ? 'Comandă confirmată' : 'Comanda #$id',
     body: LoadPanel<Map<String, dynamic>>(
       load: () => service.order(id),
+      refreshEvery: ordersRefresh,
       errorTitle: 'Nu am putut încărca comanda',
       loading: const ListSkeleton(rows: 3, thumbnail: false),
       builder: (order, reload) {
         final theme = Theme.of(context);
         final status = order['status'] as String;
         final celebrate = confirmation && status != 'cancelled';
-        final code = order['pickup_code'] != null && status != 'cancelled'
+        final code =
+            order['pickup_code'] != null &&
+                status != 'cancelled' &&
+                status != 'not_collected'
             ? '${order['pickup_code']}'
             : null;
         return LayoutBuilder(
@@ -266,6 +291,13 @@ class LiveOrderDetailPage extends StatelessWidget {
                     if (code != null) ...[
                       const SizedBox(height: Space.xl),
                       _PickupCode(code: code, ready: status == 'ready'),
+                    ],
+                    if (pickupEnded(order)) ...[
+                      const SizedBox(height: Space.l),
+                      const InfoRow(
+                        icon: Icons.schedule_outlined,
+                        text: 'Intervalul de ridicare s-a încheiat. Dacă nu ai ajuns la timp, contactează magazinul.',
+                      ),
                     ],
                     const SizedBox(height: Space.xl),
                     OrderProgress(status: status),
@@ -508,7 +540,7 @@ class StatusPill extends StatelessWidget {
       'ready' => PillTone.success,
       'accepted' => PillTone.brand,
       'collected' => PillTone.neutral,
-      'cancelled' => PillTone.error,
+      'cancelled' || 'not_collected' => PillTone.error,
       _ => PillTone.warning,
     },
   );
@@ -525,6 +557,14 @@ class OrderProgress extends StatelessWidget {
         leading: Icon(Icons.cancel_outlined),
         title: Text('Comandă anulată'),
         subtitle: Text('Produsele au revenit în stoc.'),
+      );
+    }
+    if (status == 'not_collected') {
+      return const ListTile(
+        contentPadding: EdgeInsets.zero,
+        leading: Icon(Icons.event_busy_outlined),
+        title: Text('Comanda nu a fost ridicată'),
+        subtitle: Text('Intervalul de ridicare s-a încheiat.'),
       );
     }
     final current = [

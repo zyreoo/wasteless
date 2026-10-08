@@ -20,6 +20,7 @@ class _LiveProductPageState extends State<LiveProductPage> {
   bool busy = false;
   bool? saved;
   Future<Product> load() async {
+    if (widget.service.guest) return widget.service.product(widget.id);
     final results = await Future.wait([
       widget.service.products(saved: true),
       widget.service.product(widget.id),
@@ -30,6 +31,7 @@ class _LiveProductPageState extends State<LiveProductPage> {
   }
 
   Future<void> toggleFavorite() async {
+    if (widget.service.guest) return askToSignIn(context);
     if (busy) return;
     setState(() => busy = true);
     try {
@@ -50,6 +52,7 @@ class _LiveProductPageState extends State<LiveProductPage> {
   }
 
   Future<void> add() async {
+    if (widget.service.guest) return askToSignIn(context);
     if (busy) return;
     setState(() => busy = true);
     try {
@@ -186,6 +189,8 @@ class _LiveProductPageState extends State<LiveProductPage> {
                           ? 'Se adaugă…'
                           : soldOut
                           ? 'Stoc epuizat'
+                          : widget.service.guest
+                          ? 'Autentifică-te pentru a rezerva'
                           : 'Adaugă în coș',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

@@ -1,5 +1,6 @@
 import os
 import unittest
+from unittest.mock import patch
 
 from fastapi.routing import APIRoute
 from starlette.middleware.cors import CORSMiddleware
@@ -37,6 +38,13 @@ FLUTTER_CONTRACT = {
     ('DELETE', '/api/merchant/photo'),
 }
 
+# Visitors can browse offers and shops without an account.
+PUBLIC_BROWSING = {
+    ('GET', '/api/products'),
+    ('GET', '/api/products/{product_id}'),
+    ('GET', '/api/merchants'),
+}
+
 
 class FlutterContractTests(unittest.TestCase):
     def test_every_route_the_client_calls_is_served(self):
@@ -48,7 +56,7 @@ class FlutterContractTests(unittest.TestCase):
         os.environ['RATE_LIMIT_ENABLED'] = 'false'
         try:
             client = TestClient(app)
-            for method, path in sorted(FLUTTER_CONTRACT):
+            for method, path in sorted(FLUTTER_CONTRACT - PUBLIC_BROWSING):
                 with self.subTest(f'{method} {path}'):
                     url = path.replace('{product_id}', '1').replace('{item_id}', '1').replace('{order_id}', '1')
                     # No Supabase is configured here, so a 401 proves the check
@@ -56,6 +64,20 @@ class FlutterContractTests(unittest.TestCase):
                     response = client.request(method, url, json={})
                     self.assertEqual(response.status_code, 401)
                     self.assertEqual(response.headers.get('www-authenticate'), 'Bearer')
+        finally:
+            os.environ['RATE_LIMIT_ENABLED'] = 'true'
+
+    @patch.dict(os.environ, {'SUPABASE_URL': '', 'SUPABASE_PUBLISHABLE_KEY': ''})
+    def test_browsing_routes_serve_visitors(self):
+        os.environ['RATE_LIMIT_ENABLED'] = 'false'
+        try:
+            client = TestClient(app)
+            for method, path in sorted(PUBLIC_BROWSING):
+                with self.subTest(f'{method} {path}'):
+                    # No Supabase is configured here: the visitor got past
+                    # authentication and reached the data layer.
+                    response = client.request(method, path.replace('{product_id}', '1'))
+                    self.assertEqual(response.status_code, 503)
         finally:
             os.environ['RATE_LIMIT_ENABLED'] = 'true'
 

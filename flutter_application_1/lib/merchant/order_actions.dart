@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../auth/auth_controller.dart';
+import '../pages/live_orders_page.dart';
 import '../services/commerce_service.dart';
 
 class OrderActions extends StatefulWidget {
@@ -66,6 +67,28 @@ class _OrderActionsState extends State<OrderActions> {
         return;
       }
     }
+    if (status == 'not_collected') {
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Comanda nu a fost ridicată?'),
+          content: const Text(
+            'Comanda se închide ca neridicată. Clientul vede noul status, iar stocul nu se modifică.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Înapoi'),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              child: const Text('Închide comanda'),
+            ),
+          ],
+        ),
+      );
+      if (confirmed != true) return;
+    }
     if (!mounted || busy) return;
     setState(() => busy = true);
     try {
@@ -109,7 +132,12 @@ class _OrderActionsState extends State<OrderActions> {
               }[next]!,
             ),
           ),
-        if (['confirmed', 'accepted', 'ready'].contains(status))
+        if (widget.merchant && pickupEnded(widget.order))
+          OutlinedButton(
+            onPressed: busy ? null : () => act('not_collected'),
+            child: const Text('Nu a fost ridicată'),
+          ),
+        if (openStatuses.contains(status))
           OutlinedButton(
             onPressed: busy ? null : () => act('cancelled'),
             child: const Text('Anulează comanda'),

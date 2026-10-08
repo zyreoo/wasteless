@@ -8,6 +8,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_application_1/auth/auth_controller.dart';
 import 'package:flutter_application_1/discovery/legal_pages.dart';
 import 'package:flutter_application_1/main.dart';
+import 'package:flutter_application_1/pages/catalog_page.dart';
 import 'package:flutter_application_1/pages/design_page.dart';
 import 'package:flutter_application_1/services/api_service.dart';
 import 'package:flutter_application_1/widgets/figma_layout.dart';
@@ -135,16 +136,14 @@ void main() {
     await stop(tester, app);
   });
 
-  testWidgets('Signed-out preview merchants are labelled as demo', (
+  testWidgets('Visitors start on the real catalogue, not the sign-in form', (
     tester,
   ) async {
     final app = await start(tester, signedIn: false);
+    expect(find.byType(CatalogPage), findsOneWidget);
+    expect(find.byKey(const ValueKey('field-5:148')), findsNothing);
     await open(tester, '/merchant', 'atelier');
-    expect(find.text('Atelierul de pâine'), findsWidgets);
-    expect(
-      find.textContaining('Nu se pot comanda', skipOffstage: false),
-      findsWidgets,
-    );
+    expect(find.text('Atelierul de pâine'), findsNothing);
     await stop(tester, app);
   });
 

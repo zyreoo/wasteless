@@ -4,10 +4,8 @@ import 'merchant/merchant_directory.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'discovery/discovery_page.dart';
 import 'discovery/information_pages.dart';
 import 'discovery/legal_pages.dart';
-import 'discovery/merchant.dart';
 import 'discovery/preferences.dart';
 import 'auth/auth_controller.dart';
 import 'config/app_config.dart';
@@ -147,23 +145,31 @@ class WastelessApp extends StatelessWidget {
         ),
         child: BrowseSession(key: ValueKey(auth.user?.id), child: child!),
       ),
+      // Visitors start on the real offers; an account is needed to reserve.
+      // An expired session or a failed email link is explained on sign-in.
       home: auth.recovering
           ? ResetPasswordPage(auth: auth)
-          : auth.signedIn
-          ? CatalogPage(service: CommerceService(api))
-          : DesignPage(nodeId: designRoutes['/login']!, auth: auth),
+          : !auth.signedIn && auth.notice != null
+          ? DesignPage(nodeId: designRoutes['/login']!, auth: auth)
+          : CatalogPage(service: CommerceService(api, guest: !auth.signedIn)),
       onGenerateRoute: (settings) {
         final route = settings.name;
         final public =
             route == '/register' ||
             route == '/login' ||
             route == '/forgot-password';
+        final visitor = CommerceService(api, guest: true);
         final informational = switch (route) {
           '/settings' => const SettingsPage(),
-          '/search' =>
-            auth.signedIn
-                ? MerchantDirectory(service: CommerceService(api))
-                : const DiscoveryPage(),
+          '/home' when !auth.signedIn => CatalogPage(service: visitor),
+          '/product' when !auth.signedIn && settings.arguments is int =>
+            LiveProductPage(service: visitor, id: settings.arguments as int),
+          '/search' ||
+          '/explore' when !auth.signedIn => MerchantDirectory(service: visitor),
+          '/map' when !auth.signedIn => MerchantDirectory(
+            service: visitor,
+            mapFirst: true,
+          ),
           '/help' => const HelpPage(),
           '/about' => const AboutPage(),
           '/terms' => const TermsPage(),
@@ -172,27 +178,6 @@ class WastelessApp extends StatelessWidget {
             auth.signedIn
                 ? MerchantDashboard(service: CommerceService(api))
                 : const BusinessPage(),
-          '/explore' =>
-            auth.signedIn
-                ? MerchantDirectory(service: CommerceService(api))
-                : const DiscoveryPage(),
-          '/map' =>
-            auth.signedIn
-                ? MerchantDirectory(
-                    service: CommerceService(api),
-                    mapFirst: true,
-                  )
-                : const DiscoveryPage(mapFirst: true),
-          // Illustrative merchants belong to the signed-out preview only.
-          '/merchant'
-              when !auth.signedIn &&
-                  settings.arguments is String &&
-                  demoMerchants.any((m) => m.id == settings.arguments) =>
-            MerchantPage(
-              merchant: demoMerchants.firstWhere(
-                (m) => m.id == settings.arguments,
-              ),
-            ),
           _ => null,
         };
         if (informational != null && !auth.recovering) {

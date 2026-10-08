@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -43,12 +45,44 @@ class MerchantDashboard extends StatefulWidget {
 
 class _MerchantDashboardState extends State<MerchantDashboard> {
   late Future<Map<String, dynamic>> future = widget.service.dashboard();
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+    // New orders appear without a manual refresh.
+    timer = Timer.periodic(ordersRefresh, (_) => quietReload());
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  Future<void> quietReload() async {
+    if (busy || ModalRoute.of(context)?.isCurrent == false) return;
+    final Map<String, dynamic> data;
+    try {
+      data = await widget.service.dashboard();
+    } catch (_) {
+      // Keep what is shown; the next tick retries.
+      return;
+    }
+    if (!mounted || busy) return;
+    setState(() {
+      future = Future.value(data);
+    });
+  }
+
   int tab = 1;
   bool selectedInitialTab = false;
   bool busy = false;
   Future<void> reload() async {
     final next = widget.service.dashboard();
-    setState(() => future = next);
+    setState(() {
+      future = next;
+    });
     await next;
   }
 
@@ -117,16 +151,15 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
         }
         final data = snapshot.data!;
         final merchant = data['merchant'] as Map<String, dynamic>?;
-        if (!selectedInitialTab && merchant != null) {
-          selectedInitialTab = true;
-          tab = merchant['demo_seeded'] == true ? 1 : 0;
-        }
         final products = data['products'] as List;
         final orders = data['orders'] as List;
+        // Open on orders when customers are waiting, otherwise on offers.
+        if (!selectedInitialTab && merchant != null) {
+          selectedInitialTab = true;
+          tab = orders.any((o) => openStatuses.contains(o['status'])) ? 1 : 0;
+        }
         final active = orders
-            .where(
-              (o) => ['confirmed', 'accepted', 'ready'].contains(o['status']),
-            )
+            .where((o) => openStatuses.contains(o['status']))
             .length;
         final revenue = orders
             .where((o) => o['status'] == 'collected')
@@ -140,10 +173,10 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
             padding: const EdgeInsets.all(Space.xl),
             children: [
               if (merchant == null)
-                PageIntro(
-                  'Comerciant · mediu de test',
-                  merchant?['name'] as String? ?? 'Afacerea ta începe aici.',
-                  'Date sincronizate între conturi. Ofertele sunt fictive, iar comenzile nu implică plăți sau ridicări reale.',
+                const PageIntro(
+                  'Comerciant',
+                  'Afacerea ta începe aici.',
+                  'Completează profilul magazinului. După aprobare, pachetele tale apar pentru clienții din apropiere.',
                 ),
               if (merchant != null) ...[
                 Row(
@@ -175,7 +208,6 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
                                 )
                               else if (merchant['status'] == 'rejected')
                                 const Pill('Neaprobat', tone: PillTone.error),
-                              const Pill('Mod demo', tone: PillTone.neutral),
                             ],
                           ),
                           const SizedBox(height: Space.xs),
@@ -312,14 +344,14 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
                           onPressed: busy
                               ? null
                               : () => run(widget.service.seedProducts),
-                          child: const Text('Adaugă cele 4 produse fictive'),
+                          child: const Text('Adaugă exemple de test'),
                         ),
                     ],
                   ),
                   const SizedBox(height: 12),
                   if (products.isEmpty)
                     const Text(
-                      'Publică prima ofertă sau adaugă produsele fictive pentru test.',
+                      'Publică primul pachet surpriză. Exemplele de test sunt marcate DEMO și nu se pot ridica.',
                     ),
                   if (products.isNotEmpty)
                     Card(
@@ -430,9 +462,7 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
                     ),
                 ] else ...[
                   if (orders.isEmpty)
-                    const Text(
-                      'Comenzile clienților apar aici. Poți testa cu alt cont sau din „Vezi ca un client”.',
-                    ),
+                    const Text('Comenzile clienților apar aici automat.'),
                   if (orders.isNotEmpty)
                     Card(
                       clipBehavior: Clip.antiAlias,
@@ -459,6 +489,13 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
                                             .titleMedium,
                                       ),
                                       StatusPill(o['status'] as String),
+                                      if (pickupEnded(
+                                        Map<String, dynamic>.from(o),
+                                      ))
+                                        const Pill(
+                                          'Interval încheiat',
+                                          tone: PillTone.warning,
+                                        ),
                                     ],
                                   ),
                                   const SizedBox(height: 2),
@@ -533,20 +570,20 @@ class _MerchantEditorState extends State<MerchantEditor> {
     super.initState();
     final defaults = widget.profile
         ? {
-            'name': 'Atelierul meu · DEMO',
-            'address': 'Adresă fictivă: Strada Exemplu 10, București',
+            'name': '',
+            'address': '',
             'pickup_window': '18:00–19:00',
             'latitude': '44.435',
             'longitude': '26.102',
           }
         : {
             'name': '',
-            'description': 'Produs fictiv pentru simularea fluxului.',
-            'price': '19.00',
-            'original_price': '55.00',
-            'stock': '8',
-            'category': 'Brutărie',
-            'allergens': 'Gluten, lapte',
+            'description': '',
+            'price': '',
+            'original_price': '',
+            'stock': '5',
+            'category': 'Pachet surpriză',
+            'allergens': '',
           };
     for (final key in defaults.keys) {
       fields[key] = TextEditingController(
@@ -695,6 +732,7 @@ class _MerchantEditorState extends State<MerchantEditor> {
                       }[e.key],
                     ),
                     validator: (v) {
+                      if (e.key == 'description') return null;
                       if (v == null || v.trim().isEmpty) {
                         return 'Completează câmpul.';
                       }
@@ -804,7 +842,7 @@ class _MerchantEditorState extends State<MerchantEditor> {
               const SizedBox(height: 24),
               FilledButton(
                 onPressed: busy ? null : save,
-                child: Text(busy ? 'Se salvează…' : 'Salvează în backend'),
+                child: Text(busy ? 'Se salvează…' : 'Salvează'),
               ),
             ],
           ),

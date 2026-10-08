@@ -4,19 +4,28 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, Header, HTTPException, Query, Request, Response
 from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, model_validator
 
-from auth import Identity, current_user
+from auth import Identity, current_user, optional_user
 from repositories.commerce_repository import CommerceRepository
 from services.commerce_service import cart_summary
 from rate_limit import user_rate_limit
 
 router = APIRouter(prefix='/api', dependencies=[Depends(user_rate_limit)])
+# Browsing is open to visitors; everything else needs an account.
+public_router = APIRouter(prefix='/api')
 
 
 def repository(user: Annotated[Identity, Depends(current_user)]):
     return CommerceRepository(user)
 
 
+def browsing_repository(request: Request, user: Annotated[Identity | None, Depends(optional_user)]):
+    if user is not None:
+        user_rate_limit(request, user)
+    return CommerceRepository(user)
+
+
 Repo = Annotated[CommerceRepository, Depends(repository)]
+BrowsingRepo = Annotated[CommerceRepository, Depends(browsing_repository)]
 
 
 class ProductInput(BaseModel):
@@ -33,14 +42,14 @@ class QuantityInput(BaseModel):
     quantity: int = Field(ge=0, le=99, strict=True)
 
 
-@router.get('/products')
-def products(repo: Repo, offset: int = Query(0, ge=0), limit: int = Query(50, ge=1, le=100)):
+@public_router.get('/products')
+def products(repo: BrowsingRepo, offset: int = Query(0, ge=0), limit: int = Query(50, ge=1, le=100)):
     rows = repo.products(offset, limit + 1)
     return {'items': rows[:limit], 'next_offset': offset + limit if len(rows) > limit else None}
 
 
-@router.get('/products/{product_id}')
-def product(product_id: int, repo: Repo):
+@public_router.get('/products/{product_id}')
+def product(product_id: int, repo: BrowsingRepo):
     return repo.product(product_id)
 
 
@@ -151,13 +160,13 @@ class AvailabilityInput(BaseModel):
 
 class TransitionInput(BaseModel):
     model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
-    status: Literal['accepted', 'ready', 'collected', 'cancelled']
+    status: Literal['accepted', 'ready', 'collected', 'cancelled', 'not_collected']
     code: str = Field(default='', max_length=20)
     reason: str = Field(default='', max_length=500)
 
 
-@router.get('/merchants')
-def merchant_directory(repo: Repo):
+@public_router.get('/merchants')
+def merchant_directory(repo: BrowsingRepo):
     return {'items': repo.merchants()}
 
 

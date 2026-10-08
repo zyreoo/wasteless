@@ -90,6 +90,7 @@ class _CatalogPageState extends State<CatalogPage> {
 
   /// Favorites are one small list; the catalogue starts with its first page.
   Future<List<Product>> load() async {
+    if (widget.service.guest && !widget.savedOnly) return pager.refresh();
     if (widget.savedOnly) {
       final items = await widget.service.products(saved: true);
       saved = items.map((p) => p.id).toSet();
@@ -128,6 +129,7 @@ class _CatalogPageState extends State<CatalogPage> {
     bool wasSaved,
     Future<void> Function() reload,
   ) async {
+    if (widget.service.guest) return askToSignIn(context);
     if (busy.contains(p.id)) return;
     setState(() => busy.add(p.id));
     try {

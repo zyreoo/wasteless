@@ -49,13 +49,14 @@ void main() {
     tester,
   ) async {
     final auth = AuthController(c);
-    int calls = 0;
+    final paths = <String>[];
     final api = ApiService(
       baseUrl: 'https://api.example.invalid',
       accessToken: auth.accessToken,
-      client: MockClient((_) async {
-        calls++;
-        return http.Response('{}', 200);
+      client: MockClient((r) async {
+        paths.add(r.url.path);
+        expect(r.headers['Authorization'], isNull);
+        return http.Response('{"items":[]}', 200);
       }),
     );
     await tester.pumpWidget(WastelessApp(auth: auth, api: api));
@@ -64,7 +65,8 @@ void main() {
     Navigator.pushNamed(context, '/cart');
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('field-5:148')), findsOneWidget);
-    expect(calls, 0);
+    // Visitors only ever load the public catalogue.
+    expect(paths.toSet(), {'/api/products'});
     await tester.pumpWidget(const SizedBox());
     auth.dispose();
     api.close();
@@ -91,7 +93,11 @@ void main() {
                 : [
                     {
                       'id': 7,
-                      'name': 'Account A product',
+                      // Signed-in and visitor responses differ, so leftover
+                      // account data would be visible after logout.
+                      'name': r.headers['Authorization'] == null
+                          ? 'Public offer'
+                          : 'Account A product',
                       'price': 1,
                       'stock': 2,
                     },
@@ -107,7 +113,8 @@ void main() {
     await auth.logout();
     await tester.pumpAndSettle();
     expect(find.text('Account A product'), findsNothing);
-    expect(find.byKey(const ValueKey('field-5:148')), findsOneWidget);
+    expect(find.text('Public offer'), findsOneWidget);
+    expect(find.byType(BackButton), findsNothing);
     await tester.pumpWidget(const SizedBox());
     auth.dispose();
     api.close();

@@ -22,7 +22,11 @@ class CommerceRepository:
         key = os.getenv('SUPABASE_PUBLISHABLE_KEY', '')
         if not url or not key:
             raise HTTPException(503, 'Serviciul nu este configurat.')
-        headers = {'apikey': key, 'Authorization': f'Bearer {self.user.token}'}
+        # Without a user the request runs as the anonymous role, which can only
+        # call the public catalogue functions.
+        headers = {'apikey': key}
+        if self.user is not None:
+            headers['Authorization'] = f'Bearer {self.user.token}'
         try:
             if self.client:
                 response = self.client.request(method, f'{url}/rest/v1/{path}', params=params, json=body, headers=headers)
@@ -48,6 +52,7 @@ class CommerceRepository:
                 'Invalid pickup window': 'Verifică ziua și intervalul de ridicare: în viitor, în următoarele 7 zile, maximum 12 ore.',
                 'One pickup window per order': 'O comandă poate conține doar pachete cu același interval de ridicare.',
                 'Invalid image': 'Imaginea nu este validă.',
+                'Pickup not ended': 'Comanda poate fi închisă după terminarea intervalului de ridicare.',
             }
             try:
                 detail = safe_messages.get(response.json().get('message'), 'Operația nu a reușit. Reîncarcă datele și încearcă din nou.')
@@ -59,13 +64,18 @@ class CommerceRepository:
         return response.json()
 
     def products(self, offset, limit):
+        if self.user is None:
+            return self.request('POST', 'rpc/wasteless_catalog', body={'p_offset': offset, 'p_limit': limit})
         # RLS already hides ended pickups from customers; this also hides them
         # from a merchant browsing the catalogue with their own bags in it.
         now = datetime.now(timezone.utc).isoformat()
         return self.request('GET', 'product', params={'select': PRODUCT_COLUMNS, 'active': 'eq.true', 'or': f'(pickup_end.is.null,pickup_end.gt.{now})', 'order': 'id', 'offset': offset, 'limit': limit})
 
     def product(self, id):
-        rows = self.request('GET', 'product', params={'select': PRODUCT_COLUMNS, 'id': f'eq.{id}', 'active': 'eq.true'})
+        if self.user is None:
+            rows = self.request('POST', 'rpc/wasteless_catalog', body={'p_id': id})
+        else:
+            rows = self.request('GET', 'product', params={'select': PRODUCT_COLUMNS, 'id': f'eq.{id}', 'active': 'eq.true'})
         if not rows:
             raise HTTPException(404, 'Produsul nu mai este disponibil.')
         return rows[0]
@@ -95,6 +105,8 @@ class CommerceRepository:
         return self.request('POST', f'rpc/wasteless_{name}', body=params)
 
     def merchants(self):
+        if self.user is None:
+            return self.request('POST', 'rpc/wasteless_shops', body={})
         return self.request('GET', 'merchants', params={'select': 'id,name,address,pickup_window,latitude,longitude,is_demo,image_url', 'owner_id':'not.is.null', 'status':'eq.approved', 'order':'id', 'limit':100})
 
     def dashboard(self):

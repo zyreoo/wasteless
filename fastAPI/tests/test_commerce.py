@@ -5,7 +5,7 @@ from fastapi.testclient import TestClient
 import httpx
 from auth import Identity, current_user
 from main import app
-from routes.commerce import repository
+from routes.commerce import browsing_repository, repository
 from repositories.commerce_repository import CommerceRepository
 from services.commerce_service import cart_summary
 
@@ -18,6 +18,7 @@ class CommerceTests(unittest.TestCase):
         self.repo=Mock()
         app.dependency_overrides[current_user]=lambda: Identity(A,'a@example.invalid','user-token')
         app.dependency_overrides[repository]=lambda:self.repo
+        app.dependency_overrides[browsing_repository]=lambda:self.repo
         self.client=TestClient(app)
         self.addCleanup(app.dependency_overrides.clear)
 
@@ -111,6 +112,22 @@ class RepositoryTests(unittest.TestCase):
     def test_cart_owner_filter(self):
         self.response([]);self.assertEqual(self.repo.cart(),[])
         self.assertEqual(self.http.request.call_args.kwargs['params']['user_id'],f'eq.{A}')
+
+    def test_visitors_browse_through_the_public_catalogue(self):
+        visitor=CommerceRepository(None,self.http)
+        self.response([{'id':7}])
+        self.assertEqual(visitor.products(0,51),[{'id':7}])
+        call=self.http.request.call_args
+        self.assertEqual(call.args[:2],('POST','https://example.supabase.co/rest/v1/rpc/wasteless_catalog'))
+        self.assertEqual(call.kwargs['json'],{'p_offset':0,'p_limit':51})
+        self.assertNotIn('Authorization',call.kwargs['headers'])
+        self.assertEqual(visitor.product(7),{'id':7})
+        self.assertEqual(self.http.request.call_args.kwargs['json'],{'p_id':7})
+        self.response([])
+        with self.assertRaises(HTTPException) as e:visitor.product(8)
+        self.assertEqual(e.exception.status_code,404)
+        visitor.merchants()
+        self.assertTrue(self.http.request.call_args.args[1].endswith('/rpc/wasteless_shops'))
 
     def test_other_users_order_is_not_found(self):
         self.response([])

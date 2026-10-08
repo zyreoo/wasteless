@@ -40,9 +40,11 @@ class ApiService {
     String? idempotencyKey,
     List<int>? bytes,
     String? contentType,
+    bool public = false,
   }) async {
     final token = await accessToken();
-    if (token == null) {
+    // Browsing works without an account; everything else needs a session.
+    if (token == null && !public) {
       throw const ApiException(
         'Autentifică-te pentru a continua.',
         status: 401,
@@ -55,7 +57,7 @@ class ApiService {
         Uri.parse('${baseUrl.replaceFirst(RegExp(r'/$'), '')}$path'),
       );
       request.headers.addAll({
-        'Authorization': 'Bearer $token',
+        if (token != null) 'Authorization': 'Bearer $token',
         'Content-Type': contentType ?? 'application/json',
       });
       if (idempotencyKey != null) {
@@ -80,7 +82,7 @@ class ApiService {
     }
     if (response.statusCode == 401) {
       // The API answers 401 only when Supabase no longer accepts the token.
-      await onSessionRejected?.call(token);
+      if (token != null) await onSessionRejected?.call(token);
       throw const ApiException(
         'Sesiunea a expirat. Autentifică-te din nou.',
         status: 401,

@@ -409,6 +409,16 @@ void main() {
         find.byType(TextFormField).first,
         'Pachet de gustări de seară',
       );
+      for (final (label, value) in [
+        ('Preț redus (lei)', '19'),
+        ('Preț inițial (lei)', '55'),
+        ('Alergeni', 'Gluten, lapte'),
+      ]) {
+        await tester.enterText(
+          find.widgetWithText(TextFormField, label),
+          value,
+        );
+      }
       await tester.tap(find.byKey(const ValueKey('pickup-day')));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Mâine').last);
@@ -418,7 +428,7 @@ void main() {
         '20:30',
       );
       await tester.enterText(find.byKey(const ValueKey('pickup-to')), '21:30');
-      await tester.tap(find.text('Salvează în backend'));
+      await tester.tap(find.text('Salvează'));
       await tester.pumpAndSettle();
       final body = jsonDecode(requests.single.body) as Map<String, dynamic>;
       final start = DateTime.parse(body['pickup_start']).toLocal();

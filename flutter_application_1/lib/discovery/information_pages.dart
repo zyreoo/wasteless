@@ -2,6 +2,7 @@ import '../widgets/image_loading.dart';
 
 import 'package:flutter/material.dart';
 
+import '../theme/app_theme.dart';
 import '../widgets/live_page.dart';
 import 'components.dart';
 import 'preferences.dart';
@@ -54,15 +55,6 @@ class SettingsPage extends StatelessWidget {
                         title: const Text('Animații reduse'),
                         subtitle: const Text(
                           'O experiență mai liniștită, cu mai puțină mișcare.',
-                        ),
-                      ),
-                      const Divider(height: 1),
-                      SwitchListTile(
-                        value: prefs.showDemo,
-                        onChanged: (value) => prefs.update(showDemo: value),
-                        title: const Text('Comercianți demonstrativi'),
-                        subtitle: const Text(
-                          'Arată exemplele de comercianți pe hartă și în listă.',
                         ),
                       ),
                     ],
@@ -234,36 +226,163 @@ class AboutPage extends StatelessWidget {
 
 class BusinessPage extends StatelessWidget {
   const BusinessPage({super.key});
+
+  static const _benefits = [
+    (
+      Icons.savings_outlined,
+      'Recuperezi din valoarea stocului',
+      'Produsele bune rămase la final de zi se vând, în loc să fie aruncate.',
+    ),
+    (
+      Icons.storefront_outlined,
+      'Clienți noi din cartier',
+      'Oamenii din apropiere îți descoperă magazinul și revin.',
+    ),
+    (
+      Icons.schedule_outlined,
+      'Câteva minute pe zi',
+      'Publici un pachet surpriză, alegi intervalul de ridicare și gata.',
+    ),
+  ];
+
+  static const _steps = [
+    (
+      'Creezi contul și profilul magazinului',
+      'Nume, adresă, interval de ridicare și o fotografie.',
+    ),
+    (
+      'Verificăm magazinul',
+      'Magazinul devine vizibil pentru clienți după aprobare.',
+    ),
+    (
+      'Publici pachete surpriză',
+      'Stabilești prețul, valoarea estimată, stocul și ziua ridicării.',
+    ),
+    (
+      'Predai comanda pe baza codului',
+      'Clientul vine în intervalul ales și îți arată codul de ridicare.',
+    ),
+  ];
+
   @override
-  Widget build(BuildContext context) => LiveScaffold(
-    title: 'Pentru comercianți',
-    body: Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 760),
-        child: ListView(
-          padding: const EdgeInsets.all(24),
-          children: [
-            const PageIntro(
-              'Wasteless pentru afacerea ta',
-              'Dă valoare la ce rămâne.',
-              'Publică oferte, gestionează stocul și procesează comenzile clienților din spațiul comerciantului.',
-            ),
-            const SizedBox(height: 24),
-            const Text(
-              'Poți testa întregul flux cu produse fictive, salvate în backend. După autentificare, creează profilul comerciantului și folosește „Adaugă cele 4 produse fictive”.',
-            ),
-            const SizedBox(height: 24),
-            FilledButton(
-              onPressed: () => Navigator.pushNamed(context, '/login'),
-              child: const Text('Autentifică-te pentru a începe'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pushNamed(context, '/register'),
-              child: const Text('Creează un cont'),
-            ),
-          ],
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return LiveScaffold(
+      title: 'Pentru comercianți',
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 760),
+          child: ListView(
+            padding: const EdgeInsets.all(24),
+            children: [
+              const PageIntro(
+                'Wasteless pentru afacerea ta',
+                'Dă valoare la ce rămâne.',
+                'Vinde pachete surpriză cu produsele nevândute ale zilei, către oameni din apropiere care vin să le ridice.',
+              ),
+              const SizedBox(height: Space.xl),
+              Wrap(
+                spacing: Space.m,
+                runSpacing: Space.m,
+                children: [
+                  FilledButton(
+                    onPressed: () => Navigator.pushNamed(context, '/register'),
+                    child: const Text('Înscrie-ți magazinul'),
+                  ),
+                  OutlinedButton(
+                    onPressed: () => Navigator.pushNamed(context, '/login'),
+                    child: const Text('Am deja cont'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: Space.x3),
+              for (final (icon, title, detail) in _benefits)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Space.l),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(icon, color: AppColors.brand),
+                      const SizedBox(width: Space.l),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(title, style: theme.textTheme.titleSmall),
+                            const SizedBox(height: Space.xs),
+                            Text(
+                              detail,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              const SizedBox(height: Space.xl),
+              const SectionTitle('Cum funcționează'),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(Space.l),
+                  child: Column(
+                    children: [
+                      for (final (i, (title, detail)) in _steps.indexed)
+                        Padding(
+                          padding: EdgeInsets.only(
+                            bottom: i == _steps.length - 1 ? 0 : Space.l,
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CircleAvatar(
+                                radius: 14,
+                                backgroundColor: AppColors.brandSoft,
+                                child: Text(
+                                  '${i + 1}',
+                                  style: theme.textTheme.labelLarge?.copyWith(
+                                    color: AppColors.brand,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: Space.l),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      title,
+                                      style: theme.textTheme.titleSmall,
+                                    ),
+                                    const SizedBox(height: Space.xs),
+                                    Text(
+                                      detail,
+                                      style: theme.textTheme.bodyMedium
+                                          ?.copyWith(
+                                            color: AppColors.textSecondary,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: Space.xl),
+              Text(
+                'Clienții plătesc la ridicare, direct în magazin. Ai întrebări? Scrie-ne din pagina de ajutor.',
+                style: theme.textTheme.bodySmall,
+              ),
+            ],
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }

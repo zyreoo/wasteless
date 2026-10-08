@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../auth/auth_controller.dart';
@@ -13,8 +15,13 @@ class LoadPanel<T> extends StatefulWidget {
     required this.builder,
     this.loading,
     this.errorTitle = 'Nu am putut încărca pagina',
+    this.refreshEvery,
   });
   final Future<T> Function() load;
+
+  /// Reloads quietly at this interval while the page is on top. A failed
+  /// quiet reload keeps what is shown instead of replacing it with an error.
+  final Duration? refreshEvery;
   final Widget Function(T value, Future<void> Function() reload) builder;
 
   /// Shown on first load instead of a bare spinner, e.g. a skeleton layout.
@@ -26,10 +33,46 @@ class LoadPanel<T> extends StatefulWidget {
 
 class _LoadPanelState<T> extends State<LoadPanel<T>> {
   late Future<T> future = widget.load();
+  Timer? timer;
+  bool refreshing = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final every = widget.refreshEvery;
+    if (every != null) timer = Timer.periodic(every, (_) => quietReload());
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  Future<void> quietReload() async {
+    if (refreshing || ModalRoute.of(context)?.isCurrent == false) return;
+    refreshing = true;
+    final T value;
+    try {
+      value = await widget.load();
+    } catch (_) {
+      // Keep the current content; the next tick or a manual reload retries.
+      return;
+    } finally {
+      refreshing = false;
+    }
+    if (!mounted) return;
+    setState(() {
+      future = Future.value(value);
+    });
+  }
+
   Future<void> reload() async {
     if (!mounted) return;
     final next = widget.load();
-    setState(() => future = next);
+    setState(() {
+      future = next;
+    });
     try {
       await next;
     } catch (_) {
@@ -63,6 +106,10 @@ class _LoadPanelState<T> extends State<LoadPanel<T>> {
   );
 }
 
+/// Visitors browse freely; saving or reserving an offer opens sign-in.
+Future<void> askToSignIn(BuildContext context) =>
+    Navigator.pushNamed(context, '/login');
+
 /// App shell: a sidebar on desktop, four bottom tabs on phones. The map is
 /// part of discovery, so on phones it highlights the Descoperă tab.
 class LiveScaffold extends StatelessWidget {
@@ -78,7 +125,7 @@ class LiveScaffold extends StatelessWidget {
   static const routes = ['/home', '/search', '/saved', '/cart', '/history'];
   static const _items = <(IconData, IconData, String)>[
     (Icons.local_offer_outlined, Icons.local_offer, 'Descoperă'),
-    (Icons.map_outlined, Icons.map, 'Hartă'),
+    (Icons.storefront_outlined, Icons.storefront, 'Magazine'),
     (Icons.favorite_border, Icons.favorite, 'Favorite'),
     (Icons.shopping_bag_outlined, Icons.shopping_bag, 'Coș'),
     (Icons.receipt_long_outlined, Icons.receipt_long, 'Comenzi'),

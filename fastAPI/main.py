@@ -67,5 +67,6 @@ def me(user: Annotated[Identity, Depends(current_user)]):
     return {'id': user.id, 'email': user.email}
 
 
-from routes.commerce import router as commerce_router
+from routes.commerce import public_router, router as commerce_router
+app.include_router(public_router)
 app.include_router(commerce_router)

@@ -718,9 +718,13 @@ class _DesignPageState extends State<DesignPage> {
             ),
             const Divider(height: 32),
             OutlinedButton.icon(
-              onPressed: () => go('/explore'),
-              icon: const Icon(Icons.map_outlined),
-              label: const Text('Explorează demonstrația'),
+              onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/home',
+                (_) => false,
+              ),
+              icon: const Icon(Icons.local_offer_outlined),
+              label: const Text('Vezi ofertele fără cont'),
             ),
             const SizedBox(height: 12),
             Wrap(

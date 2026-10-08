@@ -60,8 +60,8 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.ensureVisible(find.text('Adaugă cele 4 produse fictive'));
-      await tester.tap(find.text('Adaugă cele 4 produse fictive'));
+      await tester.ensureVisible(find.text('Adaugă exemple de test'));
+      await tester.tap(find.text('Adaugă exemple de test'));
       await tester.pumpAndSettle();
       expect(seeded, isTrue);
       expect(find.text('Pachet demo'), findsOneWidget);

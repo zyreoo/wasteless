@@ -172,5 +172,42 @@ await denied(B,"select wasteless_checkout('99999999-9999-4999-8999-999999999993'
 await denied(B,"select wasteless_cart('add',$1,null,1)",[dated]);
 check((await asUser(D,'select id from product where id=$1',[dated])).length,1);
 
-console.log(`${checks} database checks passed: real SQL migration, RLS, ownership, stock, price snapshots, rollback, idempotency, approval, shop photos and pickup windows.`);
+// Real offers, the public catalogue and bags that were never picked up.
+await db.exec(readFileSync(new URL('../../supabase/migrations/20261008120000_public_catalog_and_real_offers.sql',import.meta.url),'utf8'));
+const realShop=(await asUser(E,"select wasteless_merchant('profile',$1) as id",[{...profile,name:'Roade Locale'}]))[0].id;
+const realBag=(await asUser(E,"select wasteless_merchant('product',$1) as id",[bag]))[0].id;
+check((await db.query('select is_demo from merchants where id=$1',[realShop])).rows[0].is_demo,false);
+check((await db.query('select is_demo from product where id=$1',[realBag])).rows[0].is_demo,false);
+check((await asUser(A,'select bool_and(is_demo) as demo from product where merchant_id=$1',[mid]))[0].demo,true);
+async function asAnon(sql, params=[]) {
+ return db.transaction(async tx=>{await tx.exec('set local role anon');return (await tx.query(sql,params)).rows;});
+}
+const catalog=(await asAnon('select wasteless_catalog() as items'))[0].items;
+const ids=catalog.map(p=>p.id);
+check(ids.includes(pendingBag),true);
+check(ids.includes(realBag),false);
+check(ids.includes(dated),false);
+check(ids.includes(pid),true);
+check(Object.keys(catalog.find(p=>p.id===pendingBag).merchants).includes('owner_id'),false);
+check(catalog.find(p=>p.id===pendingBag).merchants.name,'Cuptorul Urban');
+check((await asAnon('select wasteless_catalog($1) as items',[realBag]))[0].items,[]);
+check((await asAnon('select wasteless_catalog($1) as items',[pendingBag]))[0].items.length,1);
+check((await asAnon('select wasteless_catalog(null,0,1) as items'))[0].items.length,1);
+const shops=(await asAnon('select wasteless_shops() as items'))[0].items.map(s=>s.id);
+check(shops.includes(newShop) && shops.includes(mid) && !shops.includes(realShop),true);
+await assert.rejects(asAnon('select * from product'));checks++;
+await assert.rejects(asAnon('select * from merchants'));checks++;
+await assert.rejects(asAnon("select wasteless_cart('clear')"));checks++;
+// Not collected: only the shop, only after the pickup window, stock unchanged.
+const stockBefore=(await db.query('select stock from product where id=$1',[dated])).rows[0].stock;
+await denied(D,"select wasteless_order_transition($1,'not_collected')",[datedOrder]);
+await db.query("update \"order\" set pickup_start=now()-interval '3 hours', pickup_end=now()-interval '1 hour' where id=$1",[datedOrder]);
+await denied(B,"select wasteless_order_transition($1,'not_collected')",[datedOrder]);
+await asUser(D,"select wasteless_order_transition($1,'not_collected')",[datedOrder]);
+check((await asUser(B,'select status from "order" where id=$1',[datedOrder]))[0].status,'not_collected');
+check((await db.query('select stock from product where id=$1',[dated])).rows[0].stock,stockBefore);
+await denied(B,"select wasteless_order_transition($1,'cancelled','','Prea târziu')",[datedOrder]);
+await denied(D,"select wasteless_order_transition($1,'not_collected')",[demoOrder]);
+
+console.log(`${checks} database checks passed: real SQL migration, RLS, ownership, stock, price snapshots, rollback, idempotency, approval, shop photos, pickup windows, public catalogue and uncollected orders.`);
 await db.close();

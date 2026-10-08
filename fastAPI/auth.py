@@ -53,3 +53,12 @@ def current_user(
     except (ValueError, TypeError, KeyError):
         raise HTTPException(503, 'Răspuns invalid de la serviciul de autentificare.') from None
     return Identity(id=user_id, email=email, token=credentials.credentials)
+
+
+def optional_user(
+    credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(bearer)],
+) -> Identity | None:
+    """Visitors may browse without a session; a token that is sent must be valid."""
+    if credentials is None:
+        return None
+    return current_user(credentials)
