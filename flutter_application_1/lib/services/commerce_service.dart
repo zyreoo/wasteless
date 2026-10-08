@@ -177,10 +177,6 @@ class CommerceService {
     await api.request('DELETE', '/api/merchant/photo');
   }
 
-  Future<void> seedProducts() async {
-    await api.request('POST', '/api/merchant/seed');
-  }
-
   Future<void> saveProduct(Map<String, dynamic> data, {int? id}) async {
     await api.request(
       id == null ? 'POST' : 'PUT',

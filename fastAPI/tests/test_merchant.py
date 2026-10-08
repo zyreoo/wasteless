@@ -17,10 +17,16 @@ class MerchantTests(unittest.TestCase):
         data={'name':'Demo','address':'Example address','pickup_window':'18-19','latitude':44.4,'longitude':26.1,'owner_id':'other'}
         self.assertEqual(self.client.put('/api/merchant/profile',json=data).status_code,422)
         self.repo.rpc.assert_not_called()
-    def test_seed_is_authenticated_rpc(self):
-        self.repo.dashboard.return_value={'merchant':{'id':1},'products':[],'orders':[]}
-        self.assertEqual(self.client.post('/api/merchant/seed').status_code,200)
-        self.repo.rpc.assert_called_once_with('merchant',{'p_action':'seed','p_data':{}})
+    def test_sample_data_endpoint_is_gone(self):
+        self.assertIn(self.client.post('/api/merchant/seed').status_code,(404,405))
+        self.repo.rpc.assert_not_called()
+    def test_profile_is_saved_and_dashboard_returned(self):
+        self.repo.dashboard.return_value={'merchant':{'id':1,'status':'approved'},'products':[],'orders':[]}
+        data={'name':'Brutăria Bunicii','address':'Strada Mihai Eminescu 54, București','pickup_window':'19:00–20:00','latitude':44.4459,'longitude':26.1015}
+        r=self.client.put('/api/merchant/profile',json=data)
+        self.assertEqual(r.status_code,200)
+        self.assertEqual(r.json()['merchant']['status'],'approved')
+        self.repo.rpc.assert_called_once_with('merchant',{'p_action':'profile','p_data':data})
     def test_status_validated_and_code_forwarded(self):
         self.assertEqual(self.client.post('/api/orders/10/status',json={'status':'collected','code':'ABC12345'}).status_code,204)
         self.repo.rpc.assert_called_once_with('order_transition',{'p_order_id':10,'p_status':'collected','p_code':'ABC12345','p_reason':''})

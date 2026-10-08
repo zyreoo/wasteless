@@ -12,7 +12,6 @@ class Product {
     this.merchantId,
     this.merchant,
     this.allergens,
-    this.isDemo = false,
     this.originalPrice,
     this.pickupStart,
     this.pickupEnd,
@@ -21,7 +20,6 @@ class Product {
   final int? merchantId;
   final Map<String, dynamic>? merchant;
   final String? allergens;
-  final bool isDemo;
   final num? originalPrice;
   final String name;
   final String? description, image, category;
@@ -47,7 +45,6 @@ class Product {
         ? null
         : Map<String, dynamic>.from(j['merchants']),
     allergens: j['allergens'] as String?,
-    isDemo: j['is_demo'] == true,
     originalPrice: j['original_price'] == null
         ? null
         : num.parse('${j['original_price']}'),

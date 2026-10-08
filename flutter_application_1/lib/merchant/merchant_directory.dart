@@ -57,7 +57,7 @@ class _MerchantDirectoryState extends State<MerchantDirectory> {
           padding: const EdgeInsets.all(20),
           children: [
             PageIntro(
-              'Comerciant · produse de test',
+              'Magazin',
               merchant['name'] as String,
               '${merchant['address']}\nRidicare: ${merchant['pickup_window']}',
             ),
@@ -114,11 +114,6 @@ class _MerchantDirectoryState extends State<MerchantDirectory> {
                 Text(
                   '${products.where((p) => p.stock > 0).length} oferte disponibile · Ridicare ${merchant['pickup_window']}',
                 ),
-                if (merchant['is_demo'] == true)
-                  const Padding(
-                    padding: EdgeInsets.only(top: 8),
-                    child: Text('Comerciant fictiv · comenzi de test'),
-                  ),
                 const SizedBox(height: 20),
                 FilledButton(
                   onPressed: () {
@@ -170,7 +165,7 @@ class _MerchantDirectoryState extends State<MerchantDirectory> {
               const PageIntro(
                 'În apropiere',
                 'Găsește oferte\nlângă tine',
-                'Descoperă ofertele și alege intervalul de ridicare potrivit. Produsele DEMO sunt fictive.',
+                'Descoperă ofertele și alege intervalul de ridicare potrivit.',
               ),
               const SizedBox(height: 16),
               TextField(
@@ -186,9 +181,7 @@ class _MerchantDirectoryState extends State<MerchantDirectory> {
                 label: const Text('Actualizează ofertele'),
               ),
               if (shops.isEmpty)
-                const Text(
-                  'Niciun comerciant pentru această căutare. Poți crea un profil și adăuga produse fictive din spațiul comerciantului.',
-                ),
+                const Text('Niciun magazin pentru această căutare.'),
               for (final m in shops)
                 Card(
                   child: ListTile(

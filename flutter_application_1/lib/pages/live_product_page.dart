@@ -237,9 +237,7 @@ class _LiveProductPageState extends State<LiveProductPage> {
               ),
               const SizedBox(height: Space.m),
               Text(
-                p.isDemo
-                    ? 'Ofertă demonstrativă: comanda testează fluxul, fără plată sau ridicare reală.'
-                    : 'Plătești la ridicare, direct la magazin.',
+                'Plătești la ridicare, direct la magazin.',
                 style: theme.textTheme.bodySmall,
               ),
             ],

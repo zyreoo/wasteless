@@ -79,13 +79,12 @@ void main() {
                 child: ProductTile(
                   product: const Product(
                     id: 5,
-                    name: 'Pachet de brutărie cu pâine, croissante și specialități proaspete · DEMO',
+                    name: 'Pachet de brutărie cu pâine, croissante și specialități proaspete',
                     price: 19,
                     originalPrice: 55,
                     stock: 2,
-                    isDemo: true,
                     merchant: {
-                      'name': 'Atelierul meu',
+                      'name': 'Brutăria Bunicii',
                       'pickup_window': '18:00–19:00',
                     },
                   ),

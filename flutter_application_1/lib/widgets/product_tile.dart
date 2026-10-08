@@ -16,7 +16,7 @@ class ProductImage extends StatelessWidget {
     final shopPhoto = product.merchant?['image_url'] as String?;
     final uri = Uri.tryParse(shopPhoto ?? product.image ?? '');
     final name = product.name.toLowerCase();
-    final demoImage =
+    final assetImage =
         const [
           'assets/demo/apples.webp',
           'assets/demo/pears.webp',
@@ -49,12 +49,12 @@ class ProductImage extends StatelessWidget {
               errorBuilder: (_, error, stack) => fallback,
               excludeFromSemantics: true,
             )
-          : demoImage == null
+          : assetImage == null
           ? fallback
           : Image.asset(
               frameBuilder: softImageFrame,
               gaplessPlayback: true,
-              demoImage,
+              assetImage,
               fit: BoxFit.cover,
               errorBuilder: (_, error, stack) => fallback,
               excludeFromSemantics: true,
@@ -139,12 +139,6 @@ class _ProductTileState extends State<ProductTile> {
                             ),
                           ),
                         ),
-                        if (product.isDemo)
-                          const Positioned(
-                            top: Space.m,
-                            left: Space.m,
-                            child: _DemoLabel(),
-                          ),
                         if (discount != null)
                           Positioned(
                             left: Space.m,
@@ -254,29 +248,6 @@ class _ProductTileState extends State<ProductTile> {
       ),
     );
   }
-}
-
-class _DemoLabel extends StatelessWidget {
-  const _DemoLabel();
-  @override
-  Widget build(BuildContext context) => DecoratedBox(
-    decoration: BoxDecoration(
-      color: AppColors.surface.withValues(alpha: .92),
-      borderRadius: BorderRadius.circular(Radii.pill),
-    ),
-    child: const Padding(
-      padding: EdgeInsets.symmetric(horizontal: Space.s, vertical: 3),
-      child: Text(
-        'DEMO · FĂRĂ PLATĂ',
-        style: TextStyle(
-          fontSize: 10,
-          fontWeight: FontWeight.w600,
-          letterSpacing: .3,
-          color: AppColors.textSecondary,
-        ),
-      ),
-    ),
-  );
 }
 
 class _FavoriteButton extends StatelessWidget {

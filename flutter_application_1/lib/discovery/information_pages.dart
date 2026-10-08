@@ -111,11 +111,11 @@ class HelpPage extends StatelessWidget {
               ),
               (
                 'Ce înseamnă un pachet surpriză?',
-                'O selecție de produse rămase la final de zi. Conținutul poate varia. Pachetele comercianților din demonstrație nu sunt disponibile pentru cumpărare.',
+                'O selecție de produse bune rămase la final de zi, la un preț redus. Conținutul variază de la o zi la alta.',
               ),
               (
-                'Pot comanda de pe hartă?',
-                'Harta afișează momentan comercianți demonstrativi, marcați DEMO. Pentru comenzile reale folosește catalogul.',
+                'Cum găsesc magazinele din apropiere?',
+                'În secțiunea Magazine vezi lista și harta. Din catalog poți folosi locația ta pentru a ordona ofertele după distanță.',
               ),
               (
                 'Unde văd comenzile mele?',

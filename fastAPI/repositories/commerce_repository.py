@@ -107,10 +107,10 @@ class CommerceRepository:
     def merchants(self):
         if self.user is None:
             return self.request('POST', 'rpc/wasteless_shops', body={})
-        return self.request('GET', 'merchants', params={'select': 'id,name,address,pickup_window,latitude,longitude,is_demo,image_url', 'owner_id':'not.is.null', 'status':'eq.approved', 'order':'id', 'limit':100})
+        return self.request('GET', 'merchants', params={'select': 'id,name,address,pickup_window,latitude,longitude,is_demo,image_url', 'status':'eq.approved', 'order':'id', 'limit':100})
 
     def dashboard(self):
-        rows = self.request('GET', 'merchants', params={'select':'id,name,address,pickup_window,latitude,longitude,is_demo,demo_seeded,image_url,status','owner_id':f'eq.{self.user.id}'})
+        rows = self.request('GET', 'merchants', params={'select':'id,name,address,pickup_window,latitude,longitude,is_demo,image_url,status','owner_id':f'eq.{self.user.id}'})
         if not rows:
             return {'merchant':None,'products':[],'orders':[]}
         merchant = rows[0]

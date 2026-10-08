@@ -181,12 +181,6 @@ def merchant_profile(data: MerchantProfileInput, repo: Repo):
     return repo.dashboard()
 
 
-@router.post('/merchant/seed')
-def merchant_seed(repo: Repo):
-    repo.rpc('merchant', {'p_action': 'seed', 'p_data': {}})
-    return repo.dashboard()
-
-
 @router.post('/merchant/products', status_code=201)
 def merchant_create_product(data: MerchantProductInput, repo: Repo):
     pid = repo.rpc('merchant', {'p_action': 'product', 'p_data': data.model_dump(mode='json')})

@@ -339,19 +339,12 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
                         icon: const Icon(Icons.add),
                         label: const Text('Adaugă ofertă'),
                       ),
-                      if (merchant['demo_seeded'] != true)
-                        OutlinedButton(
-                          onPressed: busy
-                              ? null
-                              : () => run(widget.service.seedProducts),
-                          child: const Text('Adaugă exemple de test'),
-                        ),
                     ],
                   ),
                   const SizedBox(height: 12),
                   if (products.isEmpty)
                     const Text(
-                      'Publică primul pachet surpriză. Exemplele de test sunt marcate DEMO și nu se pot ridica.',
+                      'Publică primul pachet surpriză: preț redus, valoare estimată, stoc și intervalul de ridicare.',
                     ),
                   if (products.isNotEmpty)
                     Card(
@@ -756,8 +749,9 @@ class _MerchantEditorState extends State<MerchantEditor> {
               if (!widget.profile)
                 DropdownButtonFormField<String>(
                   initialValue: image,
+                  isExpanded: true,
                   decoration: const InputDecoration(
-                    labelText: 'Imagine ilustrativă',
+                    labelText: 'Imaginea ofertei',
                   ),
                   items: const [
                     DropdownMenuItem(
@@ -780,13 +774,17 @@ class _MerchantEditorState extends State<MerchantEditor> {
                 DropdownButtonFormField<int?>(
                   key: const ValueKey('pickup-day'),
                   initialValue: pickupDay,
+                  isExpanded: true,
                   decoration: const InputDecoration(
                     labelText: 'Ziua ridicării',
                   ),
                   items: const [
                     DropdownMenuItem(
                       value: null,
-                      child: Text('Intervalul obișnuit al magazinului'),
+                      child: Text(
+                        'Intervalul obișnuit al magazinului',
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     DropdownMenuItem(value: 0, child: Text('Azi')),
                     DropdownMenuItem(value: 1, child: Text('Mâine')),

@@ -53,7 +53,6 @@ class _LiveCartPageState extends State<LiveCartPage> {
           );
         }
         final theme = Theme.of(context);
-        final allDemo = items.every((i) => i['product']?['is_demo'] == true);
         final count = items.fold<int>(0, (n, i) => n + (i['quantity'] as int));
         final merchant = items.first['product']?['merchants']?['name'];
         final lines = Column(
@@ -115,9 +114,7 @@ class _LiveCartPageState extends State<LiveCartPage> {
                 _AmountRow('Total', money(cart['total']), strong: true),
                 const SizedBox(height: Space.s),
                 Text(
-                  allDemo
-                      ? 'Produse demonstrative: comanda nu implică plată.'
-                      : 'Plătești la ridicare, direct la magazin.',
+                  'Plătești la ridicare, direct la magazin.',
                   style: theme.textTheme.bodySmall,
                 ),
                 if (cart['single_merchant'] == false) ...[

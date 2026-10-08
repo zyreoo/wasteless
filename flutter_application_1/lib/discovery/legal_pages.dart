@@ -39,7 +39,7 @@ class LegalPage extends StatelessWidget {
                     padding: EdgeInsets.all(Space.m),
                     child: InfoRow(
                       icon: Icons.gavel_outlined,
-                      text: 'Versiune preliminară pentru perioada de testare. Documentul va fi completat cu datele operatorului și revizuit juridic înainte de lansarea publică.',
+                      text: 'Versiune preliminară. Documentul va fi completat cu datele operatorului și revizuit juridic înainte de lansarea publică.',
                     ),
                   ),
                 ),
@@ -94,7 +94,7 @@ class TermsPage extends StatelessWidget {
       ),
       (
         'Plata',
-        'În perioada de testare nu se procesează plăți online. Ofertele marcate DEMO sunt demonstrative și nu presupun plată sau ridicare reală. Când plata va fi disponibilă, condițiile vor fi publicate în acest document.',
+        'Plata se face la ridicare, direct în magazin. Plata online nu este disponibilă momentan; când va fi, condițiile vor fi publicate în acest document.',
       ),
       (
         'Magazinele partenere',

@@ -69,7 +69,6 @@ class _LiveCheckoutPageState extends State<LiveCheckoutPage> {
         final theme = Theme.of(context);
         final merchant = (items.first['product']?['merchants'] as Map?)
             ?.cast<String, dynamic>();
-        final allDemo = items.every((i) => i['product']?['is_demo'] == true);
         final first = items.first['product'] as Map<String, dynamic>?;
         final pickup = first == null
             ? null
@@ -156,13 +155,9 @@ class _LiveCheckoutPageState extends State<LiveCheckoutPage> {
                 const SizedBox(height: Space.l),
                 const Divider(),
                 const SizedBox(height: Space.m),
-                InfoRow(
-                  icon: allDemo
-                      ? Icons.science_outlined
-                      : Icons.payments_outlined,
-                  text: allDemo
-                      ? 'Comandă de test: produse demonstrative, fără plată sau ridicare reală.'
-                      : 'Plătești la ridicare. Confirmarea nu retrage bani.',
+                const InfoRow(
+                  icon: Icons.payments_outlined,
+                  text: 'Plătești la ridicare. Confirmarea nu retrage bani.',
                 ),
                 const InfoRow(
                   icon: Icons.qr_code_2_outlined,

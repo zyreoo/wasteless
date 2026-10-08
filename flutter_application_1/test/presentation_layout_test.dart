@@ -21,8 +21,8 @@ const merchant = {
 };
 Map<String, Object> product(int id, {int stock = 6}) => {
   'id': id,
-  'name': 'Pachet de brutărie cu pâine, croissante și specialități · DEMO',
-  'description': 'Produse fictive pentru testarea rezervării și ridicării.',
+  'name': 'Pachet de brutărie cu pâine, croissante și specialități',
+  'description': 'Pâine, croissante și specialități rămase la finalul zilei.',
   'image_path': 'assets/demo/rescue-bag.webp',
   'price': '19.00',
   'original_price': '55.00',
@@ -30,7 +30,6 @@ Map<String, Object> product(int id, {int stock = 6}) => {
   'category': 'Brutărie',
   'allergens': 'Gluten, lapte, ouă, susan, soia',
   'merchant_id': 1,
-  'is_demo': true,
   'merchants': merchant,
 };
 final cartItem = {
@@ -50,7 +49,6 @@ final order = {
   'pickup_address': merchant['address'],
   'pickup_window': merchant['pickup_window'],
   'pickup_code': '7F3K2Q9A',
-  'is_demo': true,
   'cancellation_reason': null,
   'order_items': [
     {

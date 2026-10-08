@@ -386,9 +386,7 @@ class LiveOrderDetailPage extends StatelessWidget {
                     ),
                     const SizedBox(height: Space.s),
                     Text(
-                      order['is_demo'] == true
-                          ? 'Comandă de test: produse demonstrative, fără plată sau ridicare reală.'
-                          : 'Plata la ridicare. Nicio plată online nu a fost efectuată.',
+                      'Plata la ridicare. Nicio plată online nu a fost efectuată.',
                       style: theme.textTheme.bodySmall,
                     ),
                     const SizedBox(height: Space.xl),

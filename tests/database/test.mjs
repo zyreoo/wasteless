@@ -209,5 +209,43 @@ check((await db.query('select stock from product where id=$1',[dated])).rows[0].
 await denied(B,"select wasteless_order_transition($1,'cancelled','','Prea târziu')",[datedOrder]);
 await denied(D,"select wasteless_order_transition($1,'not_collected')",[demoOrder]);
 
-console.log(`${checks} database checks passed: real SQL migration, RLS, ownership, stock, price snapshots, rollback, idempotency, approval, shop photos, pickup windows, public catalogue and uncollected orders.`);
+// Live marketplace: the whole merchant workflow, end to end.
+await db.exec(readFileSync(new URL('../../supabase/migrations/20261008150000_live_marketplace.sql',import.meta.url),'utf8'));
+check((await db.query('select status from merchants where id=$1',[realShop])).rows[0].status,'approved');
+const F='99999999-9999-4999-8999-999999999999';await db.query('insert into auth.users values($1)',[F]);
+const liveShop=(await asUser(F,"select wasteless_merchant('profile',$1) as id",[{...profile,name:'Brutăria Bunicii'}]))[0].id;
+check((await db.query('select status,is_demo from merchants where id=$1',[liveShop])).rows[0],{status:'approved',is_demo:false});
+await denied(F,"select wasteless_merchant('seed','{}')");
+const liveBag=(await asUser(F,"select wasteless_merchant('product',$1) as id",[{...bag,name:'Pachet surpriză de pâine',stock:5}]))[0].id;
+// Customers and visitors see the new bag immediately, with every change.
+check((await asUser(B,'select stock from product where id=$1',[liveBag]))[0].stock,5);
+check((await asAnon('select wasteless_catalog($1) as items',[liveBag]))[0].items[0].stock,5);
+await asUser(F,"select wasteless_merchant('product',$1)",[{...bag,id:liveBag,name:'Pachet surpriză de pâine',stock:3,price:15}]);
+check((await asUser(B,'select stock,price::text as price from product where id=$1',[liveBag]))[0],{stock:3,price:'15.00'});
+check((await asAnon('select wasteless_catalog($1) as items',[liveBag]))[0].items[0].price,15);
+await asUser(F,"select wasteless_merchant('availability',$1)",[{id:liveBag,active:false}]);
+check((await asUser(B,'select id from product where id=$1',[liveBag])).length,0);
+check((await asAnon('select wasteless_catalog($1) as items',[liveBag]))[0].items,[]);
+check((await asUser(F,'select active from product where id=$1',[liveBag]))[0].active,false);
+await asUser(F,"select wasteless_merchant('availability',$1)",[{id:liveBag,active:true}]);
+check((await asUser(B,'select id from product where id=$1',[liveBag])).length,1);
+// Order lifecycle on the new shop.
+await asUser(B,"select wasteless_cart('clear')");
+await asUser(B,"select wasteless_cart('add',$1,null,2)",[liveBag]);
+const liveOrder=(await asUser(B,"select wasteless_checkout('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa') as id"))[0].id;
+check((await asUser(B,'select stock from product where id=$1',[liveBag]))[0].stock,1);
+check((await asUser(F,'select status,is_demo from "order" where id=$1',[liveOrder]))[0],{status:'confirmed',is_demo:false});
+await asUser(F,"select wasteless_order_transition($1,'accepted')",[liveOrder]);
+await asUser(F,"select wasteless_order_transition($1,'ready')",[liveOrder]);
+const liveCode=(await asUser(B,'select pickup_code from "order" where id=$1',[liveOrder]))[0].pickup_code;
+check((await asUser(F,'select pickup_code from "order" where id=$1',[liveOrder]))[0].pickup_code,liveCode);
+await asUser(F,"select wasteless_order_transition($1,'collected',$2)",[liveOrder,liveCode.toLowerCase()]);
+check((await asUser(B,'select status from "order" where id=$1',[liveOrder]))[0].status,'collected');
+// A shop listed before its merchant account is attached.
+const listed=(await db.query("insert into merchants(name,address,pickup_window,latitude,longitude) values('Roade Locale','Piața Obor, București','18:00–19:30',44.45,26.13) returning id,status,is_demo")).rows[0];
+check([listed.status,listed.is_demo],['approved',false]);
+check((await asUser(B,'select id from merchants where id=$1',[listed.id])).length,1);
+check((await asAnon('select wasteless_shops() as items'))[0].items.some(s=>s.id===listed.id),true);
+
+console.log(`${checks} database checks passed: real SQL migration, RLS, ownership, stock, price snapshots, rollback, idempotency, approval, shop photos, pickup windows, public catalogue, uncollected orders and the live merchant workflow.`);
 await db.close();
