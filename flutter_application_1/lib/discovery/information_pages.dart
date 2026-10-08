@@ -251,8 +251,8 @@ class BusinessPage extends StatelessWidget {
       'Nume, adresă, interval de ridicare și o fotografie.',
     ),
     (
-      'Verificăm magazinul',
-      'Magazinul devine vizibil pentru clienți după aprobare.',
+      'Magazinul apare imediat',
+      'Clienții din apropiere îți văd magazinul în listă și pe hartă.',
     ),
     (
       'Publici pachete surpriză',
