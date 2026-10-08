@@ -1,6 +1,6 @@
 # Wasteless
 
-Flutter, FastAPI and Supabase. Development branch: `codex/wasteless-mvp`.
+Flutter, FastAPI and Supabase. Development branch: `main`.
 
 ## Implemented
 
