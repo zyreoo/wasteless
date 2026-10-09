@@ -151,6 +151,7 @@ class ApiService {
     }
     if (decoded is! Map) return null;
     final detail = decoded['detail'];
+    if (detail is List) return fieldDetail(detail);
     if (detail is! String) return null;
     final text = detail.trim();
     if (text.isEmpty ||
@@ -161,6 +162,35 @@ class ApiService {
       return null;
     }
     return text;
+  }
+
+  static const _fieldNames = {
+    'name': 'Nume',
+    'description': 'Descriere',
+    'price': 'Preț redus',
+    'original_price': 'Preț inițial',
+    'stock': 'Stoc',
+    'category': 'Categorie',
+    'allergens': 'Alergeni',
+    'image_path': 'Imagine',
+    'pickup_start': 'Ziua și ora ridicării',
+    'pickup_end': 'Ziua și ora ridicării',
+    'address': 'Adresă',
+    'pickup_window': 'Interval de ridicare',
+    'latitude': 'Latitudine',
+    'longitude': 'Longitudine',
+  };
+
+  /// Names the first invalid form field from a validation error list.
+  static String? fieldDetail(List<dynamic> errors) {
+    for (final error in errors) {
+      final loc = error is Map ? error['loc'] : null;
+      if (loc is List && loc.isNotEmpty) {
+        final name = _fieldNames[loc.last];
+        if (name != null) return 'Verifică câmpul „$name”.';
+      }
+    }
+    return null;
   }
 
   /// Accepts delta-seconds only (what the API sends), bounded to an hour.

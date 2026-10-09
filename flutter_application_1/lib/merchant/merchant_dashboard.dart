@@ -176,7 +176,7 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
                 const PageIntro(
                   'Comerciant',
                   'Afacerea ta începe aici.',
-                  'Completează profilul magazinului. După aprobare, pachetele tale apar pentru clienții din apropiere.',
+                  'Completează profilul magazinului. Apoi adaugă pachete: ele apar imediat pentru clienții din apropiere.',
                 ),
               if (merchant != null) ...[
                 Row(
@@ -303,10 +303,7 @@ class _MerchantDashboardState extends State<MerchantDashboard> {
                         const _StatDivider(),
                         _Stat(value: '${products.length}', label: 'Oferte'),
                         const _StatDivider(),
-                        _Stat(
-                          value: money(revenue),
-                          label: 'Ridicat (simulat)',
-                        ),
+                        _Stat(value: money(revenue), label: 'Vânzări ridicate'),
                       ],
                     ),
                   ),
@@ -624,6 +621,55 @@ class _MerchantEditorState extends State<MerchantEditor> {
     super.dispose();
   }
 
+  double? number(String key) =>
+      double.tryParse(fields[key]!.text.trim().replaceAll(',', '.'));
+
+  /// The same rules the server applies, so a form that passes here saves.
+  String? validateField(String key, String raw) {
+    final v = raw.trim();
+    if (key == 'description') return null;
+    if (v.isEmpty) return 'Completează câmpul.';
+    const minLength = {
+      'name': 2,
+      'address': 5,
+      'pickup_window': 3,
+      'category': 2,
+      'allergens': 2,
+    };
+    if (v.length < (minLength[key] ?? 0)) {
+      return key == 'allergens'
+          ? 'Scrie alergenii sau „Fără alergeni declarați”.'
+          : 'Minimum ${minLength[key]} caractere.';
+    }
+    if (['price', 'original_price', 'latitude', 'longitude'].contains(key)) {
+      final n = double.tryParse(v.replaceAll(',', '.'));
+      if (n == null) return 'Introdu un număr valid.';
+      if (key == 'latitude' && (n < -90 || n > 90)) {
+        return 'Latitudinea este între -90 și 90.';
+      }
+      if (key == 'longitude' && (n < -180 || n > 180)) {
+        return 'Longitudinea este între -180 și 180.';
+      }
+      if (key == 'price' || key == 'original_price') {
+        if (n <= 0 || n > 10000) return 'Între 0,01 și 10.000 lei.';
+        if (!RegExp(r'^\d+([.,]\d{1,2})?$').hasMatch(v)) {
+          return 'Maximum două zecimale, ex.: 14,50.';
+        }
+        final price = number('price');
+        if (key == 'original_price' && price != null && n < price) {
+          return 'Prețul inițial nu poate fi mai mic decât prețul redus.';
+        }
+      }
+    }
+    if (key == 'stock') {
+      final n = int.tryParse(v);
+      if (n == null || n < 0 || n > 10000) {
+        return 'Stocul este un număr întreg între 0 și 10.000.';
+      }
+    }
+    return null;
+  }
+
   Future<void> save() async {
     if (!form.currentState!.validate() || busy) return;
     setState(() => busy = true);
@@ -673,8 +719,10 @@ class _MerchantEditorState extends State<MerchantEditor> {
           child: ListView(
             padding: const EdgeInsets.all(24),
             children: [
-              const Text(
-                'MOD TEST · Datele sunt salvate în backend și vizibile celorlalte conturi. Nu introduce date de plată.',
+              Text(
+                widget.profile
+                    ? 'Magazinul apare clienților imediat după ce salvezi profilul.'
+                    : 'Oferta publicată apare imediat clienților din apropiere.',
               ),
               const SizedBox(height: 20),
               for (final e in fields.entries)
@@ -724,26 +772,7 @@ class _MerchantEditorState extends State<MerchantEditor> {
                         'allergens': 'Alergeni',
                       }[e.key],
                     ),
-                    validator: (v) {
-                      if (e.key == 'description') return null;
-                      if (v == null || v.trim().isEmpty) {
-                        return 'Completează câmpul.';
-                      }
-                      if ([
-                            'price',
-                            'original_price',
-                            'latitude',
-                            'longitude',
-                          ].contains(e.key) &&
-                          double.tryParse(v.replaceAll(',', '.')) == null) {
-                        return 'Introdu un număr valid.';
-                      }
-                      if (e.key == 'stock' &&
-                          (int.tryParse(v) == null || int.parse(v) < 0)) {
-                        return 'Stocul trebuie să fie un număr întreg pozitiv sau zero.';
-                      }
-                      return null;
-                    },
+                    validator: (v) => validateField(e.key, v ?? ''),
                   ),
                 ),
               if (!widget.profile)
@@ -756,7 +785,7 @@ class _MerchantEditorState extends State<MerchantEditor> {
                   items: const [
                     DropdownMenuItem(
                       value: 'assets/demo/rescue-bag.webp',
-                      child: Text('Pachet surpriză'),
+                      child: Text('Automat, după tipul pachetului'),
                     ),
                     DropdownMenuItem(
                       value: 'assets/demo/apples.webp',
