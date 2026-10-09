@@ -6,6 +6,35 @@ import '../models/product.dart';
 import '../theme/app_theme.dart';
 import 'ui.dart';
 
+/// A photo matching a bag's name or category, from the bundled assets.
+String? suggestedImage(Product product) {
+  final text = '${product.name} ${product.category ?? ''}'.toLowerCase();
+  const rules = [
+    (['poke'], 'poke'),
+    (['sushi'], 'sushi'),
+    (['supă', 'supa', 'ciorb'], 'soup'),
+    (['vegetarian'], 'veggie-bowl'),
+    (['mic dejun'], 'breakfast'),
+    (['sandviș', 'sandvis', 'wrap'], 'sandwich'),
+    (['la cafea', 'brownie'], 'brownies'),
+    (['tort'], 'cake'),
+    (['fursec', 'biscui'], 'cookies'),
+    (['premium'], 'pastries'),
+    (['prăjitur', 'prajitur', 'cofetări', 'cofetari'], 'tarts'),
+    (['patiserie', 'croissant'], 'croissants'),
+    (['pâine', 'paine', 'brutări', 'brutari'], 'bread'),
+    (['salată', 'salata', 'verdeț', 'verdet'], 'greens'),
+    (['legume'], 'vegetables'),
+    (['gustări', 'gustari'], 'sandwich'),
+    (['mâncare gătită', 'mancare gatita'], 'meal'),
+    (['cafenea'], 'breakfast'),
+  ];
+  for (final (words, file) in rules) {
+    if (words.any(text.contains)) return 'assets/demo/$file.jpg';
+  }
+  return null;
+}
+
 class ProductImage extends StatelessWidget {
   const ProductImage(this.product, {super.key, this.aspectRatio = 4 / 3});
   final Product product;
@@ -16,12 +45,15 @@ class ProductImage extends StatelessWidget {
     final shopPhoto = product.merchant?['image_url'] as String?;
     final uri = Uri.tryParse(shopPhoto ?? product.image ?? '');
     final name = product.name.toLowerCase();
+    // The generic surprise-bag photo (or no photo) is replaced by one that
+    // matches what the bag contains.
     final assetImage =
-        const [
-          'assets/demo/apples.webp',
-          'assets/demo/pears.webp',
-          'assets/demo/rescue-bag.webp',
-        ].contains(product.image)
+        product.image == null || product.image == 'assets/demo/rescue-bag.webp'
+        ? suggestedImage(product) ?? product.image
+        : const [
+            'assets/demo/apples.webp',
+            'assets/demo/pears.webp',
+          ].contains(product.image)
         ? product.image
         : ['para', 'pară', 'pere'].contains(name)
         ? 'assets/demo/pears.webp'
@@ -71,6 +103,7 @@ class ProductTile extends StatefulWidget {
     required this.onFavorite,
     required this.onOpen,
     this.imageAspect = 4 / 3,
+    this.showFavorite = true,
   });
   final Product product;
   final bool saved;
@@ -80,6 +113,9 @@ class ProductTile extends StatefulWidget {
   /// Grids use 4:3; single-column phone lists use a wider 16:10 so more
   /// offers fit on screen.
   final double imageAspect;
+
+  /// Shop pages list offers without the favorite control.
+  final bool showFavorite;
 
   @override
   State<ProductTile> createState() => _ProductTileState();
@@ -235,15 +271,16 @@ class _ProductTileState extends State<ProductTile> {
               ),
             ),
           ),
-          Positioned(
-            top: Space.s,
-            right: Space.s,
-            child: _FavoriteButton(
-              saved: widget.saved,
-              onPressed: widget.onFavorite,
-              duration: motion,
+          if (widget.showFavorite)
+            Positioned(
+              top: Space.s,
+              right: Space.s,
+              child: _FavoriteButton(
+                saved: widget.saved,
+                onPressed: widget.onFavorite,
+                duration: motion,
+              ),
             ),
-          ),
         ],
       ),
     );

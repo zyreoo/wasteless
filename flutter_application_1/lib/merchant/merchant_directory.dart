@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../services/commerce_service.dart';
 import '../models/product.dart';
+import '../theme/app_theme.dart';
 import '../widgets/live_page.dart';
 import '../widgets/product_tile.dart';
 import '../discovery/components.dart';
@@ -53,30 +54,66 @@ class _MerchantDirectoryState extends State<MerchantDirectory> {
     MaterialPageRoute(
       builder: (_) => LiveScaffold(
         title: merchant['name'] as String,
-        body: ListView(
-          padding: const EdgeInsets.all(20),
-          children: [
-            PageIntro(
-              'Magazin',
-              merchant['name'] as String,
-              '${merchant['address']}\nRidicare: ${merchant['pickup_window']}',
-            ),
-            const SizedBox(height: 20),
-            if (products.isEmpty)
-              const Text('Acest comerciant nu are oferte publicate momentan.'),
-            for (final p in products)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: ListTile(
-                  leading: const Icon(Icons.shopping_bag_outlined),
-                  title: Text(p.name),
-                  subtitle: Text('${money(p.price)} · ${p.stock} disponibile'),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () =>
-                      Navigator.pushNamed(context, '/product', arguments: p.id),
-                ),
+        body: LayoutBuilder(
+          builder: (context, bounds) {
+            final content = (bounds.maxWidth - 40).clamp(0.0, 1200.0);
+            final columns = content >= 1080
+                ? 4
+                : content >= 760
+                ? 3
+                : content >= 480
+                ? 2
+                : 1;
+            // Offers in stock first, sold-out ones at the end.
+            final offers = [...products]
+              ..sort((a, b) => (b.stock > 0 ? 1 : 0) - (a.stock > 0 ? 1 : 0));
+            return ListView(
+              padding: EdgeInsets.symmetric(
+                horizontal: (bounds.maxWidth - content) / 2,
+                vertical: 20,
               ),
-          ],
+              children: [
+                PageIntro(
+                  'Magazin',
+                  merchant['name'] as String,
+                  '${merchant['address']}\nRidicare: ${merchant['pickup_window']}',
+                ),
+                const SizedBox(height: Space.xl),
+                if (offers.isEmpty)
+                  const Text(
+                    'Acest comerciant nu are oferte publicate momentan.',
+                  ),
+                for (var row = 0; row * columns < offers.length; row++)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: Space.xxl),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        for (var c = 0; c < columns; c++) ...[
+                          if (c > 0) const SizedBox(width: Space.xl),
+                          Expanded(
+                            child: row * columns + c < offers.length
+                                ? ProductTile(
+                                    product: offers[row * columns + c],
+                                    imageAspect: columns == 1 ? 1.6 : 4 / 3,
+                                    showFavorite: false,
+                                    saved: false,
+                                    onFavorite: null,
+                                    onOpen: () => Navigator.pushNamed(
+                                      context,
+                                      '/product',
+                                      arguments: offers[row * columns + c].id,
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+              ],
+            );
+          },
         ),
       ),
     ),
@@ -246,7 +283,18 @@ class _MerchantDirectoryState extends State<MerchantDirectory> {
                                   .where((p) => p.merchantId == m['id'])
                                   .toList(),
                             ),
-                            icon: const Icon(Icons.storefront),
+                            style: IconButton.styleFrom(
+                              backgroundColor: AppColors.brand,
+                              foregroundColor: Colors.white,
+                              side: const BorderSide(
+                                color: Colors.white,
+                                width: 2,
+                              ),
+                            ),
+                            icon: const Icon(
+                              Icons.storefront,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                     ],
